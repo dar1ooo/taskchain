@@ -4,6 +4,6 @@ export class BoardModel {
   public id = '';
   public owner = '';
   public inviteCode = '';
-  public title = '';
+  public title: string = '';
   public columns: BoardColumn[] = [];
 }

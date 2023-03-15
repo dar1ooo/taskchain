@@ -14,7 +14,7 @@ import {
   ConfirmDialogModel,
   TicketModel,
 } from 'src/app/shared/models';
-import { IGetBoardRequest } from 'src/app/shared/request';
+import { ICreateBoardRequest, IGetBoardRequest } from 'src/app/shared/request';
 import { ISaveBoardRequest } from 'src/app/shared/request/save-board-request';
 import { BoardService } from 'src/app/shared/services/board.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
@@ -88,16 +88,45 @@ export class BoardComponent implements OnInit {
       newBoardRef.afterClosed().subscribe((newBoard: BoardModel) => {
         if (newBoard) {
           this.board = newBoard;
-          this.saveBoard();
+          this.createBoard();
         }
       });
     }
   }
 
+  public createBoard(): void {
+    const request: ICreateBoardRequest = {
+      boardTitle: this.board.title,
+      user: this.extensions.getUser(),
+    };
+
+    this.boardService
+      .createBoard(request)
+      .pipe(
+        tap((res) => {
+          debugger;
+          this.board = res.board;
+        }),
+        catchError((error) => {
+          const ref = this.snackBar.open('Saving Board failed', 'retry', {
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+          });
+
+          ref.onAction().subscribe((res) => {
+            this.createBoard();
+          });
+
+          return error;
+        })
+      )
+      .subscribe();
+  }
+
   public saveBoard(): void {
     const request: ISaveBoardRequest = {
-      Board: this.board,
-      User: this.extensions.getUser(),
+      board: this.board,
+      user: this.extensions.getUser(),
     };
 
     this.boardService
@@ -114,7 +143,7 @@ export class BoardComponent implements OnInit {
           });
 
           ref.onAction().subscribe((res) => {
-            this.saveBoard();
+            this.createBoard();
           });
 
           return error;

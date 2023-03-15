@@ -19,12 +19,10 @@ public class BoardController : BaseController
     }
 
     [HttpPost]
-    [Route("save")]
-    public IActionResult Save(SaveBoardRequest request)
+    [Route("createBoard")]
+    public IActionResult CreateBoard(CreateBoardRequest request)
     {
-        //List<string> usernames = boardService
-
-        Board board = boardService.Save(request.Board, request.User);
+        Board board = boardService.CreateBoard(request.Board, request.User);
 
         if (board == null)
         {
@@ -36,7 +34,7 @@ public class BoardController : BaseController
             userService.AddUserToBoard(request.User, board);
         }
 
-        SaveBoardResponse response = new();
+        CreateBoardResponse response = new();
         response.Board = board;
 
         return Ok(response);

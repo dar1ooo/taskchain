@@ -12,4 +12,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\dario\source\repos\taskchain\taskchain-backend\api\Models\request\.editorconfig" />
+  </ItemGroup>
+
 </Project>

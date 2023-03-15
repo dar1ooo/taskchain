@@ -15,7 +15,7 @@ namespace api.Services
             collection = "Boards";
         }
 
-        public Board Save(Board board, User user)
+        public Board CreateBoard(Board board, User user)
         {
             MongoDbBoard mongoDbBoard = new MongoDbBoard(board);
             mongoDbBoard.InviteCode = RandomString(6);
