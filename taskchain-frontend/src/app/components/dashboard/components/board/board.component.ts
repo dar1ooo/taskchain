@@ -18,6 +18,7 @@ import { IGetBoardRequest } from 'src/app/shared/request';
 import { ISaveBoardRequest } from 'src/app/shared/request/save-board-request';
 import { BoardService } from 'src/app/shared/services/board.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { NewBoardDialogComponent } from './new-board-dialog/new-board-dialog.component';
 import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
 
 export interface DialogData {
@@ -31,7 +32,7 @@ export interface DialogData {
   styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent implements OnInit {
-  public viewmodel: BoardModel = new BoardModel();
+  public board: BoardModel = new BoardModel();
 
   constructor(
     public dialog: MatDialog,
@@ -58,7 +59,7 @@ export class BoardComponent implements OnInit {
         .loadBoard(request)
         .pipe(
           tap((res) => {
-            this.viewmodel = res;
+            this.board = res;
           }),
           catchError((error) => {
             const ref = this.snackBar.open('Loading Board', 'retry', {
@@ -77,8 +78,49 @@ export class BoardComponent implements OnInit {
     }
 
     if (boardId === '0') {
-      this.viewmodel.Id = '0';
+      const newBoardRef = this.dialog.open(NewBoardDialogComponent, {
+        data: new BoardModel(),
+        disableClose: true,
+        maxHeight: '90vh',
+        autoFocus: '__non_existing_element__',
+      });
+
+      newBoardRef.afterClosed().subscribe((newBoard: BoardModel) => {
+        if (newBoard) {
+          this.board = newBoard;
+          this.saveBoard();
+        }
+      });
     }
+  }
+
+  public saveBoard(): void {
+    const request: ISaveBoardRequest = {
+      Board: this.board,
+      User: this.extensions.getUser(),
+    };
+
+    this.boardService
+      .saveBoard(request)
+      .pipe(
+        tap((res) => {
+          debugger;
+          this.board = res.board;
+        }),
+        catchError((error) => {
+          const ref = this.snackBar.open('Saving Board failed', 'retry', {
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+          });
+
+          ref.onAction().subscribe((res) => {
+            this.saveBoard();
+          });
+
+          return error;
+        })
+      )
+      .subscribe();
   }
 
   public dropTicket(event: CdkDragDrop<TicketModel[]>): void {
@@ -108,11 +150,11 @@ export class BoardComponent implements OnInit {
 
     ticketRef.afterClosed().subscribe((newTicket: TicketModel) => {
       if (newTicket) {
-        if (newTicket.DeleteTicket) {
+        if (newTicket.deleteTicket) {
           this.deleteTicket(column, newTicket);
         } else {
-          var foundIndex = column.Tickets.findIndex((x) => x.Id === ticket.Id);
-          column.Tickets[foundIndex] = newTicket;
+          var foundIndex = column.tickets.findIndex((x) => x.id === ticket.id);
+          column.tickets[foundIndex] = newTicket;
         }
       }
     });
@@ -128,7 +170,7 @@ export class BoardComponent implements OnInit {
 
     ticketRef.afterClosed().subscribe((newTicket) => {
       if (newTicket) {
-        column.Tickets.push(newTicket);
+        column.tickets.push(newTicket);
         this.saveBoard();
       }
     });
@@ -136,11 +178,11 @@ export class BoardComponent implements OnInit {
 
   public addColumn(): void {
     const column = new BoardColumn();
-    this.viewmodel.columns.push(column);
+    this.board.columns.push(column);
   }
 
   public deleteColumn(column: BoardColumn): void {
-    const message = 'Are you sure you want to delete ' + column.Title + ' ?';
+    const message = 'Are you sure you want to delete ' + column.title + ' ?';
 
     const dialogData = new ConfirmDialogModel({
       title: 'Confirm Action',
@@ -154,9 +196,9 @@ export class BoardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((dialogResult) => {
       if (dialogResult === true) {
-        const index = this.viewmodel.columns.indexOf(column, 0);
+        const index = this.board.columns.indexOf(column, 0);
         if (index > -1) {
-          this.viewmodel.columns.splice(index, 1);
+          this.board.columns.splice(index, 1);
         }
       }
     });
@@ -167,7 +209,7 @@ export class BoardComponent implements OnInit {
   }
 
   public deleteTicket(column: BoardColumn, ticket: TicketModel): void {
-    const message = 'Are you sure you want to delete ' + ticket.Title + ' ?';
+    const message = 'Are you sure you want to delete ' + ticket.title + ' ?';
 
     const dialogData = new ConfirmDialogModel({
       title: 'Confirm Action',
@@ -181,153 +223,125 @@ export class BoardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((dialogResult) => {
       if (dialogResult === true) {
-        const index = column.Tickets.indexOf(ticket, 0);
+        const index = column.tickets.indexOf(ticket, 0);
         if (index > -1) {
-          column.Tickets.splice(index, 1);
+          column.tickets.splice(index, 1);
         }
       }
     });
   }
 
-  public saveBoard(): void {
-    this.viewmodel.Title = 'asdasd';
-    const request: ISaveBoardRequest = {
-      Board: this.viewmodel,
-    };
-
-    this.boardService
-      .saveBoard(request)
-      .pipe(
-        tap((res) => {
-          this.viewmodel = res;
-        }),
-        catchError((error) => {
-          const ref = this.snackBar.open('Saving Board failed', 'retry', {
-            horizontalPosition: 'right',
-            verticalPosition: 'bottom',
-          });
-
-          ref.onAction().subscribe((res) => {
-            this.saveBoard();
-          });
-
-          return error;
-        })
-      )
-      .subscribe();
-  }
-
   private loadMockData() {
     const column = new BoardColumn();
-    column.Title = 'Backlog';
-    column.Tickets.push(
+    column.title = 'Backlog';
+    column.tickets.push(
       new TicketModel({
-        Id: '1',
-        Title: 'Get to Work',
-        CompletedChecks: 2,
-        TotalChecks: 5,
+        id: '1',
+        title: 'Get to Work',
+        completedChecks: 2,
+        totalChecks: 5,
       })
     );
-    column.Tickets.push(
+    column.tickets.push(
       new TicketModel({
-        Id: '2',
-        Title: 'Pick Up Groceries',
-        CompletedChecks: 2,
-        TotalChecks: 5,
+        id: '2',
+        title: 'Pick Up Groceries',
+        completedChecks: 2,
+        totalChecks: 5,
       })
     );
-    column.Tickets.push(
+    column.tickets.push(
       new TicketModel({
-        Id: '3',
-        Title: 'Sleep',
-        CompletedChecks: 5,
-        TotalChecks: 5,
+        id: '3',
+        title: 'Sleep',
+        completedChecks: 5,
+        totalChecks: 5,
       })
     );
 
     const column1 = new BoardColumn();
-    column1.Title = 'to estimate';
-    column1.Tickets.push(
+    column1.title = 'to estimate';
+    column1.tickets.push(
       new TicketModel({
-        Id: '4',
-        Title: 'Get to Work',
-        CompletedChecks: 2,
-        TotalChecks: 5,
+        id: '4',
+        title: 'Get to Work',
+        completedChecks: 2,
+        totalChecks: 5,
       })
     );
-    column1.Tickets.push(
+    column1.tickets.push(
       new TicketModel({
-        Id: '5',
-        Title: 'Pick Up Groceries',
-        CompletedChecks: 2,
-        TotalChecks: 5,
+        id: '5',
+        title: 'Pick Up Groceries',
+        completedChecks: 2,
+        totalChecks: 5,
       })
     );
-    column1.Tickets.push(
+    column1.tickets.push(
       new TicketModel({
-        Id: '6',
-        Title: 'Sleep',
-        CompletedChecks: 2,
-        TotalChecks: 5,
+        id: '6',
+        title: 'Sleep',
+        completedChecks: 2,
+        totalChecks: 5,
       })
     );
 
     const column2 = new BoardColumn();
-    column2.Title = 'approved to implement';
-    column2.Tickets.push(
+    column2.title = 'approved to implement';
+    column2.tickets.push(
       new TicketModel({
-        Id: '7',
-        Title: 'Get to Work',
+        id: '7',
+        title: 'Get to Work',
       })
     );
-    column2.Tickets.push(
+    column2.tickets.push(
       new TicketModel({
-        Id: '8',
-        Title: 'Pick Up Groceries',
-        CompletedChecks: 2,
-        TotalChecks: 5,
+        id: '8',
+        title: 'Pick Up Groceries',
+        completedChecks: 2,
+        totalChecks: 5,
       })
     );
-    column2.Tickets.push(
+    column2.tickets.push(
       new TicketModel({
-        Id: '9',
+        id: '9',
 
-        Title: 'Sleep',
-        CompletedChecks: 5,
-        TotalChecks: 5,
+        title: 'Sleep',
+        completedChecks: 5,
+        totalChecks: 5,
       })
     );
 
     const column3 = new BoardColumn();
-    column3.Title = 'sprint';
-    column3.Tickets.push(
+    column3.title = 'sprint';
+    column3.tickets.push(
       new TicketModel({
-        Id: '10',
+        id: '10',
 
-        Title: 'Get to Work',
+        title: 'Get to Work',
       })
     );
-    column3.Tickets.push(
+    column3.tickets.push(
       new TicketModel({
-        Id: '11',
+        id: '11',
 
-        Title: 'Pick Up Groceries',
-        CompletedChecks: 2,
-        TotalChecks: 5,
+        title: 'Pick Up Groceries',
+        completedChecks: 2,
+        totalChecks: 5,
       })
     );
-    column3.Tickets.push(
+    column3.tickets.push(
       new TicketModel({
-        Id: '12',
-        Title: 'Sleep',
-        CompletedChecks: 5,
-        TotalChecks: 5,
+        id: '12',
+        title: 'Sleep',
+        completedChecks: 5,
+        totalChecks: 5,
       })
     );
 
-    this.viewmodel.columns.push(column);
-    this.viewmodel.columns.push(column1);
-    this.viewmodel.columns.push(column2);
-    this.viewmodel.columns.push(column3);
+    this.board.columns.push(column);
+    this.board.columns.push(column1);
+    this.board.columns.push(column2);
+    this.board.columns.push(column3);
   }
 }

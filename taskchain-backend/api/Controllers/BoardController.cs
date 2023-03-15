@@ -1,4 +1,6 @@
-﻿using api.Models.request;
+﻿using api.Models;
+using api.Models.request;
+using api.Models.response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
@@ -22,8 +24,21 @@ public class BoardController : BaseController
     {
         //List<string> usernames = boardService
 
-        boardService.Save(request.Board);
+        Board board = boardService.Save(request.Board, request.User);
 
-        return Ok();
+        if (board == null)
+        {
+            return BadRequest();
+        }
+
+        if (request.Board.Id == String.Empty)
+        {
+            userService.AddUserToBoard(request.User, board);
+        }
+
+        SaveBoardResponse response = new();
+        response.Board = board;
+
+        return Ok(response);
     }
 }

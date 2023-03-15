@@ -30,9 +30,10 @@ namespace api.Services
                 MongoDbUser mongoDbUser = new MongoDbUser();
                 mongoDbUser.Password = HashPassword(user.Password);
                 mongoDbUser.Username = user.Username;
+                mongoDbUser.Boards = new List<BoardOverview>();
 
                 //insert to db
-                MongoCRUD.InsertRecord<MongoDbUser>(collection, mongoDbUser);
+                MongoCRUD.InsertRecord(collection, mongoDbUser);
 
                 var arrayFilter = Builders<MongoDbUser>.Filter.Eq("Username", user.Username);
                 MongoDbUser foundUser = MongoCRUD.FindRecord<MongoDbUser>(collection, arrayFilter);
@@ -67,6 +68,7 @@ namespace api.Services
                     {
                         Id = foundUser.Id.ToString(),
                         Username = foundUser.Username,
+                        Boards = foundUser.Boards,
                     };
                 }
                 throw new Exception();
@@ -131,6 +133,23 @@ namespace api.Services
                 buffer4 = bytes.GetBytes(0x20);
             }
             return buffer4.SequenceEqual(buffer3);
+        }
+
+        public void AddUserToBoard(User user, Board board)
+        {
+            MongoDbUser dbUser = new MongoDbUser()
+            {
+                Id = new Guid(user.Id),
+                Boards = user.Boards,
+            };
+
+            dbUser.Boards.Add(new BoardOverview() { Id = board.Id, Title = board.Title });
+
+            //filter to find which user to update
+            var update = Builders<MongoDbUser>.Update
+                .Set(p => p.Boards, dbUser.Boards);
+
+            MongoCRUD.UpsertRecord("Users", dbUser.Id, update);
         }
     }
 }

@@ -14,23 +14,20 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.extensions.checkForLogin();
-    this.getBoards();
-  }
-
-  public getBoards(): void {
+    this.user = this.extensions.getUser();
   }
 
   public loadMockData(): void {
     let board = new BoardModel();
-    board.Title = 'Development';
-    (board.Id = '1'), this.user.Boards.push(board);
+    board.title = 'Development';
+    (board.id = '1'), this.user.boards.push(board);
 
     board = new BoardModel();
-    board.Title = 'Releases';
-    (board.Id = '2'), this.user.Boards.push(board);
+    board.title = 'Releases';
+    (board.id = '2'), this.user.boards.push(board);
 
     board = new BoardModel();
-    board.Title = 'Support IT';
-    (board.Id = '3'), this.user.Boards.push(board);
+    board.title = 'Support IT';
+    (board.id = '3'), this.user.boards.push(board);
   }
 }

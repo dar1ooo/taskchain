@@ -27,6 +27,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { RegisterComponent } from './components/register/register.component';
 import { JoinBoardComponent } from './components/dashboard/components/join-board/join-board.component';
 import { Extensions } from './shared/extensions';
+import { NewBoardDialogComponent } from './components/dashboard/components/board/new-board-dialog/new-board-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +41,7 @@ import { Extensions } from './shared/extensions';
     NavbarComponent,
     DashboardComponent,
     JoinBoardComponent,
+    NewBoardDialogComponent,
   ],
   imports: [
     BrowserModule,

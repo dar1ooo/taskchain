@@ -1,7 +1,7 @@
 import { BoardOverview } from './board-overview-model';
 
 export class UserModel {
-  Id = '';
-  Username = '';
-  Boards: BoardOverview[] = [];
+  id = '';
+  username = '';
+  boards: BoardOverview[] = [];
 }

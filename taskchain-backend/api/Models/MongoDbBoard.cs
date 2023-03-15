@@ -6,7 +6,6 @@ namespace api.Models
     {
         public MongoDbBoard(Board board)
         {
-            Id = Guid.Parse(board.Id);
             InviteCode = board.InviteCode;
             Title = board.Title;
             Columns = board.Columns;
@@ -14,6 +13,8 @@ namespace api.Models
 
         [BsonId]
         public Guid Id { get; set; }
+
+        public string Owner { get; set; }
 
         public string InviteCode { get; set; }
         public string Title { set; get; }

@@ -1,9 +1,9 @@
 <div class="boards-wrapper">
   <ul>
-    <li class="boards-list-item" *ngFor="let board of user.Boards">
-      <a href="/board?id={{ board.Id }}">
+    <li class="boards-list-item" *ngFor="let board of user.boards">
+      <a href="/board?id={{ board.id }}">
         <div class="board-detail">
-          <div class="board-title">{{ board.Title }}</div>
+          <div class="board-title">{{ board.title }}</div>
         </div>
       </a>
     </li>

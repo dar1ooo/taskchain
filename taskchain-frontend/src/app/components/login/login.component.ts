@@ -4,25 +4,33 @@ import { UserLogin, UserModel } from 'src/app/shared/models';
 import { tap, catchError } from 'rxjs';
 import { IUserLoginRequest } from 'src/app/shared/request';
 import { UserService } from 'src/app/shared/services/user.service';
+import { Extensions } from 'src/app/shared/extensions';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   public userLogin = new UserLogin();
 
   constructor(
     private userService: UserService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private extensions: Extensions
   ) {}
 
+  ngOnInit(): void {
+    if (this.extensions.getUser().id !== '') {
+      window.location.href = '/dashboard';
+    }
+  }
+
   public loginUser(): void {
-    if (this.userLogin.Username !== '' && this.userLogin.Password !== '') {
+    if (this.userLogin.username !== '' && this.userLogin.password !== '') {
       const request: IUserLoginRequest = {
-        Username: this.userLogin.Username,
-        Password: this.userLogin.Password,
+        username: this.userLogin.username,
+        password: this.userLogin.password,
       };
 
       this.userService

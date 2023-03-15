@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BoardModel } from '../models';
 import { IGetBoardRequest, ISaveBoardRequest } from '../request';
+import { ISaveBoardResponse } from '../response';
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +18,8 @@ export class BoardService {
     return this.http.post<BoardModel>(url, request);
   }
 
-  saveBoard(request: ISaveBoardRequest): Observable<BoardModel> {
+  saveBoard(request: ISaveBoardRequest): Observable<ISaveBoardResponse> {
     const url = this.baseurl + '/save';
-    return this.http.post<BoardModel>(url, request);
+    return this.http.post<ISaveBoardResponse>(url, request);
   }
 }

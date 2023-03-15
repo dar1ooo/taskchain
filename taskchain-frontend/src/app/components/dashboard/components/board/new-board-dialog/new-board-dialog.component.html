@@ -1,0 +1,10 @@
+<h2>Enter a Board Title</h2>
+<textarea
+  class="board-title"
+  [(ngModel)]="board.title"
+  placeholder="Title"
+></textarea>
+<div class="actionbar">
+  <button (click)="saveBoard()">Save</button>
+  <button (click)="cancel()">Cancel</button>
+</div>

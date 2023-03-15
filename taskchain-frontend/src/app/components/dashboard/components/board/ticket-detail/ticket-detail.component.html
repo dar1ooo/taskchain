@@ -2,7 +2,7 @@
   <div class="container">
     <textarea
       class="ticket-title"
-      [(ngModel)]="ticket.Title"
+      [(ngModel)]="ticket.title"
       placeholder="Title"
     ></textarea>
     <div class="row">
@@ -22,7 +22,7 @@
           alignleft aligncenter alignright alignjustify | \
           bullist numlist outdent indent | removeformat'
           }"
-          [(ngModel)]="ticket.Description"
+          [(ngModel)]="ticket.description"
         ></editor>
         <div class="checklist">
           <input type="checkbox" /> <span> Clean Dishes</span>
@@ -43,11 +43,11 @@
               <h3>Tags</h3>
               <mat-chip-list #tags>
                 <mat-chip
-                  *ngFor="let tag of this.ticket.Tags"
-                  [style.background]="tag?.Color ? tag.Color : '#e0e0e0'"
+                  *ngFor="let tag of this.ticket.tags"
+                  [style.background]="tag?.color ? tag.color : '#e0e0e0'"
                   (removed)="removeTag(tag)"
                 >
-                  {{ tag?.Title }}
+                  {{ tag?.title }}
                   <mat-icon
                     (click)="openColorPickerDialog(tag)"
                     class="mat-icon notranslate mat-chip-remove mat-chip-trailing-icon material-icons mat-icon-no-color"

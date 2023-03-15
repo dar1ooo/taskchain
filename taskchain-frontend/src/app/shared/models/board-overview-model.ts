@@ -1,4 +1,4 @@
 export class BoardOverview {
-  public Id = '';
-  public Title = '';
+  public id = '';
+  public title = '';
 }

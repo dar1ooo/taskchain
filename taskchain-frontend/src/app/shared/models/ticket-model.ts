@@ -5,11 +5,11 @@ export class TicketModel {
     Object.assign(this, init);
   }
 
-  public Id = '';
-  public Title = '';
-  public Description = '';
-  public CompletedChecks = 0;
-  public TotalChecks = 0;
-  public DeleteTicket = false;
-  public Tags: TagModel[] = [];
+  public id = '';
+  public title = '';
+  public description = '';
+  public completedChecks = 0;
+  public totalChecks = 0;
+  public deleteTicket = false;
+  public tags: TagModel[] = [];
 }

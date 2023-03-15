@@ -1,5 +1,5 @@
 .board {
-  padding: 25px;
+  padding-left: 25px;
   margin-bottom: 8px;
   overflow-x: auto;
   overflow-y: hidden;
@@ -8,6 +8,13 @@
   user-select: none;
   white-space: nowrap;
   max-width: 100%;
+}
+
+.board-title {
+  min-height: 35px;
+  font-weight: 500;
+  color: white;
+  margin: 10px 0px 0px 0px;
 }
 
 .list-container-wrapper {
@@ -51,6 +58,9 @@
     resize: none;
     overflow: hidden;
     overflow-wrap: break-word;
+    &:focus{
+      outline: none;
+    }
   }
 
   .options {

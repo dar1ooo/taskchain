@@ -36,7 +36,7 @@ export class TicketDetailComponent {
   }
 
   public delete(): void {
-    this.ticket.DeleteTicket = true;
+    this.ticket.deleteTicket = true;
     this.dialogRef.close(this.ticket);
   }
 
@@ -46,20 +46,20 @@ export class TicketDetailComponent {
   }
 
   public removeTag(tag: TagModel) {
-    const index = this.ticket.Tags.indexOf(tag, 0);
+    const index = this.ticket.tags.indexOf(tag, 0);
     if (index > -1) {
-      this.ticket.Tags.splice(index, 1);
+      this.ticket.tags.splice(index, 1);
     }
   }
 
   public addTag(event: MatChipInputEvent) {
     var randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-    this.ticket.Tags.push({ Title: event.value, Color: randomColor });
+    this.ticket.tags.push({ title: event.value, color: randomColor });
     this.tagInput = '';
   }
 
   public saveTicket(): void {
-    if (this.ticket.Title === '') {
+    if (this.ticket.title === '') {
       this.snackBar.open('Please enter a Title', '', {
         duration: 4000,
       });
@@ -77,7 +77,7 @@ export class TicketDetailComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        tag.Color = result;
+        tag.color = result;
       }
     });
   }

@@ -13,5 +13,7 @@ namespace api.Interfaces
         public List<string> GetTakenUsernames();
 
         public User AuthenticateUser(UserLogin user);
+
+        public void AddUserToBoard(User user, Board board);
     }
 }
