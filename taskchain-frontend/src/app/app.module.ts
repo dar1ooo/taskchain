@@ -25,6 +25,7 @@ import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { RegisterComponent } from './components/register/register.component';
+import { JoinBoardComponent } from './components/dashboard/components/join-board/join-board.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +38,7 @@ import { RegisterComponent } from './components/register/register.component';
     RegisterComponent,
     NavbarComponent,
     DashboardComponent,
+    JoinBoardComponent,
   ],
   imports: [
     BrowserModule,

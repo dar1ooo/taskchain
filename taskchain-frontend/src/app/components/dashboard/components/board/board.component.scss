@@ -225,7 +225,12 @@
   border-bottom: solid 1px #ccc;
   background: white;
   font-size: 14px;
-
+  a,
+  a:active,
+  a:hover,
+  a:focus {
+    text-decoration: none !important;
+  }
   .list-header {
     flex: 0 0 auto;
     position: relative;
@@ -288,10 +293,6 @@
     font-size: 14px;
     &:hover {
       background-color: #f4f5f7;
-    }
-
-    a {
-      text-decoration: none !important;
     }
   }
 }

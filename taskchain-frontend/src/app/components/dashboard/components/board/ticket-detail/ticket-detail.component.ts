@@ -51,7 +51,8 @@ export class TicketDetailComponent {
   }
 
   public addTag(event: MatChipInputEvent) {
-    this.ticket.Tags.push({ Title: event.value, Color: '#e0e0e0' });
+    var randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+    this.ticket.Tags.push({ Title: event.value, Color: randomColor });
     this.tagInput = '';
   }
 

@@ -41,3 +41,7 @@ body::-webkit-scrollbar-thumb {
 .colorpicker-wrapper .mat-dialog-container {
   background-color: #d5d5d5;
 }
+
+.mat-chip.mat-standard-chip .mat-chip-remove {
+  opacity: 1 !important;
+}

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserLogin, UserModel } from '../models';
-import { IUserRegisterRequest } from '../request';
+import { IJoinBoardRequest, IUserRegisterRequest } from '../request';
 
 @Injectable({
   providedIn: 'root',
@@ -40,5 +40,10 @@ export class UserService {
   deleteUser(user: UserModel): Observable<any> {
     const url = this.baseurl + '/delete';
     return this.http.post<any>(url, user);
+  }
+
+  joinBoard(request: IJoinBoardRequest): Observable<any> {
+    const url = this.baseurl + '/join';
+    return this.http.post<any>(url, request);
   }
 }
