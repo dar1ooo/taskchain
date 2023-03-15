@@ -12,7 +12,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  loginUser(userLogin: UserLogin): Observable<any> {
+  loginUser(userLogin: UserLogin): Observable<UserModel> {
     const url = this.baseurl + '/login';
     return this.http.post<UserModel>(url, userLogin);
   }

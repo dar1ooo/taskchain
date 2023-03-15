@@ -3,12 +3,24 @@
     <div class="screen__content">
       <form class="login">
         <div class="login__field">
-          <input type="text" class="login__input" placeholder="Username" />
+          <input
+            name="Username"
+            type="text"
+            class="login__input"
+            placeholder="Username"
+            [(ngModel)]="userLogin.Username"
+          />
         </div>
         <div class="login__field">
-          <input type="password" class="login__input" placeholder="Password" />
+          <input
+            name="Password"
+            type="password"
+            class="login__input"
+            placeholder="Password"
+            [(ngModel)]="userLogin.Password"
+          />
         </div>
-        <button class="button login__submit">
+        <button class="button login__submit" (click)="loginUser()">
           <span class="button__text">Log In </span>
         </button>
         <a class="register" href="/register">Register ?</a>
