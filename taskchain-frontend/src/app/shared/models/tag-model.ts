@@ -1,4 +1,4 @@
 export class TagModel {
-  public Title: string = '';
-  public Color: string = '';
+  public Title = '';
+  public Color = '';
 }

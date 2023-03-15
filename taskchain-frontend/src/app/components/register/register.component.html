@@ -3,23 +3,37 @@
     <div class="screen__content">
       <form class="register">
         <div class="register__field">
-          <input type="text" class="register__input" placeholder="Username" />
+          <input
+            type="text"
+            name="Username"
+            class="register__input"
+            placeholder="Username"
+            [(ngModel)]="userRegister.Username"
+          />
         </div>
         <div class="register__field">
           <input
+            name="Password"
             type="password"
             class="register__input"
             placeholder="Password"
+            [(ngModel)]="userRegister.Password"
           />
         </div>
         <div class="register__field">
           <input
+            name="ConfirmPassowrd"
             type="password"
             class="register__input"
             placeholder="Confirm Password"
+            [(ngModel)]="userRegister.ConfirmPassword"
+            (ngModelChange)="validatePassword()"
           />
+          <div class="password-nomatch" *ngIf="!passwordsMatch">
+            Passwords don't match
+          </div>
         </div>
-        <button class="button register__submit">
+        <button class="button register__submit" (click)="register()">
           <span class="button__text">Register</span>
         </button>
         <a class="login" href="/login">Login ?</a>

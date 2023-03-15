@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserModel } from 'src/app/shared';
+import { UserModel } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-navbar',

@@ -1,7 +1,7 @@
 import { BoardColumn } from './board-column-model';
 
 export class BoardModel {
-  public Id: string = '';
-  public Title: string = '';
+  public Id = '';
+  public Title = '';
   public columns: BoardColumn[] = [];
 }
