@@ -1,0 +1,60 @@
+nav {
+  background-color: #161b22;
+}
+
+#staffbite {
+  font-family: "Fredoka One", cursive;
+}
+
+a {
+  font-weight: bold;
+  color: rgb(211, 205, 195, 0.85);
+}
+a:hover,
+a:focus {
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.75);
+}
+a:link.profile-btn {
+  text-decoration: none;
+}
+.profile-btn {
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+
+  img {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 4px;
+  }
+
+  span {
+    color: var(--main-color);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .profile-btn span {
+    display: none;
+  }
+
+  .profile-btn button {
+    margin-left: 4px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .profile-btn img {
+    width: 24px;
+    height: 24px;
+  }
+}

@@ -1,0 +1,72 @@
+<div class="ticket-wrapper">
+  <div class="container">
+    <textarea
+      class="ticket-title"
+      [(ngModel)]="ticket.Title"
+      placeholder="Title"
+    ></textarea>
+    <div class="row">
+      <div class="col-8">
+        <editor
+          apiKey="jasrh2k76bpw9xjo38sd2zk9v08tp98hbcxlj9qr2ow3a9z3"
+          [init]="{
+            height: 500,
+            menubar: true,
+            plugins: [
+              'advlist autolink lists link image charmap print preview anchor',
+              'searchreplace visualblocks code fullscreen',
+              'insertdatetime media table paste code wordcount'
+            ],
+            toolbar:
+              'undo redo | formatselect | bold italic backcolor | \
+          alignleft aligncenter alignright alignjustify | \
+          bullist numlist outdent indent | removeformat'
+          }"
+          [(ngModel)]="ticket.Description"
+        ></editor>
+        <div class="checklist">
+          <input type="checkbox" /> <span> Clean Dishes</span>
+        </div>
+        <div class="actionbar">
+          <button (click)="dialogRef.close(ticket)">Save</button>
+          <button (click)="delete()">Delete</button>
+          <button (click)="cancel()">Cancel</button>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="side-bar-wrapper">
+          <div class="side-bar">
+            <div class="users">
+              <h3>Users</h3>
+            </div>
+            <div class="tags">
+              <h3>Tags</h3>
+              <mat-chip-list #tags>
+                <mat-chip
+                  *ngFor="let tag of this.ticket.Tags"
+                  [style.background]="tag?.Color ? tag.Color : '#e0e0e0'"
+                  (removed)="removeTag(tag)"
+                >
+                  {{ tag?.Title }}
+                  <mat-icon
+                    (click)="openColorPickerDialog(tag)"
+                    class="mat-icon notranslate mat-chip-remove mat-chip-trailing-icon material-icons mat-icon-no-color"
+                    >color_lense</mat-icon
+                  >
+                  <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+
+                <input
+                  placeholder="Add tags"
+                  [matChipInputFor]="tags"
+                  (matChipInputTokenEnd)="addTag($event)"
+                  [(ngModel)]="tagInput"
+                />
+              </mat-chip-list>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

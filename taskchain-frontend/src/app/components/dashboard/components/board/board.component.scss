@@ -1,0 +1,297 @@
+.board {
+  padding: 25px;
+  margin-bottom: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 8px;
+  position: absolute;
+  user-select: none;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.list-container-wrapper {
+  box-sizing: border-box;
+  display: inline-block;
+  height: 100%;
+  margin: 0 6px;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 272px;
+}
+
+.list {
+  background-color: #ebecf0;
+  border-radius: 5px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  position: relative;
+  white-space: normal;
+  height: 90vh;
+  min-height: 800px;
+  a {
+    text-decoration: none;
+  }
+
+  .list-header {
+    flex: 0 0 auto;
+    position: relative;
+    border-radius: 3px;
+    box-shadow: none;
+    border: none;
+    background-color: inherit;
+    font-weight: 600;
+    font-size: 15px;
+    height: 20px;
+    max-height: 256px;
+    padding: 0px 8px;
+    margin: 10px 8px 12px 8px;
+    resize: none;
+    overflow: hidden;
+    overflow-wrap: break-word;
+  }
+
+  .options {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    z-index: 1;
+    color: #6b778c;
+    float: left;
+    padding: 0px 15px 5px 15px;
+    border-radius: 6px;
+    &::before {
+      font-size: 20px;
+      content: "…";
+    }
+    &:hover {
+      cursor: pointer;
+      background-color: #c2c2c2a3;
+    }
+  }
+
+  .list-cards {
+    flex: 1 1 auto;
+    margin: 0 4px;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 1px 4px 0;
+    z-index: 1;
+  }
+
+  .list-card {
+    text-decoration: none;
+    border-radius: 3px;
+    cursor: pointer;
+    display: block;
+    margin-bottom: 8px;
+    max-width: 300px;
+    position: relative;
+    z-index: 0;
+    padding: 15px 15px 10px 15px;
+    border-bottom: solid 1px #ccc;
+    background: white;
+    font-size: 14px;
+    &:hover {
+      background-color: #f4f5f7;
+    }
+
+    a {
+      text-decoration: none !important;
+    }
+  }
+}
+
+.card-add {
+  max-height: 20px;
+  min-height: 20px;
+  font-size: 15px;
+  border-radius: 3px;
+  padding: 4px 8px;
+  margin: 8px;
+  color: #5e6c84;
+  &:hover {
+    background-color: #c8c9cb95;
+    cursor: pointer;
+  }
+}
+
+.badges {
+  margin-left: -2px;
+  max-width: 100%;
+  padding-top: 5px;
+
+  .badge {
+    font-size: 12px;
+    color: #5e6c84;
+    display: inline-block;
+    margin: 0 4px 4px 4px;
+    max-width: 100%;
+    font-weight: 500;
+
+    &.completed {
+      background-color: #61bd4f;
+      border-radius: 5px;
+      color: white;
+    }
+  }
+  .icon-checklist {
+    font-size: 15px;
+    vertical-align: middle;
+
+    &.done::before {
+      content: "✅";
+    }
+
+    &.not-done::before {
+      content: "☑";
+    }
+  }
+}
+
+.add-list {
+  background: rgba(255, 255, 255, 0.253);
+  width: 272px;
+  border-radius: 5px;
+  padding: 10px;
+  display: inline-block;
+  &:hover {
+    cursor: pointer;
+    background-color: #f4f5f7;
+  }
+}
+
+.card-tags {
+  margin: 10px 0px;
+}
+
+.hamburger-menu {
+  padding: 8px;
+  border-radius: 8px;
+  h4 {
+    border-bottom: 1px solid #aaaaaa;
+  }
+
+  button {
+    width: 100%;
+    padding: 11px 3px;
+    background: #b33737;
+    border: none;
+    border-radius: 0.5rem;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    outline: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.7),
+      -6px -6px 10px rgba(255, 255, 255, 0.5),
+      6px 6px 8px rgba(255, 255, 255, 0.075), 6px 6px 10px rgba(0, 0, 0, 0.15);
+  }
+  button:hover {
+    box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.6),
+      -2px -2px 4px rgba(255, 255, 255, 0.4),
+      2px 2px 2px rgba(255, 255, 255, 0.05), 2px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  button:active {
+    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.7),
+      inset -2px -2px 4px rgba(255, 255, 255, 0.5),
+      inset 2px 2px 2px rgba(255, 255, 255, 0.075),
+      inset 2px 2px 4px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  text-decoration: none;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: #091e4240;
+  cursor: grabbing !important;
+  display: block;
+  margin-bottom: 8px;
+  max-width: 300px;
+  min-height: 20px;
+  position: relative;
+  z-index: 0;
+  padding: 20px 10px;
+  border-bottom: solid 1px #ccc;
+  background: white;
+  font-size: 14px;
+
+  .list-header {
+    flex: 0 0 auto;
+    position: relative;
+    border-radius: 3px;
+    box-shadow: none;
+    border: none;
+    background-color: inherit;
+    font-weight: 600;
+    font-size: 15px;
+    height: 20px;
+    max-height: 256px;
+    padding: 0px 8px;
+    margin: 10px 8px 12px 8px;
+    resize: none;
+    overflow: hidden;
+    overflow-wrap: break-word;
+  }
+
+  .options {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    z-index: 1;
+    color: #6b778c;
+    float: left;
+    padding: 0px 15px 5px 15px;
+    border-radius: 6px;
+    &::before {
+      font-size: 20px;
+      content: "…";
+    }
+    &:hover {
+      cursor: pointer;
+      background-color: #c2c2c2a3;
+    }
+  }
+
+  .list-cards {
+    flex: 1 1 auto;
+    margin: 0 4px;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 1px 4px 0;
+    z-index: 1;
+  }
+
+  .list-card {
+    text-decoration: none;
+    border-radius: 3px;
+    cursor: pointer;
+    display: block;
+    margin-bottom: 8px;
+    max-width: 300px;
+    position: relative;
+    z-index: 0;
+    padding: 15px 15px 10px 15px;
+    border-bottom: solid 1px #ccc;
+    background: white;
+    font-size: 14px;
+    &:hover {
+      background-color: #f4f5f7;
+    }
+
+    a {
+      text-decoration: none !important;
+    }
+  }
+}

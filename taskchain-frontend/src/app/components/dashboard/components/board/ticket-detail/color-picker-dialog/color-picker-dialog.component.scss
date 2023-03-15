@@ -1,0 +1,26 @@
+.colorpicker {
+  padding: 20px 20px 10px 20px;
+}
+
+.actionbar {
+  padding: 20px 20px 0px 20px;
+  button {
+    margin-right: 15px;
+  }
+}
+
+button {
+  margin-right: 10px;
+  padding: 10px 15px;
+  background: #efefef;
+  border: none;
+  border-radius: 0.5rem;
+  color: #444;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.2rem;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}

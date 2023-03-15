@@ -1,0 +1,90 @@
+<div class="board">
+  <div cdkDropListGroup>
+    <div
+      *ngFor="let column of viewmodel.columns"
+      class="list-container-wrapper"
+    >
+      <div class="list">
+        <div>
+          <textarea class="list-header" placeholder="Title">{{
+            column.Title
+          }}</textarea>
+          <a
+            class="options"
+            type="button"
+            [matMenuTriggerFor]="settingsMenu"
+          ></a>
+          <mat-menu #settingsMenu>
+            <div class="hamburger-menu">
+              <button (click)="deleteColumn(column)">Delete</button>
+            </div>
+          </mat-menu>
+        </div>
+        <div
+          cdkDropList
+          class="list-cards"
+          [cdkDropListData]="column.Tickets"
+          (cdkDropListDropped)="dropTicket($event)"
+        >
+          <div
+            class="list-card"
+            *ngFor="let ticket of column.Tickets"
+            cdkDrag
+            (click)="openDetail(column, ticket)"
+          >
+            <div>
+              {{ ticket.Title }}
+            </div>
+            <a
+              class="options"
+              type="button"
+              [matMenuTriggerFor]="settingsMenu"
+              (click)="preventDefault($event)"
+            ></a>
+            <mat-menu #settingsMenu>
+              <div class="hamburger-menu">
+                <button (click)="deleteTicket(column, ticket)">Delete</button>
+              </div>
+            </mat-menu>
+            <div class="card-tags" *ngIf="ticket.Tags.length >= 1">
+              <mat-chip-list>
+                <mat-chip
+                  [style.background]="tag?.Color ? tag.Color : '#e0e0e0'"
+                  *ngFor="let tag of ticket.Tags"
+                  selectable="false"
+                  >{{ tag?.Title }}</mat-chip
+                >
+              </mat-chip-list>
+            </div>
+            <div class="badges">
+              <div
+                *ngIf="
+                  ticket.CompletedChecks === ticket.TotalChecks &&
+                  ticket.TotalChecks != 0
+                "
+              >
+                <span class="icon-checklist done"></span>
+                <span class="badge completed"
+                  >{{ ticket.CompletedChecks }} / {{ ticket.TotalChecks }}</span
+                >
+              </div>
+              <div
+                *ngIf="
+                  ticket.CompletedChecks !== ticket.TotalChecks &&
+                  ticket.TotalChecks != 0
+                "
+              >
+                <span class="icon-checklist not-done"></span>
+                <span class="badge"
+                  >{{ ticket.CompletedChecks }} / {{ ticket.TotalChecks }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-add" (click)="addCard(column)"><a>+ </a>Add Card</div>
+      </div>
+    </div>
+    <span class="add-list" (click)="addColumn()"> + Add another list </span>
+  </div>
+</div>

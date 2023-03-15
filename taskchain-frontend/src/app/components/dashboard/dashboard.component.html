@@ -1,0 +1,18 @@
+<div class="boards-wrapper">
+  <ul>
+    <li class="boards-list-item" *ngFor="let board of boards">
+      <a href="/board?id={{ board.Id }}">
+        <div class="board-detail">
+          <div class="board-title">{{ board.Title }}</div>
+        </div>
+      </a>
+    </li>
+    <li class="add-board">
+      <a href="/board?id=0">
+        <div class="board-detail">
+          <div class="board-title">+ Add Board</div>
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>

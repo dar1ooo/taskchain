@@ -1,0 +1,9 @@
+<div class="colorpicker-wrapper">
+  <div class="colorpicker">
+    <color-chrome (onChangeComplete)="onChangeComplete($event)"></color-chrome>
+  </div>
+  <div class="actionbar">
+    <button (click)="dialogRef.close(selectedColor)">Update</button>
+    <button (click)="dialogRef.close()">Cancel</button>
+  </div>
+</div>
