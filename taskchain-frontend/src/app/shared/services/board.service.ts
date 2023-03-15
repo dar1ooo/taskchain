@@ -1,18 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BoardModel, UserLogin, UserModel } from '../models';
-import {
-  IGetBoardRequest,
-  IJoinBoardRequest,
-  IUserRegisterRequest,
-} from '../request';
+import { BoardModel } from '../models';
+import { IGetBoardRequest } from '../request';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BoardService {
-  private baseurl = 'http://localhost:5079/api/Board';
+  private baseurl = 'http://localhost:7079/api/Board';
 
   constructor(private http: HttpClient) {}
 

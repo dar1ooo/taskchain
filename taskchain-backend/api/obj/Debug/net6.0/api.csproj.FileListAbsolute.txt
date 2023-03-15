@@ -25,3 +25,16 @@ C:\Users\dario.schaffner\source\repos\taskchain\taskchain-backend\api\obj\Debug\
 C:\Users\dario.schaffner\source\repos\taskchain\taskchain-backend\api\obj\Debug\net6.0\api.pdb
 C:\Users\dario.schaffner\source\repos\taskchain\taskchain-backend\api\obj\Debug\net6.0\api.genruntimeconfig.cache
 C:\Users\dario.schaffner\source\repos\taskchain\taskchain-backend\api\obj\Debug\net6.0\ref\api.dll
+C:\Users\dario.schaffner\source\repos\taskchain\taskchain-backend\api\bin\Debug\net6.0\AWSSDK.Core.dll
+C:\Users\dario.schaffner\source\repos\taskchain\taskchain-backend\api\bin\Debug\net6.0\AWSSDK.SecurityToken.dll
+C:\Users\dario.schaffner\source\repos\taskchain\taskchain-backend\api\bin\Debug\net6.0\DnsClient.dll
+C:\Users\dario.schaffner\source\repos\taskchain\taskchain-backend\api\bin\Debug\net6.0\MongoDB.Bson.dll
+C:\Users\dario.schaffner\source\repos\taskchain\taskchain-backend\api\bin\Debug\net6.0\MongoDB.Driver.dll
+C:\Users\dario.schaffner\source\repos\taskchain\taskchain-backend\api\bin\Debug\net6.0\MongoDB.Driver.Core.dll
+C:\Users\dario.schaffner\source\repos\taskchain\taskchain-backend\api\bin\Debug\net6.0\MongoDB.Libmongocrypt.dll
+C:\Users\dario.schaffner\source\repos\taskchain\taskchain-backend\api\bin\Debug\net6.0\SharpCompress.dll
+C:\Users\dario.schaffner\source\repos\taskchain\taskchain-backend\api\bin\Debug\net6.0\Snappier.dll
+C:\Users\dario.schaffner\source\repos\taskchain\taskchain-backend\api\bin\Debug\net6.0\ZstdSharp.dll
+C:\Users\dario.schaffner\source\repos\taskchain\taskchain-backend\api\bin\Debug\net6.0\runtimes\linux\native\libmongocrypt.so
+C:\Users\dario.schaffner\source\repos\taskchain\taskchain-backend\api\bin\Debug\net6.0\runtimes\osx\native\libmongocrypt.dylib
+C:\Users\dario.schaffner\source\repos\taskchain\taskchain-backend\api\bin\Debug\net6.0\runtimes\win\native\mongocrypt.dll

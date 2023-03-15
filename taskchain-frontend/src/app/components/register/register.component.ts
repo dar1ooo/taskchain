@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, tap } from 'rxjs';
-import { UserRegister } from 'src/app/shared/models';
+import { UserModel, UserRegister } from 'src/app/shared/models';
 import { IUserRegisterRequest } from 'src/app/shared/request';
 import { UserService } from 'src/app/shared/services/user.service';
 
@@ -36,25 +36,20 @@ export class RegisterComponent {
         .registerUser(request)
         .pipe(
           tap((result) => {
-            const ref = this.snackBar.open(
-              'Registration Success, head to login page',
-              '',
-              {
-                horizontalPosition: 'right',
-                verticalPosition: 'bottom',
-              }
-            );
-            ref.onAction().subscribe((res) => {
-              window.location.href = '/login';
-            });
+            let user = new UserModel();
+            user = result;
+            sessionStorage.setItem('user', JSON.stringify(user));
+            window.location.href = '/dashboard';
           }),
-          catchError((error) => {
-            const ref = this.snackBar.open('Registration Failed', 'retry', {
+          catchError((err) => {
+            this.snackBar.open('Registration Failed', 'retry', {
               horizontalPosition: 'right',
               verticalPosition: 'bottom',
               duration: 3000,
             });
-            return error;
+            this.userRegister = new UserRegister();
+
+            return err;
           })
         )
         .subscribe();

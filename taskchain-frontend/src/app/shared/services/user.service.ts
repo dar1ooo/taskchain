@@ -8,7 +8,7 @@ import { IJoinBoardRequest, IUserRegisterRequest } from '../request';
   providedIn: 'root',
 })
 export class UserService {
-  private baseurl = 'http://localhost:5079/api/User';
+  private baseurl = ' https://localhost:7079/api/User';
 
   constructor(private http: HttpClient) {}
 
