@@ -5,7 +5,8 @@
   min-height: 90vh;
 }
 
-.password-nomatch {
+.error-message {
+  height: 30px;
   padding-top: 10px;
   color: red;
 }
@@ -117,7 +118,7 @@
 }
 
 .register__field {
-  padding: 20px 0px;
+  padding: 10px 0px;
   position: relative;
 }
 
@@ -141,7 +142,7 @@
 .register__submit {
   background: #fff;
   font-size: 14px;
-  margin-top: 30px;
+  margin-top: 10px;
   padding: 16px 20px;
   border-radius: 26px;
   border: 1px solid #eb5757;

@@ -9,7 +9,11 @@
             class="register__input"
             placeholder="Username"
             [(ngModel)]="userRegister.Username"
+            (ngModelChange)="checkForAvailableUsername()"
           />
+          <div class="error-message">
+            <div *ngIf="showUsernameTakenError">Username is taken</div>
+          </div>
         </div>
         <div class="register__field">
           <input
@@ -18,7 +22,9 @@
             class="register__input"
             placeholder="Password"
             [(ngModel)]="userRegister.Password"
+            (ngModelChange)="validatePassword()"
           />
+          <div class="error-message"></div>
         </div>
         <div class="register__field">
           <input
@@ -29,8 +35,8 @@
             [(ngModel)]="userRegister.ConfirmPassword"
             (ngModelChange)="validatePassword()"
           />
-          <div class="password-nomatch" *ngIf="!passwordsMatch">
-            Passwords don't match
+          <div class="error-message">
+            <div *ngIf="!passwordsMatch">Passwords don't match</div>
           </div>
         </div>
         <button class="button register__submit" (click)="register()">
