@@ -16,26 +16,18 @@ public class UserController : BaseController
     /// Route to create a user in the database
     /// </summary>
     /// <param name="userRegister"></param>
-    /// <returns>Status 200, 404 or 401 and the created user if successful</returns>
+    /// <returns>Created User or error code</returns>
     [HttpPost]
     [Route("register")]
     public IActionResult Register(UserRegister userRegister)
     {
-        List<string> usernames = _userService.GetTakenUsernames();
-        //check for taken usernames
-        if (usernames.Any(username => userRegister.Username == username))
+        User user = _userService.RegisterUser(userRegister);
+        if (user == null)
         {
-            return BadRequest(ModelState);
+            return NotFound();
         }
 
-        //create mongodb user to save in the database
-        MongoDbUser user = new MongoDbUser();
-        user.Password = _userService.HashPassword(userRegister.Password);
-        user.Username = userRegister.Username;
-
-        //creates user in db
-        _userService.RegisterUser(user);
-        return CreatedAtAction(nameof(Register), user);
+        return Ok(user);
     }
 
     /// <summary>

@@ -1,5 +1,7 @@
+import { BoardModel } from './board-model';
+
 export class UserModel {
   Id = '';
   Username = '';
-  Email = '';
+  Boards: BoardModel[] = [];
 }

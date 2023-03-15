@@ -4,7 +4,7 @@ namespace api.Interfaces
 {
     public interface IUserService
     {
-        public void RegisterUser(MongoDbUser user);
+        public User RegisterUser(UserRegister user);
 
         public string HashPassword(string password);
 

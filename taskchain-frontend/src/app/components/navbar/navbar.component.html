@@ -10,11 +10,10 @@
           <a class="nav-link" href="/login" *ngIf="!user">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/dashboard" *ngIf="!user">Dashboard</a>
+          <a class="nav-link" href="/dashboard" *ngIf="user">Dashboard</a>
         </li>
         <a href="/dashboard" class="profile-btn" *ngIf="user">
           <img src="https://xsgames.co/randomusers/avatar.php?g=pixel" />
-          <span>{{ user.Username }}</span>
         </a>
       </ul>
     </div>

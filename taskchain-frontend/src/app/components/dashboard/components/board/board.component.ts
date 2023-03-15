@@ -190,7 +190,7 @@ export class BoardComponent implements OnInit {
     column.Title = 'Backlog';
     column.Tickets.push(
       new TicketModel({
-        Id: 1,
+        Id: '1',
         Title: 'Get to Work',
         CompletedChecks: 2,
         TotalChecks: 5,
@@ -198,7 +198,7 @@ export class BoardComponent implements OnInit {
     );
     column.Tickets.push(
       new TicketModel({
-        Id: 2,
+        Id: '2',
         Title: 'Pick Up Groceries',
         CompletedChecks: 2,
         TotalChecks: 5,
@@ -206,7 +206,7 @@ export class BoardComponent implements OnInit {
     );
     column.Tickets.push(
       new TicketModel({
-        Id: 3,
+        Id: '3',
         Title: 'Sleep',
         CompletedChecks: 5,
         TotalChecks: 5,
@@ -217,7 +217,7 @@ export class BoardComponent implements OnInit {
     column1.Title = 'to estimate';
     column1.Tickets.push(
       new TicketModel({
-        Id: 4,
+        Id: '4',
         Title: 'Get to Work',
         CompletedChecks: 2,
         TotalChecks: 5,
@@ -225,7 +225,7 @@ export class BoardComponent implements OnInit {
     );
     column1.Tickets.push(
       new TicketModel({
-        Id: 5,
+        Id: '5',
         Title: 'Pick Up Groceries',
         CompletedChecks: 2,
         TotalChecks: 5,
@@ -233,7 +233,7 @@ export class BoardComponent implements OnInit {
     );
     column1.Tickets.push(
       new TicketModel({
-        Id: 6,
+        Id: '6',
         Title: 'Sleep',
         CompletedChecks: 2,
         TotalChecks: 5,
@@ -244,13 +244,13 @@ export class BoardComponent implements OnInit {
     column2.Title = 'approved to implement';
     column2.Tickets.push(
       new TicketModel({
-        Id: 7,
+        Id: '7',
         Title: 'Get to Work',
       })
     );
     column2.Tickets.push(
       new TicketModel({
-        Id: 8,
+        Id: '8',
         Title: 'Pick Up Groceries',
         CompletedChecks: 2,
         TotalChecks: 5,
@@ -258,7 +258,7 @@ export class BoardComponent implements OnInit {
     );
     column2.Tickets.push(
       new TicketModel({
-        Id: 9,
+        Id: '9',
 
         Title: 'Sleep',
         CompletedChecks: 5,
@@ -270,14 +270,14 @@ export class BoardComponent implements OnInit {
     column3.Title = 'sprint';
     column3.Tickets.push(
       new TicketModel({
-        Id: 10,
+        Id: '10',
 
         Title: 'Get to Work',
       })
     );
     column3.Tickets.push(
       new TicketModel({
-        Id: 11,
+        Id: '11',
 
         Title: 'Pick Up Groceries',
         CompletedChecks: 2,
@@ -286,7 +286,7 @@ export class BoardComponent implements OnInit {
     );
     column3.Tickets.push(
       new TicketModel({
-        Id: 12,
+        Id: '12',
         Title: 'Sleep',
         CompletedChecks: 5,
         TotalChecks: 5,

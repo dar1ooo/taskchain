@@ -5,7 +5,7 @@ export class TicketModel {
     Object.assign(this, init);
   }
 
-  public Id = 0;
+  public Id = '';
   public Title = '';
   public Description = '';
   public CompletedChecks = 0;

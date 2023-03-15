@@ -20,10 +20,31 @@ namespace api.Services
         /// Register User to DB
         /// </summary>
         /// <param name="user"></param>
-        public void RegisterUser(MongoDbUser user)
+        public User RegisterUser(UserRegister user)
         {
-            //insert to db
-            MongoCRUD.InsertRecord<MongoDbUser>(collection, user);
+            List<string> usernames = GetTakenUsernames();
+            //check for taken usernames
+            if (!usernames.Any(username => username == user.Username))
+            {
+                //create mongodb user to save in the database
+                MongoDbUser mongoDbUser = new MongoDbUser();
+                mongoDbUser.Password = HashPassword(user.Password);
+                mongoDbUser.Username = user.Username;
+
+                //insert to db
+                MongoCRUD.InsertRecord<MongoDbUser>(collection, mongoDbUser);
+
+                var arrayFilter = Builders<MongoDbUser>.Filter.Eq("Username", user.Username);
+                MongoDbUser foundUser = MongoCRUD.FindRecord<MongoDbUser>(collection, arrayFilter);
+
+                return new User()
+                {
+                    Id = foundUser.Id.ToString(),
+                    Username = foundUser.Username,
+                };
+            }
+
+            return null;
         }
 
         /// <summary>
