@@ -1,3 +1,3 @@
 export interface IGetBoardRequest {
-    BoardId: number;
+    BoardId: string;
 }

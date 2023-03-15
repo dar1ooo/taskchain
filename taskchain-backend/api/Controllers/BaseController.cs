@@ -1,15 +1,21 @@
 ﻿using api.Interfaces;
+using api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
     public class BaseController : ControllerBase
     {
-        protected readonly IUserService _userService;
-
-        public BaseController(IUserService service)
+        public IUserService userService
         {
-            _userService = service;
+            get
+            {
+                return new UserService();
+            }
+            set { }
         }
+
+        public IBoardService boardService
+        { get { return new BoardService(); } set { } }
     }
 }

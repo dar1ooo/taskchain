@@ -1,5 +1,4 @@
-﻿using api.Interfaces;
-using api.Models;
+﻿using api.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
@@ -8,10 +7,6 @@ namespace api.Controllers;
 [Route("api/[controller]")]
 public class UserController : BaseController
 {
-    public UserController(IUserService service) : base(service)
-    {
-    }
-
     /// <summary>
     /// Route to create a user in the database
     /// </summary>
@@ -21,7 +16,7 @@ public class UserController : BaseController
     [Route("register")]
     public IActionResult Register(UserRegister userRegister)
     {
-        User user = _userService.RegisterUser(userRegister);
+        User user = userService.RegisterUser(userRegister);
         if (user == null)
         {
             return NotFound();
@@ -41,7 +36,7 @@ public class UserController : BaseController
     {
         try
         {
-            var result = _userService.AuthenticateUser(user);
+            var result = userService.AuthenticateUser(user);
             if (result == null)
             {
                 return NotFound();
@@ -62,7 +57,7 @@ public class UserController : BaseController
     [Route("usernames")]
     public IActionResult GetTakenUsernames()
     {
-        List<string> usernames = _userService.GetTakenUsernames();
+        List<string> usernames = userService.GetTakenUsernames();
 
         return Ok(usernames);
     }

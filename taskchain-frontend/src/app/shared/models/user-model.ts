@@ -1,7 +1,7 @@
-import { BoardModel } from './board-model';
+import { BoardOverview } from './board-overview-model';
 
 export class UserModel {
   Id = '';
   Username = '';
-  Boards: BoardModel[] = [];
+  Boards: BoardOverview[] = [];
 }

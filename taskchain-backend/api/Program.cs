@@ -38,6 +38,7 @@ builder.Services.Configure<KestrelServerOptions>(options =>
 builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IBoardService, BoardService>();
 
 builder.Services.AddSession(options =>
 {

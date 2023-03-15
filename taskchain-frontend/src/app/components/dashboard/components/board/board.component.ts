@@ -14,6 +14,7 @@ import {
   TicketModel,
 } from 'src/app/shared/models';
 import { IGetBoardRequest } from 'src/app/shared/request';
+import { ISaveBoardRequest } from 'src/app/shared/request/save-board-request';
 import { BoardService } from 'src/app/shared/services/board.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
@@ -48,7 +49,7 @@ export class BoardComponent implements OnInit {
 
     if (boardId && boardId !== '' && boardId !== '0') {
       const request: IGetBoardRequest = {
-        BoardId: +boardId,
+        BoardId: boardId,
       };
 
       this.boardService
@@ -126,6 +127,7 @@ export class BoardComponent implements OnInit {
     ticketRef.afterClosed().subscribe((newTicket) => {
       if (newTicket) {
         column.Tickets.push(newTicket);
+        this.saveBoard();
       }
     });
   }
@@ -183,6 +185,34 @@ export class BoardComponent implements OnInit {
         }
       }
     });
+  }
+
+  public saveBoard(): void {
+    this.viewmodel.Title = 'asdasd';
+    const request: ISaveBoardRequest = {
+      Board: this.viewmodel,
+    };
+
+    this.boardService
+      .saveBoard(request)
+      .pipe(
+        tap((res) => {
+          this.viewmodel = res;
+        }),
+        catchError((error) => {
+          const ref = this.snackBar.open('Saving Board failed', 'retry', {
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+          });
+
+          ref.onAction().subscribe((res) => {
+            this.saveBoard();
+          });
+
+          return error;
+        })
+      )
+      .subscribe();
   }
 
   private loadMockData() {

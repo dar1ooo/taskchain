@@ -2,18 +2,23 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BoardModel } from '../models';
-import { IGetBoardRequest } from '../request';
+import { IGetBoardRequest, ISaveBoardRequest } from '../request';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BoardService {
-  private baseurl = 'http://localhost:7079/api/Board';
+  private baseurl = 'https://localhost:7079/api/Board';
 
   constructor(private http: HttpClient) {}
 
   loadBoard(request: IGetBoardRequest): Observable<BoardModel> {
-    const url = this.baseurl + '/login';
+    const url = this.baseurl + '/board';
+    return this.http.post<BoardModel>(url, request);
+  }
+
+  saveBoard(request: ISaveBoardRequest): Observable<BoardModel> {
+    const url = this.baseurl + '/save';
     return this.http.post<BoardModel>(url, request);
   }
 }
