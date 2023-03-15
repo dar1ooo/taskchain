@@ -26,6 +26,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { JoinBoardComponent } from './components/dashboard/components/join-board/join-board.component';
+import { Extensions } from './shared/extensions';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +60,7 @@ import { JoinBoardComponent } from './components/dashboard/components/join-board
     MatSnackBarModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [Extensions],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

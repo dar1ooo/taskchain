@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Extensions } from 'src/app/shared/extensions';
 import { BoardModel, UserModel } from 'src/app/shared/models';
 
 @Component({
@@ -9,19 +10,14 @@ import { BoardModel, UserModel } from 'src/app/shared/models';
 export class DashboardComponent implements OnInit {
   public user = new UserModel();
 
-  constructor() {}
+  constructor(private extensions: Extensions) {}
 
   ngOnInit(): void {
+    this.extensions.checkForLogin();
     this.getBoards();
   }
 
   public getBoards(): void {
-    const sessionUser = sessionStorage.getItem('user');
-    if (sessionUser) {
-      this.user = JSON.parse(sessionUser) as UserModel;
-    } else {
-      window.location.href = '/login';
-    }
   }
 
   public loadMockData(): void {

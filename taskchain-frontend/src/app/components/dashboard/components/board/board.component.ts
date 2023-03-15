@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, tap } from 'rxjs';
+import { Extensions } from 'src/app/shared/extensions';
 import {
   BoardColumn,
   BoardModel,
@@ -35,11 +36,12 @@ export class BoardComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private boardService: BoardService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private extensions: Extensions
   ) {}
 
   ngOnInit(): void {
-    // this.loadMockData();
+    this.extensions.checkForLogin();
     this.loadBoard();
   }
 
@@ -74,7 +76,7 @@ export class BoardComponent implements OnInit {
         .subscribe();
     }
 
-    if (boardId === '' || boardId === '0') {
+    if (boardId === '0') {
       this.viewmodel.Id = '0';
     }
   }
