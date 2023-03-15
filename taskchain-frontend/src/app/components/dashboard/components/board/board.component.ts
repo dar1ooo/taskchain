@@ -5,12 +5,16 @@ import {
 } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { catchError, tap } from 'rxjs';
 import {
   BoardColumn,
   BoardModel,
   ConfirmDialogModel,
   TicketModel,
 } from 'src/app/shared/models';
+import { IGetBoardRequest } from 'src/app/shared/request';
+import { BoardService } from 'src/app/shared/services/board.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
 
@@ -27,10 +31,51 @@ export interface DialogData {
 export class BoardComponent implements OnInit {
   public viewmodel: BoardModel = new BoardModel();
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private boardService: BoardService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
-    this.loadMockData();
+    // this.loadMockData();
+    this.loadBoard();
+  }
+
+  public loadBoard(): void {
+    const urlParams = new URLSearchParams(window.location.search);
+    const boardId = urlParams.get('id');
+
+    if (boardId && boardId !== '' && boardId !== '0') {
+      const request: IGetBoardRequest = {
+        BoardId: +boardId,
+      };
+
+      this.boardService
+        .loadBoard(request)
+        .pipe(
+          tap((res) => {
+            this.viewmodel = res;
+          }),
+          catchError((error) => {
+            const ref = this.snackBar.open('Loading Board', 'retry', {
+              horizontalPosition: 'right',
+              verticalPosition: 'bottom',
+            });
+
+            ref.onAction().subscribe((res) => {
+              this.loadBoard();
+            });
+
+            return error;
+          })
+        )
+        .subscribe();
+    }
+
+    if (boardId === '' || boardId === '0') {
+      this.viewmodel.Id = '0';
+    }
   }
 
   public dropTicket(event: CdkDragDrop<TicketModel[]>): void {

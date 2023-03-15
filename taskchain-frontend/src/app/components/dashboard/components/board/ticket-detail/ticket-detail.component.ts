@@ -5,6 +5,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { TagModel, TicketModel } from 'src/app/shared/models';
 import { ColorPickerDialogComponent } from './color-picker-dialog/color-picker-dialog.component';
 @Component({
@@ -24,7 +25,8 @@ export class TicketDetailComponent {
   constructor(
     public dialogRef: MatDialogRef<TicketDetailComponent>,
     @Inject(MAT_DIALOG_DATA) public ticket: TicketModel,
-    public colorPickerdialog: MatDialog
+    public colorPickerdialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
     this.revertTicket = { ...this.ticket };
   }
@@ -54,6 +56,16 @@ export class TicketDetailComponent {
     var randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
     this.ticket.Tags.push({ Title: event.value, Color: randomColor });
     this.tagInput = '';
+  }
+
+  public saveTicket(): void {
+    if (this.ticket.Title === '') {
+      this.snackBar.open('Please enter a Title', '', {
+        duration: 4000,
+      });
+    } else {
+      this.dialogRef.close(this.ticket);
+    }
   }
 
   public openColorPickerDialog(tag: TagModel): void {

@@ -1,4 +1,4 @@
-<div class="board">
+<div class="board" *ngIf="viewmodel.Id !== ''">
   <div cdkDropListGroup>
     <div
       *ngFor="let column of viewmodel.columns"
