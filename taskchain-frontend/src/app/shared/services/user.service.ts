@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserLogin, UserModel } from '../models';
 import { IJoinBoardRequest, IUserRegisterRequest } from '../request';
+import { IJoinBoardResponse } from '../response';
 
 @Injectable({
   providedIn: 'root',
@@ -27,23 +28,8 @@ export class UserService {
     return this.http.get<string[]>(url);
   }
 
-  getAllTeachers(): Observable<UserModel[]> {
-    const url = this.baseurl + '/teachers';
-    return this.http.get<UserModel[]>(url);
-  }
-
-  updateUser(user: UserModel): Observable<any> {
-    const url = this.baseurl + '/update';
-    return this.http.post<any>(url, user);
-  }
-
-  deleteUser(user: UserModel): Observable<any> {
-    const url = this.baseurl + '/delete';
-    return this.http.post<any>(url, user);
-  }
-
-  joinBoard(request: IJoinBoardRequest): Observable<any> {
+  joinBoard(request: IJoinBoardRequest): Observable<IJoinBoardResponse> {
     const url = this.baseurl + '/join';
-    return this.http.post<any>(url, request);
+    return this.http.post<IJoinBoardResponse>(url, request);
   }
 }

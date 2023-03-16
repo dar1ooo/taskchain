@@ -46,7 +46,7 @@ namespace api.Services
             var collection = db.GetCollection<T>(table);
             try
             {
-                var value = collection.Find<T>(filter).First();
+                var value = collection.Find<T>(filter).FirstOrDefault();
                 return value;
             }
             catch

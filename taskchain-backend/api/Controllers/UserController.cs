@@ -1,4 +1,6 @@
 ﻿using api.Models;
+using api.Models.request;
+using api.Models.response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
@@ -60,5 +62,29 @@ public class UserController : BaseController
         List<string> usernames = userService.GetTakenUsernames();
 
         return Ok(usernames);
+    }
+
+    /// <summary>
+    /// Route to create a user in the database
+    /// </summary>
+    /// <param name="userRegister"></param>
+    /// <returns>Created User or error code</returns>
+    [HttpPost]
+    [Route("join")]
+    public IActionResult JoinBoard(JoinBoardRequest request)
+    {
+        Board foundBoard = boardService.GetBoardByInviteCode(request.InviteCode);
+
+        if (foundBoard != null && !request.User.Boards.Any(board => board.Id == foundBoard.Id))
+        {
+            userService.AddUserToBoard(request.User, foundBoard);
+
+            JoinBoardResponse response = new JoinBoardResponse();
+            response.BoardId = foundBoard.Id;
+
+            return Ok(response);
+        }
+
+        return NotFound();
     }
 }

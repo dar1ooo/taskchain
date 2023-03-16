@@ -18,8 +18,18 @@ namespace api.Services
         public Board CreateBoard(string boardTitle, User user)
         {
             MongoDbBoard mongoDbBoard = new MongoDbBoard(new Board() { Title = boardTitle });
-            mongoDbBoard.InviteCode = RandomString(6);
             mongoDbBoard.Owner = user.Id;
+
+            bool inviteCodeExists = true;
+            do
+            {
+                mongoDbBoard.InviteCode = RandomString(6);
+
+                if (GetBoardByInviteCode(mongoDbBoard.InviteCode) == null)
+                {
+                    inviteCodeExists = false;
+                }
+            } while (inviteCodeExists);
 
             MongoCRUD.InsertRecord(collection, mongoDbBoard);
 
@@ -58,6 +68,19 @@ namespace api.Services
                 throw;
             }
         }
+
+        public Board GetBoardByInviteCode(string inviteCode)
+        {
+            var arrayFilter = Builders<MongoDbBoard>.Filter.Eq("InviteCode", inviteCode);
+            MongoDbBoard foundBoard = MongoCRUD.FindRecord(collection, arrayFilter);
+            if (foundBoard == null)
+            {
+                return null;
+            }
+
+            return new Board(foundBoard);
+        }
+
         private static string RandomString(int length)
         {
             Random random = new Random();

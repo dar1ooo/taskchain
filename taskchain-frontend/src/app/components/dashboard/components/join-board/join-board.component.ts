@@ -27,12 +27,13 @@ export class JoinBoardComponent implements OnInit {
     if (this.inviteCode !== '') {
       const request: IJoinBoardRequest = {
         InviteCode: this.inviteCode,
+        User: this.extensions.getUser(),
       };
       this.userService
         .joinBoard(request)
         .pipe(
           tap((res) => {
-            window.location.href = '/dashboard';
+            window.location.href = '/board?id=' + res.boardId;
           }),
           catchError((error) => {
             this.snackBar.open('Board not found', 'retry', {

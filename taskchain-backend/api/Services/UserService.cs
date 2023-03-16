@@ -79,6 +79,23 @@ namespace api.Services
             }
         }
 
+        public void AddUserToBoard(User user, Board board)
+        {
+            MongoDbUser dbUser = new MongoDbUser()
+            {
+                Id = new Guid(user.Id),
+                Boards = user.Boards,
+            };
+
+            dbUser.Boards.Add(new BoardOverview() { Id = board.Id, Title = board.Title });
+
+            //filter to find which user to update
+            var update = Builders<MongoDbUser>.Update
+                .Set(p => p.Boards, dbUser.Boards);
+
+            MongoCRUD.UpsertRecord("Users", dbUser.Id, update);
+        }
+
         /// <summary>
         /// get taken usernames in db
         /// </summary>
@@ -133,23 +150,6 @@ namespace api.Services
                 buffer4 = bytes.GetBytes(0x20);
             }
             return buffer4.SequenceEqual(buffer3);
-        }
-
-        public void AddUserToBoard(User user, Board board)
-        {
-            MongoDbUser dbUser = new MongoDbUser()
-            {
-                Id = new Guid(user.Id),
-                Boards = user.Boards,
-            };
-
-            dbUser.Boards.Add(new BoardOverview() { Id = board.Id, Title = board.Title });
-
-            //filter to find which user to update
-            var update = Builders<MongoDbUser>.Update
-                .Set(p => p.Boards, dbUser.Boards);
-
-            MongoCRUD.UpsertRecord("Users", dbUser.Id, update);
         }
     }
 }
