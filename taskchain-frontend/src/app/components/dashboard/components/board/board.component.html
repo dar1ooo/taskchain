@@ -4,9 +4,13 @@
     <div *ngFor="let column of board.columns" class="list-container-wrapper">
       <div class="list">
         <div>
-          <textarea class="list-header" placeholder="Title">{{
-            column.title
-          }}</textarea>
+          <textarea
+            name="column-title{{ board.id }}"
+            class="list-header"
+            placeholder="Title"
+            [(ngModel)]="column.title"
+            (ngModelChange)="boardChanged()"
+          ></textarea>
           <a
             class="options"
             type="button"

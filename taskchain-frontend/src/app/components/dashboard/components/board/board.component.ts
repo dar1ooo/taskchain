@@ -20,7 +20,9 @@ import { BoardService } from 'src/app/shared/services/board.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { NewBoardDialogComponent } from './new-board-dialog/new-board-dialog.component';
 import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
-
+import { Subject } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 export interface DialogData {
   animal: string;
   name: string;
@@ -33,6 +35,9 @@ export interface DialogData {
 })
 export class BoardComponent implements OnInit {
   public board: BoardModel = new BoardModel();
+  public modelChanged: Subject<BoardModel> = new Subject<BoardModel>();
+  private subscription = new Subscription();
+  private debounceTime = 500;
 
   constructor(
     public dialog: MatDialog,
@@ -44,11 +49,17 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
     this.extensions.checkForLogin();
     this.loadBoard();
+
+    this.subscription = this.modelChanged
+      .pipe(debounceTime(this.debounceTime))
+      .subscribe((res) => {
+        this.saveBoard(res);
+      });
   }
 
   public loadBoard(): void {
     const urlParams = new URLSearchParams(window.location.search);
-    const boardId = urlParams.get('id');
+    const boardId = urlParams.get('id')?.toString();
 
     if (boardId && boardId !== '' && boardId !== '0') {
       const request: IGetBoardRequest = {
@@ -56,7 +67,7 @@ export class BoardComponent implements OnInit {
       };
 
       this.boardService
-        .loadBoard(request)
+        .getBoard(request)
         .pipe(
           tap((res) => {
             this.board = res;
@@ -75,9 +86,7 @@ export class BoardComponent implements OnInit {
           })
         )
         .subscribe();
-    }
-
-    if (boardId === '0') {
+    } else if (boardId === '0') {
       const newBoardRef = this.dialog.open(NewBoardDialogComponent, {
         data: new BoardModel(),
         disableClose: true,
@@ -104,7 +113,33 @@ export class BoardComponent implements OnInit {
       .createBoard(request)
       .pipe(
         tap((res) => {
-          debugger;
+          window.location.href = '/board?id=' + res.board.id;
+        }),
+        catchError((error) => {
+          const ref = this.snackBar.open('Saving Board failed', 'retry', {
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+          });
+
+          ref.onAction().subscribe((res) => {
+            this.createBoard();
+          });
+
+          return error;
+        })
+      )
+      .subscribe();
+  }
+
+  public saveBoard(board: BoardModel): void {
+    const request: ISaveBoardRequest = {
+      board: board,
+    };
+
+    this.boardService
+      .saveBoard(request)
+      .pipe(
+        tap((res) => {
           this.board = res.board;
         }),
         catchError((error) => {
@@ -123,33 +158,8 @@ export class BoardComponent implements OnInit {
       .subscribe();
   }
 
-  public saveBoard(): void {
-    const request: ISaveBoardRequest = {
-      board: this.board,
-      user: this.extensions.getUser(),
-    };
-
-    this.boardService
-      .saveBoard(request)
-      .pipe(
-        tap((res) => {
-          debugger;
-          this.board = res.board;
-        }),
-        catchError((error) => {
-          const ref = this.snackBar.open('Saving Board failed', 'retry', {
-            horizontalPosition: 'right',
-            verticalPosition: 'bottom',
-          });
-
-          ref.onAction().subscribe((res) => {
-            this.createBoard();
-          });
-
-          return error;
-        })
-      )
-      .subscribe();
+  public boardChanged(): void {
+    this.modelChanged.next(this.board);
   }
 
   public dropTicket(event: CdkDragDrop<TicketModel[]>): void {
@@ -167,6 +177,7 @@ export class BoardComponent implements OnInit {
         event.currentIndex
       );
     }
+    this.boardChanged();
   }
 
   public openDetail(column: BoardColumn, ticket: TicketModel): void {
@@ -185,6 +196,7 @@ export class BoardComponent implements OnInit {
           var foundIndex = column.tickets.findIndex((x) => x.id === ticket.id);
           column.tickets[foundIndex] = newTicket;
         }
+        this.boardChanged();
       }
     });
   }
@@ -200,7 +212,7 @@ export class BoardComponent implements OnInit {
     ticketRef.afterClosed().subscribe((newTicket) => {
       if (newTicket) {
         column.tickets.push(newTicket);
-        this.saveBoard();
+        this.boardChanged();
       }
     });
   }
@@ -208,6 +220,7 @@ export class BoardComponent implements OnInit {
   public addColumn(): void {
     const column = new BoardColumn();
     this.board.columns.push(column);
+    this.boardChanged();
   }
 
   public deleteColumn(column: BoardColumn): void {
@@ -228,6 +241,7 @@ export class BoardComponent implements OnInit {
         const index = this.board.columns.indexOf(column, 0);
         if (index > -1) {
           this.board.columns.splice(index, 1);
+          this.boardChanged();
         }
       }
     });
@@ -255,122 +269,9 @@ export class BoardComponent implements OnInit {
         const index = column.tickets.indexOf(ticket, 0);
         if (index > -1) {
           column.tickets.splice(index, 1);
+          this.boardChanged();
         }
       }
     });
-  }
-
-  private loadMockData() {
-    const column = new BoardColumn();
-    column.title = 'Backlog';
-    column.tickets.push(
-      new TicketModel({
-        id: '1',
-        title: 'Get to Work',
-        completedChecks: 2,
-        totalChecks: 5,
-      })
-    );
-    column.tickets.push(
-      new TicketModel({
-        id: '2',
-        title: 'Pick Up Groceries',
-        completedChecks: 2,
-        totalChecks: 5,
-      })
-    );
-    column.tickets.push(
-      new TicketModel({
-        id: '3',
-        title: 'Sleep',
-        completedChecks: 5,
-        totalChecks: 5,
-      })
-    );
-
-    const column1 = new BoardColumn();
-    column1.title = 'to estimate';
-    column1.tickets.push(
-      new TicketModel({
-        id: '4',
-        title: 'Get to Work',
-        completedChecks: 2,
-        totalChecks: 5,
-      })
-    );
-    column1.tickets.push(
-      new TicketModel({
-        id: '5',
-        title: 'Pick Up Groceries',
-        completedChecks: 2,
-        totalChecks: 5,
-      })
-    );
-    column1.tickets.push(
-      new TicketModel({
-        id: '6',
-        title: 'Sleep',
-        completedChecks: 2,
-        totalChecks: 5,
-      })
-    );
-
-    const column2 = new BoardColumn();
-    column2.title = 'approved to implement';
-    column2.tickets.push(
-      new TicketModel({
-        id: '7',
-        title: 'Get to Work',
-      })
-    );
-    column2.tickets.push(
-      new TicketModel({
-        id: '8',
-        title: 'Pick Up Groceries',
-        completedChecks: 2,
-        totalChecks: 5,
-      })
-    );
-    column2.tickets.push(
-      new TicketModel({
-        id: '9',
-
-        title: 'Sleep',
-        completedChecks: 5,
-        totalChecks: 5,
-      })
-    );
-
-    const column3 = new BoardColumn();
-    column3.title = 'sprint';
-    column3.tickets.push(
-      new TicketModel({
-        id: '10',
-
-        title: 'Get to Work',
-      })
-    );
-    column3.tickets.push(
-      new TicketModel({
-        id: '11',
-
-        title: 'Pick Up Groceries',
-        completedChecks: 2,
-        totalChecks: 5,
-      })
-    );
-    column3.tickets.push(
-      new TicketModel({
-        id: '12',
-        title: 'Sleep',
-        completedChecks: 5,
-        totalChecks: 5,
-      })
-    );
-
-    this.board.columns.push(column);
-    this.board.columns.push(column1);
-    this.board.columns.push(column2);
-    this.board.columns.push(column3);
   }
 }

@@ -2,7 +2,7 @@
 {
     public class CreateBoardRequest
     {
-        public Board Board { get; set; }
+        public string BoardTitle { get; set; }
         public User User { get; set; }
     }
 }

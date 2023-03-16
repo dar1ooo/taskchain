@@ -10,33 +10,41 @@ namespace api.Controllers;
 public class BoardController : BaseController
 {
     [HttpPost]
-    [Route("board")]
-    public IActionResult Board(GetBoardRequest request)
-    {
-        //List<string> usernames = boardService
-
-        return Ok();
-    }
-
-    [HttpPost]
     [Route("createBoard")]
     public IActionResult CreateBoard(CreateBoardRequest request)
     {
-        Board board = boardService.CreateBoard(request.Board, request.User);
+        Board board = boardService.CreateBoard(request.BoardTitle, request.User);
 
         if (board == null)
         {
             return BadRequest();
         }
 
-        if (request.Board.Id == String.Empty)
-        {
-            userService.AddUserToBoard(request.User, board);
-        }
+        userService.AddUserToBoard(request.User, board);
 
         CreateBoardResponse response = new();
         response.Board = board;
 
         return Ok(response);
+    }
+
+    [HttpPost]
+    [Route("save")]
+    public IActionResult SaveBoard(SaveBoardRequest request)
+    {
+        Board board = boardService.SaveBoard(request.Board);
+        SaveBoardResponse response = new SaveBoardResponse();
+        response.Board = board;
+
+        return Ok(response);
+    }
+
+    [HttpPost]
+    [Route("board")]
+    public IActionResult GetBoard(GetBoardRequest request)
+    {
+        Board board = boardService.GetBoardById(new Guid(request.BoardId));
+
+        return Ok(board);
     }
 }

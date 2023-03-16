@@ -4,6 +4,10 @@ namespace api.Models
 {
     public class MongoDbBoard
     {
+        public MongoDbBoard()
+        {
+
+        }
         public MongoDbBoard(Board board)
         {
             InviteCode = board.InviteCode;

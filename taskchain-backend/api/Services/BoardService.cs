@@ -15,31 +15,26 @@ namespace api.Services
             collection = "Boards";
         }
 
-        public Board CreateBoard(Board board, User user)
+        public Board CreateBoard(string boardTitle, User user)
         {
-            MongoDbBoard mongoDbBoard = new MongoDbBoard(board);
+            MongoDbBoard mongoDbBoard = new MongoDbBoard(new Board() { Title = boardTitle });
             mongoDbBoard.InviteCode = RandomString(6);
-            if (board.Id == String.Empty)
-            {
-                mongoDbBoard.Owner = user.Id;
-            }
+            mongoDbBoard.Owner = user.Id;
 
             MongoCRUD.InsertRecord(collection, mongoDbBoard);
-
-            if (mongoDbBoard.Id.ToString() == String.Empty)
-            {
-                return null;
-            }
 
             return new Board(mongoDbBoard);
         }
 
-        private static string RandomString(int length)
+        public Board SaveBoard(Board board)
         {
-            Random random = new Random();
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-                .Select(s => s[random.Next(s.Length)]).ToArray());
+            var update = Builders<MongoDbBoard>.Update
+                .Set(p => p.Title, board.Title)
+                .Set(p => p.Columns, board.Columns);
+
+            MongoCRUD.UpsertRecord(collection, new Guid(board.Id), update);
+
+            return board;
         }
 
         public Board GetBoardById(Guid id)
@@ -55,12 +50,20 @@ namespace api.Services
                     Title = foundBoard.Title,
                     Columns = foundBoard.Columns,
                     InviteCode = foundBoard.InviteCode,
+                    Owner = foundBoard.Owner,
                 };
             }
             catch
             {
                 throw;
             }
+        }
+        private static string RandomString(int length)
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

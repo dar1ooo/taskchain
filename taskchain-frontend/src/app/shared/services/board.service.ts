@@ -17,7 +17,7 @@ export class BoardService {
 
   constructor(private http: HttpClient) {}
 
-  loadBoard(request: IGetBoardRequest): Observable<BoardModel> {
+  getBoard(request: IGetBoardRequest): Observable<BoardModel> {
     const url = this.baseurl + '/board';
     return this.http.post<BoardModel>(url, request);
   }

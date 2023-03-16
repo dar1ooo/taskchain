@@ -4,6 +4,9 @@ namespace api.Interfaces
 {
     public interface IBoardService
     {
-        public Board CreateBoard(Board board, User user);
+        public Board CreateBoard(string boardTitle, User user);
+        public Board GetBoardById(Guid id);
+
+        public Board SaveBoard(Board board);
     }
 }
