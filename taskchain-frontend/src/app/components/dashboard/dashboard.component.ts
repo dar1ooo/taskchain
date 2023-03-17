@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { catchError, tap } from 'rxjs';
 import { Extensions } from 'src/app/shared/extensions';
 import { BoardModel, UserModel } from 'src/app/shared/models';
+import { IGetBoardRequest, IGetBoardsRequest } from 'src/app/shared/request';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,24 +13,31 @@ import { BoardModel, UserModel } from 'src/app/shared/models';
 export class DashboardComponent implements OnInit {
   public user = new UserModel();
 
-  constructor(private extensions: Extensions) {}
+  constructor(
+    private extensions: Extensions,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.extensions.checkForLogin();
-    this.user = this.extensions.getUser();
+    this.getBoards();
   }
 
-  public loadMockData(): void {
-    let board = new BoardModel();
-    board.title = 'Development';
-    (board.id = '1'), this.user.boards.push(board);
+  private getBoards() {
+    const request: IGetBoardsRequest = {
+      user: this.extensions.getUser(),
+    };
 
-    board = new BoardModel();
-    board.title = 'Releases';
-    (board.id = '2'), this.user.boards.push(board);
-
-    board = new BoardModel();
-    board.title = 'Support IT';
-    (board.id = '3'), this.user.boards.push(board);
+    this.userService
+      .getBoards(request)
+      .pipe(
+        tap((result) => {
+          this.user.boards = result.boards;
+        }),
+        catchError((err) => {
+          return err;
+        })
+      )
+      .subscribe();
   }
 }

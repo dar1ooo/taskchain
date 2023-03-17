@@ -60,8 +60,23 @@ export class BoardComponent implements OnInit {
   public loadBoard(): void {
     const urlParams = new URLSearchParams(window.location.search);
     const boardId = urlParams.get('id')?.toString();
+    debugger;
+    if (
+      !this.extensions.getUser().boards.find((board) => board.id === boardId)
+    ) {
+      const ref = this.snackBar.open(
+        'You do not have permission to access this board',
+        'close',
+        {
+          horizontalPosition: 'right',
+          verticalPosition: 'bottom',
+        }
+      );
 
-    if (boardId && boardId !== '' && boardId !== '0') {
+      ref.onAction().subscribe(() => {
+        window.location.href = '/dashboard';
+      });
+    } else if (boardId && boardId !== '' && boardId !== '0') {
       const request: IGetBoardRequest = {
         BoardId: boardId,
       };

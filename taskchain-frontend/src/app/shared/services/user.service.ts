@@ -2,8 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserLogin, UserModel } from '../models';
-import { IJoinBoardRequest, IUserRegisterRequest } from '../request';
-import { IJoinBoardResponse } from '../response';
+import {
+  IGetBoardsRequest,
+  IJoinBoardRequest,
+  IUserRegisterRequest,
+} from '../request';
+import { IGetBoardsResponse, IJoinBoardResponse } from '../response';
 
 @Injectable({
   providedIn: 'root',
@@ -31,5 +35,10 @@ export class UserService {
   joinBoard(request: IJoinBoardRequest): Observable<IJoinBoardResponse> {
     const url = this.baseurl + '/join';
     return this.http.post<IJoinBoardResponse>(url, request);
+  }
+
+  getBoards(request: IGetBoardsRequest): Observable<IGetBoardsResponse> {
+    const url = this.baseurl + '/boards';
+    return this.http.post<IGetBoardsResponse>(url, request);
   }
 }

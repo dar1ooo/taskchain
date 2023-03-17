@@ -15,5 +15,7 @@ namespace api.Interfaces
         public User AuthenticateUser(UserLogin user);
 
         public void AddUserToBoard(User user, Board board);
+
+        public List<BoardOverview> GetBoards(User user);
     }
 }

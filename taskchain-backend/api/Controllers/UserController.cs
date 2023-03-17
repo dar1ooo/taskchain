@@ -87,4 +87,16 @@ public class UserController : BaseController
 
         return NotFound();
     }
+
+    [HttpPost]
+    [Route("boards")]
+    public IActionResult GetBoards(GetBoardsRequest request)
+    {
+        List<BoardOverview> boards = userService.GetBoards(request.User);
+
+        GetBoardsResponse response = new GetBoardsResponse();
+        response.Boards = boards;
+
+        return Ok(response);
+    }
 }

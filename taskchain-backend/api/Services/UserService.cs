@@ -106,6 +106,14 @@ namespace api.Services
             return users.Select(x => x.Username).ToList();
         }
 
+        public List<BoardOverview> GetBoards(User user)
+        {
+            var arrayFilter = Builders<MongoDbUser>.Filter.Eq("Username", user.Username);
+            MongoDbUser foundUser = MongoCRUD.FindRecord(collection, arrayFilter);
+
+            return foundUser.Boards;
+        }
+
         /// <summary>
         /// hash a password
         /// </summary>
