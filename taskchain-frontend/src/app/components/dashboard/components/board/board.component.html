@@ -1,5 +1,10 @@
 <div class="board">
-  <h1 class="board-title">{{ board.title }}</h1>
+  <span>
+    <h1 class="board-title">
+      {{ board.title }}
+      <span class="invite-code">Invite code: {{ board.inviteCode }}</span>
+    </h1>
+  </span>
   <div cdkDropListGroup>
     <div *ngFor="let column of board.columns" class="list-container-wrapper">
       <div class="list">
