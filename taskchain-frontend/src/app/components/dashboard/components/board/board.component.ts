@@ -6,7 +6,7 @@ import {
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { catchError, tap } from 'rxjs';
+import { catchError, debounceTime, Subject, Subscription, tap } from 'rxjs';
 import { Extensions } from 'src/app/shared/extensions';
 import {
   BoardColumn,
@@ -21,9 +21,6 @@ import { BoardService } from 'src/app/shared/services/board.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { NewBoardDialogComponent } from './new-board-dialog/new-board-dialog.component';
 import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
-import { Subject } from 'rxjs';
-import { Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
 export interface DialogData {
   animal: string;
   name: string;

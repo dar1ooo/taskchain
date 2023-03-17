@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { catchError, tap } from 'rxjs';
 import { Extensions } from 'src/app/shared/extensions';
-import { BoardModel, UserModel } from 'src/app/shared/models';
-import { IGetBoardRequest, IGetBoardsRequest } from 'src/app/shared/request';
+import { UserModel } from 'src/app/shared/models';
+import { IGetBoardsRequest } from 'src/app/shared/request';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({

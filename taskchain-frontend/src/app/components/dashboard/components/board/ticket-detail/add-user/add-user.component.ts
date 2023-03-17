@@ -1,10 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { catchError, tap } from 'rxjs';
-import { BoardModel, UserModel } from 'src/app/shared/models';
-import { IGetAllUsersRequest } from 'src/app/shared/request';
-import { UserService } from 'src/app/shared/services/user.service';
+import { UserModel } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-add-user',
