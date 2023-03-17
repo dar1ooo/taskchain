@@ -17,23 +17,30 @@ namespace api.Services
 
         public Board CreateBoard(string boardTitle, User user)
         {
-            MongoDbBoard mongoDbBoard = new MongoDbBoard(new Board() { Title = boardTitle });
-            mongoDbBoard.Owner = user.Id;
-
-            bool inviteCodeExists = true;
-            do
+            try
             {
-                mongoDbBoard.InviteCode = RandomString(6);
+                MongoDbBoard mongoDbBoard = new MongoDbBoard(new Board() { Title = boardTitle });
+                mongoDbBoard.Owner = user.Id;
 
-                if (GetBoardByInviteCode(mongoDbBoard.InviteCode) == null)
+                bool inviteCodeExists = true;
+                do
                 {
-                    inviteCodeExists = false;
-                }
-            } while (inviteCodeExists);
+                    mongoDbBoard.InviteCode = RandomString(6);
 
-            MongoCRUD.InsertRecord(collection, mongoDbBoard);
+                    if (GetBoardByInviteCode(mongoDbBoard.InviteCode) == null)
+                    {
+                        inviteCodeExists = false;
+                    }
+                } while (inviteCodeExists);
 
-            return new Board(mongoDbBoard);
+                MongoCRUD.InsertRecord(collection, mongoDbBoard);
+
+                return new Board(mongoDbBoard);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public Board SaveBoard(Board board)
@@ -80,6 +87,7 @@ namespace api.Services
         {
             var arrayFilter = Builders<MongoDbBoard>.Filter.Eq("InviteCode", inviteCode);
             MongoDbBoard foundBoard = MongoCRUD.FindRecord(collection, arrayFilter);
+
             if (foundBoard == null)
             {
                 return null;

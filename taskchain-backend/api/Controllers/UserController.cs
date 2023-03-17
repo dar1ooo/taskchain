@@ -9,40 +9,33 @@ namespace api.Controllers;
 [Route("api/[controller]")]
 public class UserController : BaseController
 {
-    /// <summary>
-    /// Route to create a user in the database
-    /// </summary>
-    /// <param name="userRegister"></param>
-    /// <returns>Created User or error code</returns>
     [HttpPost]
     [Route("register")]
     public IActionResult Register(UserRegister userRegister)
     {
         User user = userService.RegisterUser(userRegister);
+
         if (user == null)
         {
-            return NotFound();
+            return BadRequest();
         }
 
         return Ok(user);
     }
 
-    /// <summary>
-    /// Route for login
-    /// </summary>
-    /// <param name="user"></param>
-    /// <returns>404 or 200 and returns found user if successful</returns>
     [HttpPost]
     [Route("login")]
     public IActionResult Login(UserLogin user)
     {
         try
         {
-            var result = userService.AuthenticateUser(user);
+            var result = userService.LoginUser(user);
+
             if (result == null)
             {
                 return NotFound();
             }
+
             return Ok(result);
         }
         catch
@@ -51,10 +44,6 @@ public class UserController : BaseController
         }
     }
 
-    /// <summary>
-    /// route get all usernames from db
-    /// </summary>
-    /// <returns>list with usernames</returns>
     [HttpGet]
     [Route("usernames")]
     public IActionResult GetTakenUsernames()
@@ -64,11 +53,6 @@ public class UserController : BaseController
         return Ok(usernames);
     }
 
-    /// <summary>
-    /// Route to create a user in the database
-    /// </summary>
-    /// <param name="userRegister"></param>
-    /// <returns>Created User or error code</returns>
     [HttpPost]
     [Route("join")]
     public IActionResult JoinBoard(JoinBoardRequest request)

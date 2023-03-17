@@ -12,8 +12,9 @@ namespace api.Services
             var client = new MongoClient(connectionString);
             db = client.GetDatabase(database);
         }
+
         /// <summary>
-        /// crud to create record in mongodb
+        /// Create record in MongoDb
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="table"></param>
@@ -23,8 +24,9 @@ namespace api.Services
             var collection = db.GetCollection<T>(table);
             collection.InsertOne(record);
         }
+
         /// <summary>
-        /// crud to delete record in db
+        /// Delete record in MongoDb
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="table"></param>
@@ -34,8 +36,9 @@ namespace api.Services
             var collection = db.GetCollection<T>(table);
             collection.DeleteOne(filter);
         }
+
         /// <summary>
-        /// crud to find record with given filter
+        /// Find record with given filter in MongoDb
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="table"></param>
@@ -54,8 +57,9 @@ namespace api.Services
                 throw;
             }
         }
+
         /// <summary>
-        /// crud to get all records
+        /// Get all records from MongoDb Table
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="table"></param>
@@ -65,8 +69,9 @@ namespace api.Services
             var collection = db.GetCollection<T>(table);
             return collection.Find(new BsonDocument()).ToList();
         }
+
         /// <summary>
-        /// crud to get record by id
+        /// Get record by ID in MongoDb
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="table"></param>
@@ -79,18 +84,9 @@ namespace api.Services
 
             return collection.Find(filter).First();
         }
-        /// <summary>
-        /// crud drop a db collection
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="table"></param>
-        public void ClearTable<T>(string table)
-        {
-            db.DropCollection(table);
-        }
 
         /// <summary>
-        /// crud to update a record
+        /// Update a record in MongoDb
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="table"></param>
@@ -102,16 +98,7 @@ namespace api.Services
 
             var filter = Builders<T>.Filter.Eq("_id", id);
 
-            var documentBefore = collection.FindOneAndUpdate(filter, record, new FindOneAndUpdateOptions<T> { ReturnDocument = ReturnDocument.Before });
-
-            if (documentBefore != null)
-            {
-                // The document already existed and was updated.
-            }
-            else
-            {
-                // The document did not exist and was inserted.
-            }
+            collection.FindOneAndUpdate(filter, record, new FindOneAndUpdateOptions<T> { ReturnDocument = ReturnDocument.Before });
         }
     }
 }

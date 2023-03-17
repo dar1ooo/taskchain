@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { catchError, tap } from 'rxjs';
 import { Extensions } from 'src/app/shared/extensions';
 import { UserModel } from 'src/app/shared/models';
-import { IGetBoardsRequest } from 'src/app/shared/request';
+import { IGetBoardsRequest } from 'src/app/shared/models/request';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({

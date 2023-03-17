@@ -6,7 +6,7 @@ import { BoardModel, UserModel } from 'src/app/shared/models';
 import {
   IGetAllUsersRequest,
   IRemoveUserRequest,
-} from 'src/app/shared/request';
+} from 'src/app/shared/models/request';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({

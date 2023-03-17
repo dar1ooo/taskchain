@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, tap } from 'rxjs';
 import { Extensions } from 'src/app/shared/extensions';
 import { UserLogin, UserModel } from 'src/app/shared/models';
-import { IUserLoginRequest } from 'src/app/shared/request';
+import { IUserLoginRequest } from 'src/app/shared/models/request';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({

@@ -12,7 +12,7 @@
             InviteCode = mongoDbBoard.InviteCode;
             Title = mongoDbBoard.Title;
             Columns = mongoDbBoard.Columns;
-            Owner= mongoDbBoard.Owner;
+            Owner = mongoDbBoard.Owner;
         }
 
         public string Id { get; set; }

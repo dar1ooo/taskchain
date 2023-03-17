@@ -15,8 +15,8 @@ import {
   TicketModel,
   UserModel,
 } from 'src/app/shared/models';
-import { ICreateBoardRequest, IGetBoardRequest } from 'src/app/shared/request';
-import { ISaveBoardRequest } from 'src/app/shared/request/save-board-request';
+import { ICreateBoardRequest, IGetBoardRequest } from 'src/app/shared/models/request';
+import { ISaveBoardRequest } from 'src/app/shared/models/request/save-board-request';
 import { BoardService } from 'src/app/shared/services/board.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { BoardSettingsComponent } from './board-settings/board-settings.component';
@@ -36,7 +36,7 @@ export class BoardComponent implements OnInit {
   public board: BoardModel = new BoardModel();
   public modelChanged: Subject<BoardModel> = new Subject<BoardModel>();
   private subscription = new Subscription();
-  private debounceTime = 1000;
+  private debounceTime = 3000;
   public user = new UserModel();
 
   constructor(

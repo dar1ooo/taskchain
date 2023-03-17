@@ -16,6 +16,12 @@ namespace api.Controllers
         }
 
         public IBoardService boardService
-        { get { return new BoardService(); } set { } }
+        {
+            get
+            {
+                return new BoardService();
+            }
+            set { }
+        }
     }
 }

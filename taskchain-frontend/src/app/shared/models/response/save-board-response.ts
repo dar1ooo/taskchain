@@ -1,4 +1,4 @@
-import { BoardModel } from '../models';
+import { BoardModel } from '..';
 
 export interface ISaveBoardResponse {
   board: BoardModel;

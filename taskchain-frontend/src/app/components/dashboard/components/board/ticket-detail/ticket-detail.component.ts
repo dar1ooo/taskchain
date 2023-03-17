@@ -8,7 +8,7 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, tap } from 'rxjs';
 import { TagModel, TicketModel, UserModel } from 'src/app/shared/models';
-import { IGetAllUsersRequest } from 'src/app/shared/request';
+import { IGetAllUsersRequest } from 'src/app/shared/models/request';
 import { UserService } from 'src/app/shared/services/user.service';
 import { AddUserComponent } from './add-user/add-user.component';
 import { ColorPickerDialogComponent } from './color-picker-dialog/color-picker-dialog.component';

@@ -1,4 +1,4 @@
-import { BoardOverview } from '../models';
+import { BoardOverview } from '..';
 
 export interface IGetBoardsResponse {
   boards: BoardOverview[];

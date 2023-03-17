@@ -1,4 +1,4 @@
-import { UserModel } from '../models';
+import { UserModel } from '..';
 
 export interface IGetBoardsRequest {
   user: UserModel;

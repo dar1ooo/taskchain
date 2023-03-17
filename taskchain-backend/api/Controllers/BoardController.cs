@@ -22,8 +22,10 @@ public class BoardController : BaseController
 
         userService.AddUserToBoard(request.User, board);
 
-        CreateBoardResponse response = new();
-        response.Board = board;
+        CreateBoardResponse response = new()
+        {
+            Board = board
+        };
 
         return Ok(response);
     }
@@ -33,8 +35,11 @@ public class BoardController : BaseController
     public IActionResult SaveBoard(SaveBoardRequest request)
     {
         Board board = boardService.SaveBoard(request.Board);
-        SaveBoardResponse response = new SaveBoardResponse();
-        response.Board = board;
+
+        SaveBoardResponse response = new()
+        {
+            Board = board
+        };
 
         return Ok(response);
     }

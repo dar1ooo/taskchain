@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, tap } from 'rxjs';
 import { Extensions } from 'src/app/shared/extensions';
 import { UserModel } from 'src/app/shared/models';
-import { IJoinBoardRequest } from 'src/app/shared/request';
+import { IJoinBoardRequest } from 'src/app/shared/models/request';
 import { UserService } from 'src/app/shared/services/user.service';
 @Component({
   selector: 'app-join-board',

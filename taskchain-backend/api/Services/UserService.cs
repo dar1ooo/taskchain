@@ -16,10 +16,6 @@ namespace api.Services
             collection = "Users";
         }
 
-        /// <summary>
-        /// Register User to DB
-        /// </summary>
-        /// <param name="user"></param>
         public User RegisterUser(UserRegister user)
         {
             List<string> usernames = GetTakenUsernames();
@@ -48,29 +44,27 @@ namespace api.Services
             return null;
         }
 
-        /// <summary>
-        /// log in user in db
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns>found user</returns>
-        public User AuthenticateUser(UserLogin user)
+        public User LoginUser(UserLogin user)
         {
-            //filter to find username
-            var arrayFilter = Builders<MongoDbUser>.Filter.Eq("Username", user.Username);
             try
             {
-                MongoDbUser foundUser = MongoCRUD.FindRecord<MongoDbUser>(collection, arrayFilter);
+                var arrayFilter = Builders<MongoDbUser>.Filter.Eq("Username", user.Username);
+                MongoDbUser foundUser = MongoCRUD.FindRecord(collection, arrayFilter);
 
-                //check if password hash is valid
-                if (VerifyHashedPassword(foundUser.Password, user.Password))
+                if (foundUser != null)
                 {
-                    return new User()
+                    //check if password hash is valid
+                    if (VerifyHashedPassword(foundUser.Password, user.Password))
                     {
-                        Id = foundUser.Id.ToString(),
-                        Username = foundUser.Username,
-                        Boards = foundUser.Boards,
-                    };
+                        return new User()
+                        {
+                            Id = foundUser.Id.ToString(),
+                            Username = foundUser.Username,
+                            Boards = foundUser.Boards,
+                        };
+                    }
                 }
+
                 throw new Exception();
             }
             catch
@@ -81,7 +75,7 @@ namespace api.Services
 
         public void AddUserToBoard(User user, Board board)
         {
-            MongoDbUser dbUser = new MongoDbUser()
+            MongoDbUser dbUser = new()
             {
                 Id = new Guid(user.Id),
                 Boards = user.Boards,
@@ -89,20 +83,15 @@ namespace api.Services
 
             dbUser.Boards.Add(new BoardOverview() { Id = board.Id, Title = board.Title });
 
-            //filter to find which user to update
             var update = Builders<MongoDbUser>.Update
                 .Set(p => p.Boards, dbUser.Boards);
 
             MongoCRUD.UpsertRecord("Users", dbUser.Id, update);
         }
 
-        /// <summary>
-        /// get taken usernames in db
-        /// </summary>
-        /// <returns>list with usernames</returns>
         public List<string> GetTakenUsernames()
         {
-            List<MongoDbUser> users = MongoCRUD.LoadRecords<MongoDbUser>("Users");
+            List<MongoDbUser> users = MongoCRUD.LoadRecords<MongoDbUser>(collection);
             return users.Select(x => x.Username).ToList();
         }
 
@@ -152,11 +141,6 @@ namespace api.Services
             MongoCRUD.UpsertRecord("Users", foundUser.Id, update);
         }
 
-        /// <summary>
-        /// hash a password
-        /// </summary>
-        /// <param name="password"></param>
-        /// <returns>password hash</returns>
         public string HashPassword(string password)
         {
             //create salt for hash
@@ -173,12 +157,6 @@ namespace api.Services
             return Convert.ToBase64String(dst);
         }
 
-        /// <summary>
-        /// verify hash of password
-        /// </summary>
-        /// <param name="hashedPassword"></param>
-        /// <param name="password"></param>
-        /// <returns>true or false</returns>
         public bool VerifyHashedPassword(string hashedPassword, string password)
         {
             byte[] buffer4;

@@ -4,15 +4,12 @@
 </div>
 <div class="settings-item">
   <h1>Users</h1>
-  <div *ngFor="let user of users">
-    <h3>
+  <div *ngFor="let user of users" >
+    <h3 *ngIf="board.owner !== user.id">
       {{ user.username
-      }}<span
-        class="remove-user"
-        (click)="removeUser(user)"
-        *ngIf="board.owner !== user.id"
-      ></span>
+      }}<span class="remove-user" (click)="removeUser(user)"></span>
     </h3>
+    <h3 *ngIf="board.owner === user.id">Owner: {{ user.username }}</h3>
   </div>
 </div>
 <div class="settings-item">

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, tap } from 'rxjs';
 import { UserModel, UserRegister } from 'src/app/shared/models';
-import { IUserRegisterRequest } from 'src/app/shared/request';
+import { IUserRegisterRequest } from 'src/app/shared/models/request';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
