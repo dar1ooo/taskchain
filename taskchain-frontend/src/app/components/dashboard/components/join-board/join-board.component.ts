@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, tap } from 'rxjs';
 import { Extensions } from 'src/app/shared/extensions';
+import { UserModel } from 'src/app/shared/models';
 import { IJoinBoardRequest } from 'src/app/shared/request';
 import { UserService } from 'src/app/shared/services/user.service';
 @Component({
@@ -33,6 +34,9 @@ export class JoinBoardComponent implements OnInit {
         .joinBoard(request)
         .pipe(
           tap((res) => {
+            let user = new UserModel();
+            user = res.user;
+            sessionStorage.setItem('user', JSON.stringify(user));
             window.location.href = '/board?id=' + res.boardId;
           }),
           catchError((error) => {

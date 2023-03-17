@@ -2,7 +2,9 @@
   <span>
     <h1 class="board-title">
       {{ board.title }}
-      <span class="invite-code">Invite code: {{ board.inviteCode }}</span>
+      <span class="invite-code" *ngIf="board.inviteCode !== ''"
+        >Invite code: {{ board.inviteCode }}</span
+      >
     </h1>
   </span>
   <div cdkDropListGroup>

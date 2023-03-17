@@ -81,6 +81,7 @@ public class UserController : BaseController
 
             JoinBoardResponse response = new JoinBoardResponse();
             response.BoardId = foundBoard.Id;
+            response.User = request.User;
 
             return Ok(response);
         }

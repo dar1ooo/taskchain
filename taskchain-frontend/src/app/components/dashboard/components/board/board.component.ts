@@ -13,6 +13,7 @@ import {
   BoardModel,
   ConfirmDialogModel,
   TicketModel,
+  UserModel,
 } from 'src/app/shared/models';
 import { ICreateBoardRequest, IGetBoardRequest } from 'src/app/shared/request';
 import { ISaveBoardRequest } from 'src/app/shared/request/save-board-request';
@@ -37,7 +38,7 @@ export class BoardComponent implements OnInit {
   public board: BoardModel = new BoardModel();
   public modelChanged: Subject<BoardModel> = new Subject<BoardModel>();
   private subscription = new Subscription();
-  private debounceTime = 500;
+  private debounceTime = 1000;
 
   constructor(
     public dialog: MatDialog,
@@ -60,9 +61,9 @@ export class BoardComponent implements OnInit {
   public loadBoard(): void {
     const urlParams = new URLSearchParams(window.location.search);
     const boardId = urlParams.get('id')?.toString();
-    debugger;
     if (
-      !this.extensions.getUser().boards.find((board) => board.id === boardId)
+      !this.extensions.getUser().boards.find((board) => board.id === boardId) &&
+      boardId !== '0'
     ) {
       const ref = this.snackBar.open(
         'You do not have permission to access this board',
@@ -128,6 +129,9 @@ export class BoardComponent implements OnInit {
       .createBoard(request)
       .pipe(
         tap((res) => {
+          let user = new UserModel();
+          user.boards.push({ id: res.board.id, title: this.board.title });
+          sessionStorage.setItem('user', JSON.stringify(user));
           window.location.href = '/board?id=' + res.board.id;
         }),
         catchError((error) => {
