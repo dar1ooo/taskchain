@@ -39,6 +39,7 @@ export class BoardComponent implements OnInit {
   public modelChanged: Subject<BoardModel> = new Subject<BoardModel>();
   private subscription = new Subscription();
   private debounceTime = 1000;
+  public user = new UserModel();
 
   constructor(
     public dialog: MatDialog,
@@ -56,6 +57,8 @@ export class BoardComponent implements OnInit {
       .subscribe((res) => {
         this.saveBoard(res);
       });
+
+    this.user = this.extensions.getUser();
   }
 
   public loadBoard(): void {

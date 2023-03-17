@@ -28,6 +28,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { JoinBoardComponent } from './components/dashboard/components/join-board/join-board.component';
 import { Extensions } from './shared/extensions';
 import { NewBoardDialogComponent } from './components/dashboard/components/board/new-board-dialog/new-board-dialog.component';
+import { AddUserComponent } from './components/dashboard/components/board/ticket-detail/add-user/add-user.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +43,7 @@ import { NewBoardDialogComponent } from './components/dashboard/components/board
     DashboardComponent,
     JoinBoardComponent,
     NewBoardDialogComponent,
+    AddUserComponent,
   ],
   imports: [
     BrowserModule,

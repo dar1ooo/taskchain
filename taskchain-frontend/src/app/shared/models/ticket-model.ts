@@ -1,4 +1,5 @@
 import { TagModel } from './tag-model';
+import { UserModel } from './user-model';
 
 export class TicketModel {
   constructor(init?: Partial<TicketModel>) {
@@ -12,4 +13,5 @@ export class TicketModel {
   public totalChecks = 0;
   public deleteTicket = false;
   public tags: TagModel[] = [];
+  public users: UserModel[] = [];
 }

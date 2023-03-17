@@ -1,0 +1,10 @@
+<div class="add-user-wrapper">
+    <h1>Available Users:</h1>
+  <div *ngFor="let user of users">
+    <div class="user">
+      {{ user.username }}
+
+      <button (click)="addUser(user)">Add user</button>
+    </div>
+  </div>
+</div>

@@ -100,4 +100,16 @@ public class UserController : BaseController
 
         return Ok(response);
     }
+
+    [HttpPost]
+    [Route("users")]
+    public IActionResult GetAllUsers(GetAllUsersRequest request)
+    {
+        List<User> users = userService.GetAllUsers(request.BoardId);
+
+        GetAllUsersResponse response = new GetAllUsersResponse();
+        response.Users = users;
+
+        return Ok(response);
+    }
 }

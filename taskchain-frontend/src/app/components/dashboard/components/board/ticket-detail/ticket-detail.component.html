@@ -36,10 +36,14 @@
       <div class="col-4">
         <div class="side-bar-wrapper">
           <div class="side-bar">
-            <div class="users">
+            <div class="side-bar-item users">
               <h3>Users</h3>
+              <div *ngFor="let user of ticket.users">
+                <h4>{{ user.username }}<span class="remove-user" (click)="removeUser(user)"></span></h4>
+              </div>
+              <button (click)="addUser()" class="add-user">Add user</button>
             </div>
-            <div class="tags">
+            <div class="side-bar-item tags">
               <h3>Tags</h3>
               <mat-chip-list #tags>
                 <mat-chip

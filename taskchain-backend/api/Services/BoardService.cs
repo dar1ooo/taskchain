@@ -54,14 +54,21 @@ namespace api.Services
                 var arrayFilter = Builders<MongoDbBoard>.Filter.Eq("_id", id);
                 MongoDbBoard foundBoard = MongoCRUD.FindRecord(collection, arrayFilter);
 
-                return new Board()
+                if (foundBoard != null)
                 {
-                    Id = foundBoard.Id.ToString(),
-                    Title = foundBoard.Title,
-                    Columns = foundBoard.Columns,
-                    InviteCode = foundBoard.InviteCode,
-                    Owner = foundBoard.Owner,
-                };
+                    return new Board()
+                    {
+                        Id = foundBoard.Id.ToString(),
+                        Title = foundBoard.Title,
+                        Columns = foundBoard.Columns,
+                        InviteCode = foundBoard.InviteCode,
+                        Owner = foundBoard.Owner,
+                    };
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch
             {

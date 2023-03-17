@@ -15,7 +15,7 @@
   font-weight: 500;
   color: white;
   margin: 10px 0px 0px 5px;
-  .invite-code{
+  .invite-code {
     color: white;
     font-size: 15px;
     margin-left: 20px;
@@ -311,4 +311,10 @@
       background-color: #f4f5f7;
     }
   }
+}
+
+.mat-chip-overview {
+  min-height: 10px !important;
+  max-height: 10px !important;
+  width: 20px !important;
 }

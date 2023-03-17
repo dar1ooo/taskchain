@@ -2,7 +2,9 @@
   <span>
     <h1 class="board-title">
       {{ board.title }}
-      <span class="invite-code" *ngIf="board.inviteCode !== ''"
+      <span
+        class="invite-code"
+        *ngIf="board.inviteCode !== '' && board.owner === user.id"
         >Invite code: {{ board.inviteCode }}</span
       >
     </h1>
@@ -58,11 +60,11 @@
             <div class="card-tags" *ngIf="ticket.tags.length >= 1">
               <mat-chip-list>
                 <mat-chip
+                  class="mat-chip-overview"
                   [style.background]="tag?.color ? tag.color : '#e0e0e0'"
                   *ngFor="let tag of ticket.tags"
                   selectable="false"
-                  >{{ tag?.title }}</mat-chip
-                >
+                ></mat-chip>
               </mat-chip-list>
             </div>
             <div class="badges">

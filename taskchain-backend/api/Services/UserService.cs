@@ -114,6 +114,26 @@ namespace api.Services
             return foundUser.Boards;
         }
 
+        public List<User> GetAllUsers(string boardId)
+        {
+            List<MongoDbUser> foundUsers = MongoCRUD.LoadRecords<MongoDbUser>(collection);
+            List<User> users = new List<User>();
+
+            foreach (MongoDbUser foundUser in foundUsers)
+            {
+                if (foundUser.Boards.Any(board => board.Id == boardId))
+                {
+                    users.Add(new User()
+                    {
+                        Id = foundUser.Id.ToString(),
+                        Username = foundUser.Username,
+                    });
+                }
+            }
+
+            return users;
+        }
+
         /// <summary>
         /// hash a password
         /// </summary>

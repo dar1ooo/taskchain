@@ -3,11 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserLogin, UserModel } from '../models';
 import {
+  IGetAllUsersRequest,
   IGetBoardsRequest,
   IJoinBoardRequest,
   IUserRegisterRequest,
 } from '../request';
 import { IGetBoardsResponse, IJoinBoardResponse } from '../response';
+import { IGetAllUsersResponse } from '../response/get-all-users-response';
 
 @Injectable({
   providedIn: 'root',
@@ -40,5 +42,10 @@ export class UserService {
   getBoards(request: IGetBoardsRequest): Observable<IGetBoardsResponse> {
     const url = this.baseurl + '/boards';
     return this.http.post<IGetBoardsResponse>(url, request);
+  }
+
+  getAllUsers(request: IGetAllUsersRequest): Observable<IGetAllUsersResponse> {
+    const url = this.baseurl + '/users';
+    return this.http.post<IGetAllUsersResponse>(url, request);
   }
 }
