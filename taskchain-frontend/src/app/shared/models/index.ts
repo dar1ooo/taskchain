@@ -7,3 +7,4 @@ export { UserModel } from './user-model';
 export { UserLogin } from './user-login-model';
 export { UserRegister } from './user-register-model';
 export { BoardOverview } from './board-overview-model';
+export { TaskModel } from './task-model';

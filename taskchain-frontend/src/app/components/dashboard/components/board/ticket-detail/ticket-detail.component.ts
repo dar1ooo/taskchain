@@ -7,7 +7,12 @@ import {
 } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, tap } from 'rxjs';
-import { TagModel, TicketModel, UserModel } from 'src/app/shared/models';
+import {
+  TagModel,
+  TaskModel,
+  TicketModel,
+  UserModel,
+} from 'src/app/shared/models';
 import { IGetAllUsersRequest } from 'src/app/shared/models/request';
 import { UserService } from 'src/app/shared/services/user.service';
 import { AddUserComponent } from './add-user/add-user.component';
@@ -26,6 +31,7 @@ export class TicketDetailComponent implements OnInit {
   private revertTicket: TicketModel = new TicketModel();
   public tagInput: string = '';
   public users: UserModel[] = [];
+  public task = new TaskModel();
 
   constructor(
     public dialogRef: MatDialogRef<TicketDetailComponent>,
@@ -43,7 +49,7 @@ export class TicketDetailComponent implements OnInit {
   }
 
   closeDialog(): void {
-    debugger
+    debugger;
     this.dialogRef.close(this.ticket);
   }
 
@@ -152,6 +158,15 @@ export class TicketDetailComponent implements OnInit {
     const index = this.ticket.users.indexOf(user, 0);
     if (index > -1) {
       this.ticket.users.splice(index, 1);
+    }
+  }
+
+  public addTask(event: Event): void {
+    event.stopPropagation();
+
+    if (this.task.text !== '') {
+      this.ticket.tasks.push({ isDone: false, text: this.task.text });
+      this.task = new TaskModel();
     }
   }
 }

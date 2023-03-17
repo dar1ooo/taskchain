@@ -25,7 +25,17 @@
           [(ngModel)]="ticket.description"
         ></editor>
         <div class="checklist">
-          <input type="checkbox" /> <span> Clean Dishes</span>
+          <div *ngFor="let task of ticket.tasks">
+            <input type="checkbox" [(ngModel)]="task.isDone" />
+            <span>{{ task.text }}</span>
+          </div>
+          <input
+            type="text"
+            placeholder="Text"
+            [(ngModel)]="task.text"
+            (keyup.enter)="addTask($event)"
+            on
+          />
         </div>
         <div class="actionbar">
           <button (click)="saveTicket()">Save</button>

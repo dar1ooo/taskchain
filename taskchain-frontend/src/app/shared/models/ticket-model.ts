@@ -1,4 +1,5 @@
 import { TagModel } from './tag-model';
+import { TaskModel } from './task-model';
 import { UserModel } from './user-model';
 
 export class TicketModel {
@@ -14,4 +15,5 @@ export class TicketModel {
   public deleteTicket = false;
   public tags: TagModel[] = [];
   public users: UserModel[] = [];
+  public tasks: TaskModel[] = [];
 }

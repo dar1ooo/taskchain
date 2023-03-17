@@ -10,5 +10,6 @@
         public bool DeleteTicket { get; set; }
         public List<Tag> Tags { get; set; } = new List<Tag>();
         public List<User> Users { get; set; } = new List<User>();
+        public List<TaskModel> Tasks { get; set; } = new List<TaskModel>();
     }
 }
