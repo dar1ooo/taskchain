@@ -29,6 +29,7 @@ import { JoinBoardComponent } from './components/dashboard/components/join-board
 import { Extensions } from './shared/extensions';
 import { NewBoardDialogComponent } from './components/dashboard/components/board/new-board-dialog/new-board-dialog.component';
 import { AddUserComponent } from './components/dashboard/components/board/ticket-detail/add-user/add-user.component';
+import { BoardSettingsComponent } from './components/dashboard/components/board/board-settings/board-settings.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +45,7 @@ import { AddUserComponent } from './components/dashboard/components/board/ticket
     JoinBoardComponent,
     NewBoardDialogComponent,
     AddUserComponent,
+    BoardSettingsComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ import {
   IGetAllUsersRequest,
   IGetBoardsRequest,
   IJoinBoardRequest,
+  IRemoveUserRequest,
   IUserRegisterRequest,
 } from '../request';
 import { IGetBoardsResponse, IJoinBoardResponse } from '../response';
@@ -47,5 +48,10 @@ export class UserService {
   getAllUsers(request: IGetAllUsersRequest): Observable<IGetAllUsersResponse> {
     const url = this.baseurl + '/users';
     return this.http.post<IGetAllUsersResponse>(url, request);
+  }
+
+  removeUser(request: IRemoveUserRequest): Observable<void> {
+    const url = this.baseurl + '/removeUser';
+    return this.http.post<void>(url, request);
   }
 }

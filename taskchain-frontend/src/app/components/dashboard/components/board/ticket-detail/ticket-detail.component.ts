@@ -42,7 +42,8 @@ export class TicketDetailComponent implements OnInit {
     this.getAllUsers();
   }
 
-  onNoClick(): void {
+  closeDialog(): void {
+    debugger
     this.dialogRef.close(this.ticket);
   }
 

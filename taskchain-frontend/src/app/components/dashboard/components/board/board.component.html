@@ -2,10 +2,11 @@
   <span>
     <h1 class="board-title">
       {{ board.title }}
-      <span
-        class="invite-code"
-        *ngIf="board.inviteCode !== '' && board.owner === user.id"
-        >Invite code: {{ board.inviteCode }}</span
+
+      <span *ngIf="board.owner === user.id"
+        ><button class="manage-users" (click)="openSettings()">
+          settings
+        </button></span
       >
     </h1>
   </span>

@@ -6,3 +6,4 @@ export { IUserRegisterRequest } from './user-register-request';
 export { ICreateBoardRequest } from './create-board-request';
 export { IGetBoardsRequest } from './get-boards-request';
 export { IGetAllUsersRequest } from './get-all-users-request';
+export { IRemoveUserRequest } from './remove-user-request';

@@ -112,4 +112,13 @@ public class UserController : BaseController
 
         return Ok(response);
     }
+
+    [HttpPost]
+    [Route("removeUser")]
+    public IActionResult RemoveUserFromBoard(RemoveUserRequest request)
+    {
+        userService.RemoveUserFromBoard(new Guid(request.UserId), new Guid(request.BoardId));
+
+        return Ok();
+    }
 }

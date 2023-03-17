@@ -19,6 +19,7 @@ import { ICreateBoardRequest, IGetBoardRequest } from 'src/app/shared/request';
 import { ISaveBoardRequest } from 'src/app/shared/request/save-board-request';
 import { BoardService } from 'src/app/shared/services/board.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { BoardSettingsComponent } from './board-settings/board-settings.component';
 import { NewBoardDialogComponent } from './new-board-dialog/new-board-dialog.component';
 import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
 export interface DialogData {
@@ -215,8 +216,8 @@ export class BoardComponent implements OnInit {
           var foundIndex = column.tickets.findIndex((x) => x.id === ticket.id);
           column.tickets[foundIndex] = newTicket;
         }
-        this.boardChanged();
       }
+      this.boardChanged();
     });
   }
 
@@ -292,5 +293,14 @@ export class BoardComponent implements OnInit {
         }
       }
     });
+  }
+
+  public openSettings(): void {
+    const dialogRef = this.dialog.open(BoardSettingsComponent, {
+      data: this.board,
+      width: '30vw',
+    });
+
+    dialogRef.afterClosed().subscribe((dialogResult) => {});
   }
 }

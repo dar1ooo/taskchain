@@ -19,5 +19,7 @@ namespace api.Interfaces
         public List<BoardOverview> GetBoards(User user);
 
         public List<User> GetAllUsers(string boardId);
+
+        public void RemoveUserFromBoard(Guid userId, Guid boardId);
     }
 }

@@ -134,6 +134,24 @@ namespace api.Services
             return users;
         }
 
+        public void RemoveUserFromBoard(Guid userId, Guid boardId)
+        {
+            var arrayFilter = Builders<MongoDbUser>.Filter.Eq("_id", userId);
+            MongoDbUser foundUser = MongoCRUD.FindRecord(collection, arrayFilter);
+
+            BoardOverview? board = foundUser.Boards.FirstOrDefault(board => board.Id == boardId.ToString());
+
+            if (board != null)
+            {
+                foundUser.Boards.Remove(board);
+            }
+
+            var update = Builders<MongoDbUser>.Update
+                .Set(p => p.Boards, foundUser.Boards);
+
+            MongoCRUD.UpsertRecord("Users", foundUser.Id, update);
+        }
+
         /// <summary>
         /// hash a password
         /// </summary>
