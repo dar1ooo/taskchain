@@ -129,7 +129,7 @@ export class BoardComponent implements OnInit {
       .createBoard(request)
       .pipe(
         tap((res) => {
-          let user = new UserModel();
+          let user = this.extensions.getUser();
           user.boards.push({ id: res.board.id, title: this.board.title });
           sessionStorage.setItem('user', JSON.stringify(user));
           window.location.href = '/board?id=' + res.board.id;
