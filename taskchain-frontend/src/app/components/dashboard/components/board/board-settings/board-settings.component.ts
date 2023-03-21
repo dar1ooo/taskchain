@@ -54,7 +54,6 @@ export class BoardSettingsComponent implements OnInit {
         .getAllUsers(request)
         .pipe(
           tap((res) => {
-            debugger;
             this.users = res.users;
             const userIndex = this.users.findIndex(
               (user) => user.id === this.board.owner

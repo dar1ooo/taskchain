@@ -49,7 +49,6 @@ export class TicketDetailComponent implements OnInit {
   }
 
   closeDialog(): void {
-    debugger;
     this.dialogRef.close(this.ticket);
   }
 
