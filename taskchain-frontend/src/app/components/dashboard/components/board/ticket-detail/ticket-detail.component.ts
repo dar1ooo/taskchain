@@ -49,6 +49,11 @@ export class TicketDetailComponent implements OnInit {
     this.dialogRef.close(this.ticket);
   }
 
+  /**
+   * Get all users from the current Board
+   * @private
+   * @memberof TicketDetailComponent
+   */
   private getAllUsers(): void {
     const urlParams = new URLSearchParams(window.location.search);
     const boardId = urlParams.get('id')?.toString();
@@ -81,6 +86,11 @@ export class TicketDetailComponent implements OnInit {
     }
   }
 
+  /**
+   * Remove a tag from the ticket
+   * @param {TagModel} tag
+   * @memberof TicketDetailComponent
+   */
   public removeTag(tag: TagModel) {
     const index = this.ticket.tags.indexOf(tag, 0);
     if (index > -1) {
@@ -88,6 +98,11 @@ export class TicketDetailComponent implements OnInit {
     }
   }
 
+  /**
+   * Add tag to the ticket
+   * @param {MatChipInputEvent} event
+   * @memberof TicketDetailComponent
+   */
   public addTag(event: MatChipInputEvent) {
     if (this.ticket.tags.length >= 3) {
       this.snackBar.open('You cannot add more than 3 Tags', 'close');
@@ -99,6 +114,10 @@ export class TicketDetailComponent implements OnInit {
     this.tagInput = '';
   }
 
+  /**
+   * Save the ticket
+   * @memberof TicketDetailComponent
+   */
   public saveTicket(): void {
     if (this.ticket.title === '') {
       this.snackBar.open('Please enter a Title', '', {
@@ -174,6 +193,10 @@ export class TicketDetailComponent implements OnInit {
     this.updateCounter();
   }
 
+  /**
+   * Update the task counter for the current ticket
+   * @memberof TicketDetailComponent
+   */
   public updateCounter(): void {
     this.ticket.completedChecks = this.ticket.tasks.filter(
       (task) => task.isDone

@@ -23,6 +23,11 @@ export class DashboardComponent implements OnInit {
     this.getBoards();
   }
 
+  /**
+   * Loads all board for the current user
+   * @private
+   * @memberof DashboardComponent
+   */
   private getBoards() {
     const request: IGetBoardsRequest = {
       user: this.extensions.getUser(),

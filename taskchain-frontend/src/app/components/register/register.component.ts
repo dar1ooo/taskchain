@@ -40,6 +40,10 @@ export class RegisterComponent implements OnInit {
       .subscribe();
   }
 
+  /**
+   * Register a user
+   * @memberof RegisterComponent
+   */
   public register(): void {
     if (
       this.userRegister.Username !== '' &&
@@ -87,7 +91,10 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  //Checks if the entered username is available
+  /**
+   * Checks if the entered username is available
+   * @memberof RegisterComponent
+   */
   public checkForAvailableUsername(): void {
     if (this.takenUsernames.includes(this.userRegister.Username)) {
       this.showUsernameTakenError = true;
@@ -96,6 +103,10 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  /**
+   * Validates the entered password with the confirmation password
+   * @memberof RegisterComponent
+   */
   public validatePassword(): void {
     if (this.userRegister.Password === this.userRegister.ConfirmPassword) {
       this.passwordsMatch = true;

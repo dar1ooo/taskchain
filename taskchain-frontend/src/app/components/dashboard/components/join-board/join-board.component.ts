@@ -24,6 +24,10 @@ export class JoinBoardComponent implements OnInit {
     this.extensions.checkForLogin();
   }
 
+  /**
+   * Adds a user to the board according to entered invite code
+   * @memberof JoinBoardComponent
+   */
   public joinBoard(): void {
     if (this.inviteCode !== '') {
       const request: IJoinBoardRequest = {
@@ -56,6 +60,10 @@ export class JoinBoardComponent implements OnInit {
     }
   }
 
+  /**
+   * Validates the entered invite code according to it's length
+   * @memberof JoinBoardComponent
+   */
   public validateToken(): void {
     if (this.inviteCode.length > 6) {
       this.inviteCodeInvalid = true;

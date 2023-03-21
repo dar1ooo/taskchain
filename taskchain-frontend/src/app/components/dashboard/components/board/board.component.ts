@@ -62,6 +62,10 @@ export class BoardComponent implements OnInit {
     this.user = this.extensions.getUser();
   }
 
+  /**
+   * Load the current board
+   * @memberof BoardComponent
+   */
   public loadBoard(): void {
     const urlParams = new URLSearchParams(window.location.search);
     const boardId = urlParams.get('id')?.toString();
@@ -123,6 +127,10 @@ export class BoardComponent implements OnInit {
     }
   }
 
+  /**
+   * Creates a new Board
+   * @memberof BoardComponent
+   */
   public createBoard(): void {
     const request: ICreateBoardRequest = {
       boardTitle: this.board.title,
@@ -154,6 +162,11 @@ export class BoardComponent implements OnInit {
       .subscribe();
   }
 
+  /**
+   * Saves the current board
+   * @param {BoardModel} board
+   * @memberof BoardComponent
+   */
   public saveBoard(board: BoardModel): void {
     const request: ISaveBoardRequest = {
       board: board,
@@ -185,6 +198,11 @@ export class BoardComponent implements OnInit {
     this.modelChanged.next(this.board);
   }
 
+  /**
+   * Event when a ticket is moved
+   * @param {CdkDragDrop<TicketModel[]>} event
+   * @memberof BoardComponent
+   */
   public dropTicket(event: CdkDragDrop<TicketModel[]>): void {
     if (event.previousContainer === event.container) {
       moveItemInArray(
@@ -223,7 +241,12 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  public addCard(column: BoardColumn): void {
+  /**
+   * Adds a new ticket to the column
+   * @param {BoardColumn} column
+   * @memberof BoardComponent
+   */
+  public addTicket(column: BoardColumn): void {
     const ticketRef = this.dialog.open(TicketDetailComponent, {
       panelClass: 'ticket-wrapper',
       maxHeight: '90vh',
@@ -274,10 +297,21 @@ export class BoardComponent implements OnInit {
     });
   }
 
+  /**
+   * Prevents parent click on ticket menu
+   * @param {Event} event
+   * @memberof BoardComponent
+   */
   public preventDefault(event: Event): void {
     event.stopPropagation();
   }
 
+  /**
+   * Deletes the selected ticket
+   * @param {BoardColumn} column
+   * @param {TicketModel} ticket
+   * @memberof BoardComponent
+   */
   public deleteTicket(column: BoardColumn, ticket: TicketModel): void {
     const message = 'Are you sure you want to delete ' + ticket.title + ' ?';
 

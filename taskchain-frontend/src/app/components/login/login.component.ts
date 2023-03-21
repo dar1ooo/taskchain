@@ -26,6 +26,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /**
+   * Logs in the user
+   * @memberof LoginComponent
+   */
   public loginUser(): void {
     if (this.userLogin.username !== '' && this.userLogin.password !== '') {
       const request: IUserLoginRequest = {

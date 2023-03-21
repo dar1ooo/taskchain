@@ -41,6 +41,11 @@ export class BoardSettingsComponent implements OnInit {
     this.getAllUsers();
   }
 
+  /**
+   * Get all users of the current Board
+   * @private
+   * @memberof BoardSettingsComponent
+   */
   private getAllUsers(): void {
     const urlParams = new URLSearchParams(window.location.search);
     const boardId = urlParams.get('id')?.toString();
@@ -82,6 +87,11 @@ export class BoardSettingsComponent implements OnInit {
     }
   }
 
+  /**
+   * Remove a user from the board
+   * @param {UserModel} user
+   * @memberof BoardSettingsComponent
+   */
   public removeUser(user: UserModel): void {
     const message =
       'Are you sure you want to remove user: ' + user.username + ' ?';
@@ -122,6 +132,10 @@ export class BoardSettingsComponent implements OnInit {
     });
   }
 
+  /**
+   * Delete the current board
+   * @memberof BoardSettingsComponent
+   */
   public deleteBoard(): void {
     const message =
       'Are you sure you want to delete board: ' + this.board.title + ' ?';
