@@ -7,7 +7,7 @@
             type="text"
             name="Username"
             class="register__input"
-            placeholder="Username"
+            placeholder="Username *"
             [(ngModel)]="userRegister.Username"
             (ngModelChange)="checkForAvailableUsername()"
           />
@@ -20,7 +20,7 @@
             name="Password"
             type="password"
             class="register__input"
-            placeholder="Password"
+            placeholder="Password *"
             [(ngModel)]="userRegister.Password"
             (ngModelChange)="validatePassword()"
           />
@@ -31,7 +31,7 @@
             name="ConfirmPassowrd"
             type="password"
             class="register__input"
-            placeholder="Confirm Password"
+            placeholder="Confirm Password *"
             [(ngModel)]="userRegister.ConfirmPassword"
             (ngModelChange)="validatePassword()"
           />

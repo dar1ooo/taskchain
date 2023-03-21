@@ -75,6 +75,16 @@ export class RegisterComponent implements OnInit {
         )
         .subscribe();
     }
+
+    if (this.userRegister.Username === '') {
+      this.snackBar.open('Username is required!', '', {
+        duration: 3000,
+      });
+    } else if (this.userRegister.Password === '') {
+      this.snackBar.open('Password is required!', '', {
+        duration: 3000,
+      });
+    }
   }
 
   //Checks if the entered username is available

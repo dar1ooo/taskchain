@@ -51,6 +51,8 @@ export class JoinBoardComponent implements OnInit {
           })
         )
         .subscribe();
+    } else {
+      this.snackBar.open('Invite Code is required');
     }
   }
 
