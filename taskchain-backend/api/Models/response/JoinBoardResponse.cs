@@ -2,7 +2,7 @@
 {
     public class JoinBoardResponse
     {
-        public string BoardId { get; set; }
-        public User User { get; set; }
+        public string BoardId { get; set; } = String.Empty;
+        public User User { get; set; } = new();
     }
 }

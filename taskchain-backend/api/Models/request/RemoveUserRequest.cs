@@ -2,7 +2,7 @@
 {
     public class RemoveUserRequest
     {
-        public string UserId { get; set; }
-        public string BoardId { get; set; }
+        public string UserId { get; set; } = String.Empty;
+        public string BoardId { get; set; } = String.Empty;
     }
 }

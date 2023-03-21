@@ -6,7 +6,10 @@ namespace api.Controllers
 {
     public class BaseController : ControllerBase
     {
-        public IUserService userService
+        /// <summary>
+        /// used for accessing user-related functionality
+        /// </summary>
+        public IUserService UserService
         {
             get
             {
@@ -15,7 +18,10 @@ namespace api.Controllers
             set { }
         }
 
-        public IBoardService boardService
+        /// <summary>
+        /// used for accessing board-related functionality
+        /// </summary>
+        public IBoardService BoardService
         {
             get
             {

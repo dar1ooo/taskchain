@@ -2,7 +2,7 @@
 {
     public class CreateBoardRequest
     {
-        public string BoardTitle { get; set; }
-        public User User { get; set; }
+        public string BoardTitle { get; set; } = String.Empty;
+        public User User { get; set; } = new();
     }
 }

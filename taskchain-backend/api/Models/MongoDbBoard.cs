@@ -13,15 +13,16 @@ namespace api.Models
             InviteCode = board.InviteCode;
             Title = board.Title;
             Columns = board.Columns;
+            Owner = board.Owner;
         }
 
         [BsonId]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
-        public string Owner { get; set; }
+        public string Owner { get; set; } = String.Empty;
 
-        public string InviteCode { get; set; }
-        public string Title { set; get; }
-        public List<BoardColumn> Columns { get; set; } = new List<BoardColumn>();
+        public string InviteCode { get; set; } = String.Empty;
+        public string Title { set; get; } = String.Empty;
+        public List<BoardColumn> Columns { get; set; } = new();
     }
 }

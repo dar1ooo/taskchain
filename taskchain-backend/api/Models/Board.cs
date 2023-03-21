@@ -15,10 +15,10 @@
             Owner = mongoDbBoard.Owner;
         }
 
-        public string Id { get; set; }
-        public string InviteCode { get; set; }
-        public string Title { set; get; }
-        public string Owner { set; get; }
-        public List<BoardColumn> Columns { get; set; } = new List<BoardColumn>();
+        public string Id { get; set; } = String.Empty;
+        public string InviteCode { get; set; } = String.Empty;
+        public string Title { set; get; } = String.Empty;
+        public string Owner { set; get; } = String.Empty;
+        public List<BoardColumn> Columns { get; set; } = new();
     }
 }

@@ -13,14 +13,14 @@ public class BoardController : BaseController
     [Route("createBoard")]
     public IActionResult CreateBoard(CreateBoardRequest request)
     {
-        Board board = boardService.CreateBoard(request.BoardTitle, request.User);
+        Board board = BoardService.CreateBoard(request.BoardTitle, request.User);
 
         if (board == null)
         {
             return BadRequest();
         }
 
-        userService.AddUserToBoard(request.User, board);
+        UserService.AddUserToBoard(request.User, board);
 
         CreateBoardResponse response = new()
         {
@@ -34,7 +34,7 @@ public class BoardController : BaseController
     [Route("save")]
     public IActionResult SaveBoard(SaveBoardRequest request)
     {
-        Board board = boardService.SaveBoard(request.Board);
+        Board board = BoardService.SaveBoard(request.Board);
 
         SaveBoardResponse response = new()
         {
@@ -48,7 +48,7 @@ public class BoardController : BaseController
     [Route("board")]
     public IActionResult GetBoard(GetBoardRequest request)
     {
-        Board board = boardService.GetBoardById(new Guid(request.BoardId));
+        Board board = BoardService.GetBoardById(new Guid(request.BoardId));
 
         return Ok(board);
     }
@@ -57,11 +57,11 @@ public class BoardController : BaseController
     [Route("deleteBoard")]
     public IActionResult DeleteBoard(DeleteBoardRequest request)
     {
-        boardService.DeleteBoard(new Guid(request.BoardId));
+        BoardService.DeleteBoard(new Guid(request.BoardId));
 
         foreach (User user in request.Users)
         {
-            userService.RemoveUserFromBoard(new Guid(user.Id), new Guid(request.BoardId));
+            UserService.RemoveUserFromBoard(new Guid(user.Id), new Guid(request.BoardId));
         }
 
         return Ok();

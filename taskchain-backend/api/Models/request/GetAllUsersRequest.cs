@@ -2,6 +2,6 @@
 {
     public class GetAllUsersRequest
     {
-        public string BoardId { get; set; }
+        public string BoardId { get; set; } = String.Empty;
     }
 }

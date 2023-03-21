@@ -8,17 +8,17 @@ namespace api.Interfaces
         /// Registers and saves user in MongoDb
         /// </summary>
         /// <param name="user"></param>
-        public User RegisterUser(UserRegister user);
+        public User? RegisterUser(UserRegister user);
 
         /// <summary>
-        /// hash a password
+        /// Hashes a password
         /// </summary>
         /// <param name="password"></param>
         /// <returns>password hash</returns>
         public string HashPassword(string password);
 
         /// <summary>
-        /// verify hash of password
+        /// Verifies a entered password with a hash
         /// </summary>
         /// <param name="hashedPassword"></param>
         /// <param name="password"></param>

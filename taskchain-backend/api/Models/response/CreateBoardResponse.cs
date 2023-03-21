@@ -2,6 +2,6 @@
 {
     public class CreateBoardResponse
     {
-        public Board Board { get; set; }
+        public Board Board { get; set; } = new();
     }
 }

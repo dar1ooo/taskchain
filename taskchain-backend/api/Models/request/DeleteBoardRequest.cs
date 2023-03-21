@@ -2,7 +2,7 @@
 {
     public class DeleteBoardRequest
     {
-        public string BoardId { get; set; }
-        public List<User> Users { get; set; }
+        public string BoardId { get; set; } = String.Empty;
+        public List<User> Users { get; set; } = new();
     }
 }

@@ -2,6 +2,6 @@
 {
     public class GetBoardsResponse
     {
-        public List<BoardOverview> Boards { get; set; } = new List<BoardOverview>();
+        public List<BoardOverview> Boards { get; set; } = new();
     }
 }

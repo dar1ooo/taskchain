@@ -2,7 +2,7 @@
 {
     public class JoinBoardRequest
     {
-        public string InviteCode { get; set; }
-        public User User { get; set; }
+        public string InviteCode { get; set; } = String.Empty;
+        public User User { get; set; } = new();
     }
 }

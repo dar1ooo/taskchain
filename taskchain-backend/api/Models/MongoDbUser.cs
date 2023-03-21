@@ -9,6 +9,6 @@ namespace api.Models
 
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
-        public List<BoardOverview> Boards { get; set; } = new List<BoardOverview>();
+        public List<BoardOverview> Boards { get; set; } = new();
     }
 }

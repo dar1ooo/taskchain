@@ -13,7 +13,7 @@ public class UserController : BaseController
     [Route("register")]
     public IActionResult Register(UserRegister userRegister)
     {
-        User user = userService.RegisterUser(userRegister);
+        User user = UserService.RegisterUser(userRegister);
 
         if (user == null)
         {
@@ -29,7 +29,7 @@ public class UserController : BaseController
     {
         try
         {
-            var result = userService.LoginUser(user);
+            var result = UserService.LoginUser(user);
 
             if (result == null)
             {
@@ -48,7 +48,7 @@ public class UserController : BaseController
     [Route("usernames")]
     public IActionResult GetTakenUsernames()
     {
-        List<string> usernames = userService.GetTakenUsernames();
+        List<string> usernames = UserService.GetTakenUsernames();
 
         return Ok(usernames);
     }
@@ -57,15 +57,17 @@ public class UserController : BaseController
     [Route("join")]
     public IActionResult JoinBoard(JoinBoardRequest request)
     {
-        Board foundBoard = boardService.GetBoardByInviteCode(request.InviteCode);
+        Board foundBoard = BoardService.GetBoardByInviteCode(request.InviteCode);
 
         if (foundBoard != null && !request.User.Boards.Any(board => board.Id == foundBoard.Id))
         {
-            userService.AddUserToBoard(request.User, foundBoard);
+            UserService.AddUserToBoard(request.User, foundBoard);
 
-            JoinBoardResponse response = new JoinBoardResponse();
-            response.BoardId = foundBoard.Id;
-            response.User = request.User;
+            JoinBoardResponse response = new()
+            {
+                BoardId = foundBoard.Id,
+                User = request.User
+            };
 
             return Ok(response);
         }
@@ -77,10 +79,12 @@ public class UserController : BaseController
     [Route("boards")]
     public IActionResult GetBoards(GetBoardsRequest request)
     {
-        List<BoardOverview> boards = userService.GetBoards(request.User);
+        List<BoardOverview> boards = UserService.GetBoards(request.User);
 
-        GetBoardsResponse response = new GetBoardsResponse();
-        response.Boards = boards;
+        GetBoardsResponse response = new()
+        {
+            Boards = boards
+        };
 
         return Ok(response);
     }
@@ -89,10 +93,12 @@ public class UserController : BaseController
     [Route("users")]
     public IActionResult GetAllUsers(GetAllUsersRequest request)
     {
-        List<User> users = userService.GetAllUsers(request.BoardId);
+        List<User> users = UserService.GetAllUsers(request.BoardId);
 
-        GetAllUsersResponse response = new GetAllUsersResponse();
-        response.Users = users;
+        GetAllUsersResponse response = new()
+        {
+            Users = users,
+        };
 
         return Ok(response);
     }
@@ -101,7 +107,7 @@ public class UserController : BaseController
     [Route("removeUser")]
     public IActionResult RemoveUserFromBoard(RemoveUserRequest request)
     {
-        userService.RemoveUserFromBoard(new Guid(request.UserId), new Guid(request.BoardId));
+        UserService.RemoveUserFromBoard(new Guid(request.UserId), new Guid(request.BoardId));
 
         return Ok();
     }
