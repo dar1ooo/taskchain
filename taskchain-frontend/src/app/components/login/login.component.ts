@@ -55,5 +55,15 @@ export class LoginComponent implements OnInit {
         )
         .subscribe();
     }
+
+    if (this.userLogin.username === '') {
+      this.snackBar.open('Username is required !', '', {
+        duration: 3000,
+      });
+    } else if (this.userLogin.password === '') {
+      this.snackBar.open('Password is required !', '', {
+        duration: 3000,
+      });
+    }
   }
 }
