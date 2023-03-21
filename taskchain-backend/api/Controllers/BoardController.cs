@@ -52,4 +52,18 @@ public class BoardController : BaseController
 
         return Ok(board);
     }
+
+    [HttpPost]
+    [Route("deleteBoard")]
+    public IActionResult DeleteBoard(DeleteBoardRequest request)
+    {
+        boardService.DeleteBoard(new Guid(request.BoardId));
+
+        foreach (User user in request.Users)
+        {
+            userService.RemoveUserFromBoard(new Guid(user.Id), new Guid(request.BoardId));
+        }
+
+        return Ok();
+    }
 }

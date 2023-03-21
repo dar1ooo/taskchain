@@ -32,5 +32,11 @@ namespace api.Interfaces
         /// <param name="inviteCode"></param>
         /// <returns>Found Board</returns>
         public Board GetBoardByInviteCode(string inviteCode);
+
+        /// <summary>
+        /// Deletes Board by it's ID
+        /// </summary>
+        /// <param name="boardId"></param>
+        public void DeleteBoard(Guid boardId);
     }
 }

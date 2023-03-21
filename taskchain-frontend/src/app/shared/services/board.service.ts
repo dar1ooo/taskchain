@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { BoardModel } from '../models';
 import {
   ICreateBoardRequest,
+  IDeleteBoardRequest,
   IGetBoardRequest,
   ISaveBoardRequest,
 } from '../models/request';
@@ -48,5 +49,16 @@ export class BoardService {
   createBoard(request: ICreateBoardRequest): Observable<ICreateBoardResponse> {
     const url = this.baseurl + '/createBoard';
     return this.http.post<ICreateBoardResponse>(url, request);
+  }
+
+  /**
+   * API call to delete a board
+   * @param {IDeleteBoardRequest} request
+   * @return {*}  {Observable<void>}
+   * @memberof BoardService
+   */
+  deleteBoard(request: IDeleteBoardRequest): Observable<void> {
+    const url = this.baseurl + '/deleteBoard';
+    return this.http.post<void>(url, request);
   }
 }

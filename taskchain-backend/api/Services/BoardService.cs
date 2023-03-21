@@ -96,6 +96,12 @@ namespace api.Services
             return new Board(foundBoard);
         }
 
+        public void DeleteBoard(Guid boardId)
+        {
+            var arrayFilter = Builders<MongoDbBoard>.Filter.Eq("_id", boardId);
+            MongoCRUD.DeleteRecord(collection, arrayFilter);
+        }
+
         private static string RandomString(int length)
         {
             Random random = new Random();

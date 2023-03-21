@@ -7,3 +7,4 @@ export { ICreateBoardRequest } from './create-board-request';
 export { IGetBoardsRequest } from './get-boards-request';
 export { IGetAllUsersRequest } from './get-all-users-request';
 export { IRemoveUserRequest } from './remove-user-request';
+export { IDeleteBoardRequest } from './delete-board-request';

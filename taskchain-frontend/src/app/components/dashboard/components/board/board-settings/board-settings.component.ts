@@ -4,9 +4,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, tap } from 'rxjs';
 import { BoardModel, UserModel } from 'src/app/shared/models';
 import {
+  IDeleteBoardRequest,
   IGetAllUsersRequest,
   IRemoveUserRequest,
 } from 'src/app/shared/models/request';
+import { BoardService } from 'src/app/shared/services/board.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
@@ -20,6 +22,7 @@ export class BoardSettingsComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public board: BoardModel,
     private userService: UserService,
+    private boardService: BoardService,
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<BoardSettingsComponent>
   ) {}
@@ -41,8 +44,18 @@ export class BoardSettingsComponent implements OnInit {
         .getAllUsers(request)
         .pipe(
           tap((res) => {
+            debugger;
             this.users = res.users;
+            const userIndex = this.users.findIndex(
+              (user) => user.id === this.board.owner
+            );
+
+            if (userIndex > -1) {
+              const [user] = this.users.splice(userIndex, 1);
+              this.users.unshift(user);
+            }
           }),
+
           catchError((err) => {
             const ref = this.snackBar.open('Failed to load users', 'close', {
               horizontalPosition: 'right',
@@ -77,6 +90,25 @@ export class BoardSettingsComponent implements OnInit {
         }),
         catchError((err) => {
           this.snackBar.open('User could not be removed', 'close');
+          return err;
+        })
+      )
+      .subscribe();
+  }
+
+  public deleteBoard(): void {
+    const request: IDeleteBoardRequest = {
+      BoardId: this.board.id,
+      Users: this.users,
+    };
+    this.boardService
+      .deleteBoard(request)
+      .pipe(
+        tap(() => {
+          window.location.href = '/dashboard';
+        }),
+        catchError((err) => {
+          this.snackBar.open('Board could not be deleted', 'close');
           return err;
         })
       )
