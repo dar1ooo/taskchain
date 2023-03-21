@@ -1,6 +1,5 @@
 .settings-item {
   margin-bottom: 30px;
-  
 }
 
 h1 {
@@ -43,5 +42,36 @@ h1 {
       inset -2px -2px 4px rgba(255, 255, 255, 0.5),
       inset 2px 2px 2px rgba(255, 255, 255, 0.075),
       inset 2px 2px 4px rgba(0, 0, 0, 0.15);
+  }
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.username {
+  width: 70%;
+}
+
+.action {
+  button {
+    border: none;
+    border-radius: 8px;
+    color: white;
+    background-color: #6b717e;
+    padding: 5px 10px;
   }
 }

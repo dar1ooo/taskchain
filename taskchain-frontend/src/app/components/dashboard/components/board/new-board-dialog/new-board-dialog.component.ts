@@ -27,5 +27,6 @@ export class NewBoardDialogComponent implements OnInit {
 
   public cancel(): void {
     this.dialogRef.close();
+    window.location.href = '/dashboard';
   }
 }

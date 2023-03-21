@@ -28,7 +28,6 @@ export class TicketDetailComponent implements OnInit {
     event.preventDefault();
     this.dialogRef.close(this.ticket);
   }
-  private revertTicket: TicketModel = new TicketModel();
   public tagInput: string = '';
   public users: UserModel[] = [];
   public task = new TaskModel();
@@ -40,9 +39,7 @@ export class TicketDetailComponent implements OnInit {
     public addUserDialog: MatDialog,
     private userService: UserService,
     private snackBar: MatSnackBar
-  ) {
-    this.revertTicket = { ...this.ticket };
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getAllUsers();
@@ -84,16 +81,6 @@ export class TicketDetailComponent implements OnInit {
     }
   }
 
-  public delete(): void {
-    this.ticket.deleteTicket = true;
-    this.dialogRef.close(this.ticket);
-  }
-
-  public cancel(): void {
-    this.ticket = this.revertTicket;
-    this.dialogRef.close(this.ticket);
-  }
-
   public removeTag(tag: TagModel) {
     const index = this.ticket.tags.indexOf(tag, 0);
     if (index > -1) {
@@ -104,6 +91,8 @@ export class TicketDetailComponent implements OnInit {
   public addTag(event: MatChipInputEvent) {
     if (this.ticket.tags.length >= 3) {
       this.snackBar.open('You cannot add more than 3 Tags', 'close');
+    } else if (event.value.length > 12) {
+      this.snackBar.open('The text for the tag is too long', 'close');
     } else {
       this.ticket.tags.push({ title: event.value, color: '#57DFC8' });
     }
@@ -141,16 +130,22 @@ export class TicketDetailComponent implements OnInit {
       );
     });
 
-    const dialogRef = this.addUserDialog.open(AddUserComponent, {
-      panelClass: 'add-user-wrapper',
-      data: filteredUsers,
-    });
+    if (filteredUsers.length === 0) {
+      this.snackBar.open('There are no more users to add', 'close');
+    } else {
+      const dialogRef = this.addUserDialog.open(AddUserComponent, {
+        panelClass: 'add-user-wrapper',
+        data: filteredUsers,
+        width: '30%',
+        height: '30%',
+      });
 
-    dialogRef.afterClosed().subscribe((result: UserModel) => {
-      if (result) {
-        this.ticket.users.push(result);
-      }
-    });
+      dialogRef.afterClosed().subscribe((result: UserModel) => {
+        if (result) {
+          this.ticket.users.push(result);
+        }
+      });
+    }
   }
 
   public removeUser(user: UserModel): void {
@@ -166,6 +161,29 @@ export class TicketDetailComponent implements OnInit {
     if (this.task.text !== '') {
       this.ticket.tasks.push({ isDone: false, text: this.task.text });
       this.task = new TaskModel();
+      this.updateCounter();
     }
+  }
+
+  public removeTask(task: TaskModel): void {
+    const index = this.ticket.tasks.indexOf(task, 0);
+    if (index > -1) {
+      this.ticket.tasks.splice(index, 1);
+    }
+
+    this.updateCounter();
+  }
+
+  public updateCounter(): void {
+    this.ticket.completedChecks = this.ticket.tasks.filter(
+      (task) => task.isDone
+    ).length;
+
+    this.ticket.totalChecks = this.ticket.tasks.length;
+  }
+
+  public checkTask(task: TaskModel): void {
+    task.isDone = !task.isDone;
+    this.updateCounter();
   }
 }

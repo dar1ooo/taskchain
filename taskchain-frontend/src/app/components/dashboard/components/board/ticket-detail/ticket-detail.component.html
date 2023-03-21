@@ -25,11 +25,19 @@
           [(ngModel)]="ticket.description"
         ></editor>
         <div class="checklist">
-          <div *ngFor="let task of ticket.tasks">
-            <input type="checkbox" [(ngModel)]="task.isDone" />
-            <span>{{ task.text }}</span>
+          <h2 class="checklist-title">Checklist</h2>
+          <div class="checklist-item" *ngFor="let task of ticket.tasks">
+            <input
+              class="checkbox"
+              type="checkbox"
+              [(ngModel)]="task.isDone"
+              (ngModelChange)="updateCounter()"
+            />
+            <span (click)="checkTask(task)">{{ task.text }}</span>
+            <span class="remove-icon" (click)="removeTask(task)"></span>
           </div>
           <input
+            class="checkbox-input"
             type="text"
             placeholder="Text"
             [(ngModel)]="task.text"
@@ -39,47 +47,58 @@
         </div>
         <div class="actionbar">
           <button (click)="saveTicket()">Save</button>
-          <button (click)="delete()">Delete</button>
-          <button (click)="cancel()">Cancel</button>
         </div>
       </div>
       <div class="col-4">
         <div class="side-bar-wrapper">
           <div class="side-bar">
-            <div class="side-bar-item users">
-              <h3>Users</h3>
-              <div *ngFor="let user of ticket.users">
-                <h4>
-                  {{ user.username
-                  }}<span class="remove-user" (click)="removeUser(user)"></span>
-                </h4>
+            <div class="side-bar-item">
+              <div class="userlist">
+                <h2>Users</h2>
+                <table *ngIf="ticket.users.length > 0">
+                  <tr>
+                    <th>User</th>
+                    <th>Remove</th>
+                  </tr>
+                  <tr *ngFor="let user of ticket.users">
+                    <td class="username">{{ user.username }}</td>
+                    <td class="action">
+                      <span
+                        class="remove-icon"
+                        (click)="removeUser(user)"
+                      ></span>
+                    </td>
+                  </tr>
+                </table>
+                <button (click)="addUser()" class="add-user">Add user</button>
               </div>
-              <button (click)="addUser()" class="add-user">Add user</button>
             </div>
             <div class="side-bar-item tags">
-              <h3>Tags</h3>
-              <mat-chip-list #tags>
-                <mat-chip
-                  *ngFor="let tag of this.ticket.tags"
-                  [style.background]="tag?.color ? tag.color : '#e0e0e0'"
-                  (removed)="removeTag(tag)"
-                >
-                  {{ tag?.title }}
-                  <mat-icon
-                    (click)="openColorPickerDialog(tag)"
-                    class="mat-icon notranslate mat-chip-remove mat-chip-trailing-icon material-icons mat-icon-no-color"
-                    >color_lense</mat-icon
+              <h2>Tags</h2>
+              <div class="taglist">
+                <mat-chip-list #tags>
+                  <mat-chip
+                    *ngFor="let tag of this.ticket.tags"
+                    [style.background]="tag.color ? tag.color : '#e0e0e0'"
+                    (removed)="removeTag(tag)"
                   >
-                  <mat-icon matChipRemove>cancel</mat-icon>
-                </mat-chip>
-
-                <input
-                  placeholder="Add tags"
-                  [matChipInputFor]="tags"
-                  (matChipInputTokenEnd)="addTag($event)"
-                  [(ngModel)]="tagInput"
-                />
-              </mat-chip-list>
+                    {{ tag.title }}
+                    <mat-icon
+                      (click)="openColorPickerDialog(tag)"
+                      class="mat-icon notranslate mat-chip-remove mat-chip-trailing-icon material-icons mat-icon-no-color"
+                      >color_lense</mat-icon
+                    >
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+              <input
+                class="tags-input"
+                placeholder="Add tags"
+                [matChipInputFor]="tags"
+                (matChipInputTokenEnd)="addTag($event)"
+                [(ngModel)]="tagInput"
+              />
             </div>
           </div>
         </div>

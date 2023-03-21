@@ -10,11 +10,16 @@
   width: 98%;
   background-color: transparent;
 
+  &:active,
+  &:hover,
   &:focus {
+    border: none;
+    overflow: auto;
     outline: none;
-    border: 3px solid #026ca9;
-    border-radius: 8px;
-    padding-top: 8px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    resize: none;
   }
 }
 
@@ -53,14 +58,10 @@
 }
 
 .side-bar-wrapper {
-  border-left: 3px solid #000000a1;
-
   .side-bar {
-    padding-left: 20px;
-    width: 150px;
     .side-bar-item {
       margin-bottom: 20px;
-      h3 {
+      h2 {
         margin-bottom: 5px;
         border-bottom: 1px solid gray;
       }
@@ -73,11 +74,120 @@
   margin: 5px 0px;
 }
 
-.remove-user {
+.remove-icon {
   height: 100%;
   margin-left: 10px;
   cursor: pointer;
   &::after {
     content: "✘";
   }
+}
+
+.tags-input {
+  overflow: hidden;
+  border: none;
+  height: 30px;
+  margin-top: 20px;
+  border-radius: 8px;
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0px 0px 0px;
+
+  &:active,
+  &:hover,
+  &:focus {
+    border: none;
+    overflow: auto;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    resize: none;
+  }
+}
+
+.add-user {
+  border: none;
+  border-radius: 8px;
+  color: white;
+  background-color: #6b717e;
+  padding: 5px 10px;
+  margin-top: 10px;
+}
+
+.checklist {
+  margin-bottom: 30px;
+  .checkbox-input {
+    margin-top: 10px;
+    border-radius: 8px;
+    border: none;
+    width: 100%;
+    padding: 5px 15px;
+    height: 40px;
+  }
+  .checkbox-input:active,
+  .checkbox-input:hover,
+  .checkbox-input:focus {
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    resize: none;
+  }
+
+  .checklist-title {
+    margin-top: 20px;
+    border-bottom: 1px solid gray;
+  }
+
+  .checklist-item {
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+
+  .checkbox {
+    margin: 0px 10px;
+    cursor: pointer;
+  }
+}
+.userlist {
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td,
+  th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+  .username {
+    width: 70%;
+  }
+
+  .action {
+    button {
+      border: none;
+      border-radius: 8px;
+      color: white;
+      background-color: #6b717e;
+      padding: 5px 10px;
+    }
+  }
+}
+
+.taglist {
+  margin-top: 10px;
+  max-width: 100px;
 }

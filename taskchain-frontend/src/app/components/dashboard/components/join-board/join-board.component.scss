@@ -10,6 +10,18 @@
   color: red;
 }
 
+.back {
+  margin-top: 30px;
+  display: inline-block;
+  text-decoration: underline;
+  color: #454545;
+
+  &:hover {
+    cursor: pointer;
+    color: black;
+  }
+}
+
 .screen {
   position: relative;
   background: linear-gradient(to bottom, #323232 0%, #3f3f3f 40%, #1c1c1c 150%),

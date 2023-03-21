@@ -15,7 +15,10 @@ import {
   TicketModel,
   UserModel,
 } from 'src/app/shared/models';
-import { ICreateBoardRequest, IGetBoardRequest } from 'src/app/shared/models/request';
+import {
+  ICreateBoardRequest,
+  IGetBoardRequest,
+} from 'src/app/shared/models/request';
 import { ISaveBoardRequest } from 'src/app/shared/models/request/save-board-request';
 import { BoardService } from 'src/app/shared/services/board.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
@@ -36,7 +39,7 @@ export class BoardComponent implements OnInit {
   public board: BoardModel = new BoardModel();
   public modelChanged: Subject<BoardModel> = new Subject<BoardModel>();
   private subscription = new Subscription();
-  private debounceTime = 3000;
+  private debounceTime = 600;
   public user = new UserModel();
 
   constructor(
@@ -205,19 +208,18 @@ export class BoardComponent implements OnInit {
       panelClass: 'ticket-wrapper',
       data: ticket,
       maxHeight: '90vh',
+      maxWidth: '50vw',
       autoFocus: '__non_existing_element__',
     });
 
-    ticketRef.afterClosed().subscribe((newTicket: TicketModel) => {
-      if (newTicket) {
-        if (newTicket.deleteTicket) {
-          this.deleteTicket(column, newTicket);
-        } else {
-          var foundIndex = column.tickets.findIndex((x) => x.id === ticket.id);
-          column.tickets[foundIndex] = newTicket;
-        }
-      }
-      this.boardChanged();
+    ticketRef.afterClosed().subscribe(() => {
+      const targetTicket = { ...ticket };
+      const foundIndex = column.tickets.findIndex(
+        (ticket) => ticket === targetTicket
+      );
+
+      column.tickets[foundIndex] = { ...ticket };
+      this.saveBoard(this.board);
     });
   }
 
@@ -229,10 +231,15 @@ export class BoardComponent implements OnInit {
       autoFocus: '__non_existing_element__',
     });
 
-    ticketRef.afterClosed().subscribe((newTicket) => {
+    ticketRef.afterClosed().subscribe((newTicket: TicketModel) => {
       if (newTicket) {
-        column.tickets.push(newTicket);
-        this.boardChanged();
+        newTicket.completedChecks = newTicket.tasks.filter(
+          (task) => task.isDone
+        ).length;
+
+        newTicket.totalChecks = newTicket.tasks.length;
+        column.tickets.push({ ...newTicket });
+        this.saveBoard(this.board);
       }
     });
   }
@@ -286,10 +293,14 @@ export class BoardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((dialogResult) => {
       if (dialogResult === true) {
-        const index = column.tickets.indexOf(ticket, 0);
+        const columnIndex = this.board.columns.indexOf(column, 0);
+        const index = this.board.columns[columnIndex].tickets.indexOf(
+          ticket,
+          0
+        );
         if (index > -1) {
-          column.tickets.splice(index, 1);
-          this.boardChanged();
+          this.board.columns[columnIndex].tickets.splice(index, 1);
+          this.saveBoard(this.board);
         }
       }
     });

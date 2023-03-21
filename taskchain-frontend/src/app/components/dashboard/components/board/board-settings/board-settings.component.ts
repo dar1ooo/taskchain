@@ -83,26 +83,43 @@ export class BoardSettingsComponent implements OnInit {
   }
 
   public removeUser(user: UserModel): void {
-    const request: IRemoveUserRequest = {
-      userId: user.id,
-      boardId: this.board.id,
-    };
+    const message =
+      'Are you sure you want to remove user: ' + user.username + ' ?';
 
-    this.userService
-      .removeUser(request)
-      .pipe(
-        tap(() => {
-          const index = this.users.indexOf(user);
-          if (index > 0) {
-            this.users.splice(index, 1);
-          }
-        }),
-        catchError((err) => {
-          this.snackBar.open('User could not be removed', 'close');
-          return err;
-        })
-      )
-      .subscribe();
+    const dialogData = new ConfirmDialogModel({
+      title: 'Confirm Action',
+      message: message,
+    });
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '400px',
+      data: dialogData,
+    });
+
+    dialogRef.afterClosed().subscribe((dialogResult) => {
+      if (dialogResult === true) {
+        const request: IRemoveUserRequest = {
+          userId: user.id,
+          boardId: this.board.id,
+        };
+
+        this.userService
+          .removeUser(request)
+          .pipe(
+            tap(() => {
+              const index = this.users.indexOf(user);
+              if (index > 0) {
+                this.users.splice(index, 1);
+              }
+            }),
+            catchError((err) => {
+              this.snackBar.open('User could not be removed', 'close');
+              return err;
+            })
+          )
+          .subscribe();
+      }
+    });
   }
 
   public deleteBoard(): void {
