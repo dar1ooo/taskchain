@@ -1,8 +1,16 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, tap } from 'rxjs';
-import { BoardModel, UserModel } from 'src/app/shared/models';
+import {
+  BoardModel,
+  ConfirmDialogModel,
+  UserModel,
+} from 'src/app/shared/models';
 import {
   IDeleteBoardRequest,
   IGetAllUsersRequest,
@@ -10,6 +18,7 @@ import {
 } from 'src/app/shared/models/request';
 import { BoardService } from 'src/app/shared/services/board.service';
 import { UserService } from 'src/app/shared/services/user.service';
+import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-board-settings',
@@ -23,6 +32,7 @@ export class BoardSettingsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public board: BoardModel,
     private userService: UserService,
     private boardService: BoardService,
+    public dialog: MatDialog,
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<BoardSettingsComponent>
   ) {}
@@ -97,21 +107,39 @@ export class BoardSettingsComponent implements OnInit {
   }
 
   public deleteBoard(): void {
-    const request: IDeleteBoardRequest = {
-      BoardId: this.board.id,
-      Users: this.users,
-    };
-    this.boardService
-      .deleteBoard(request)
-      .pipe(
-        tap(() => {
-          window.location.href = '/dashboard';
-        }),
-        catchError((err) => {
-          this.snackBar.open('Board could not be deleted', 'close');
-          return err;
-        })
-      )
-      .subscribe();
+    const message =
+      'Are you sure you want to delete board: ' + this.board.title + ' ?';
+
+    const dialogData = new ConfirmDialogModel({
+      title: 'Confirm Action',
+      message: message,
+    });
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '400px',
+      data: dialogData,
+    });
+
+    dialogRef.afterClosed().subscribe((dialogResult) => {
+      if (dialogResult === true) {
+        const request: IDeleteBoardRequest = {
+          BoardId: this.board.id,
+          Users: this.users,
+        };
+
+        this.boardService
+          .deleteBoard(request)
+          .pipe(
+            tap(() => {
+              window.location.href = '/dashboard';
+            }),
+            catchError((err) => {
+              this.snackBar.open('Board could not be deleted', 'close');
+              return err;
+            })
+          )
+          .subscribe();
+      }
+    });
   }
 }
