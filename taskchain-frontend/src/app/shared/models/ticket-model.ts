@@ -9,6 +9,8 @@ export class TicketModel {
 
   public title = '';
   public description = '';
+  public pullRequestUrl = '';
+  public testRunUrl = '';
   public completedChecks = 0;
   public totalChecks = 0;
   public tags: TagModel[] = [];

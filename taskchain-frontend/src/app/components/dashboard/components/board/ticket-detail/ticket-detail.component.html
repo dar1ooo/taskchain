@@ -10,10 +10,10 @@
         <editor
           apiKey="jasrh2k76bpw9xjo38sd2zk9v08tp98hbcxlj9qr2ow3a9z3"
           [init]="{
-            height: 500,
+            height: 620,
             menubar: true,
             plugins: [
-              'advlist autolink lists link image charmap print preview anchor',
+              'textpattern advlist autolink lists link image charmap print preview anchor',
               'searchreplace visualblocks code fullscreen',
               'insertdatetime media table paste code wordcount'
             ],
@@ -99,6 +99,39 @@
                 (matChipInputTokenEnd)="addTag($event)"
                 [(ngModel)]="tagInput"
               />
+            </div>
+            <div class="side-bar-item">
+              <div class="userlist">
+                <h2>Pull Request</h2>
+                <input
+                  class="tags-input"
+                  placeholder="URL"
+                  [(ngModel)]="ticket.pullRequestUrl"
+                />
+                <a
+                  *ngIf="ticket.pullRequestUrl"
+                  target="_blank"
+                  href="{{ ticket.pullRequestUrl }}"
+                  >Open</a
+                >
+              </div>
+            </div>
+            <div class="side-bar-item">
+              <div class="userlist">
+                <h2>Test Run</h2>
+
+                <input
+                  class="tags-input"
+                  placeholder="URL"
+                  [(ngModel)]="ticket.testRunUrl"
+                />
+                <a
+                  *ngIf="ticket.testRunUrl"
+                  target="_blank"
+                  href="{{ ticket.testRunUrl }}"
+                  >Open</a
+                >
+              </div>
             </div>
           </div>
         </div>

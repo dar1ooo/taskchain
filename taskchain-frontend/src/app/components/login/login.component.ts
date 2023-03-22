@@ -47,13 +47,12 @@ export class LoginComponent implements OnInit {
             window.location.href = '/dashboard';
           }),
           catchError((error) => {
-            this.snackBar.open('Login Failed, please retry', '', {
+            this.snackBar.open('Login Failed, please check your credentials', '', {
               horizontalPosition: 'right',
               verticalPosition: 'bottom',
               duration: 6000,
             });
 
-            this.userLogin = new UserLogin();
             return error;
           })
         )

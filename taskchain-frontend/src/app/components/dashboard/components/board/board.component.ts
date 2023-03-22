@@ -39,7 +39,7 @@ export class BoardComponent implements OnInit {
   public board: BoardModel = new BoardModel();
   public modelChanged: Subject<BoardModel> = new Subject<BoardModel>();
   private subscription = new Subscription();
-  private debounceTime = 600;
+  private debounceTime = 2000;
   public user = new UserModel();
 
   constructor(
@@ -218,15 +218,17 @@ export class BoardComponent implements OnInit {
         event.currentIndex
       );
     }
-    this.boardChanged();
+    this.saveBoard(this.board);
   }
 
   public openDetail(column: BoardColumn, ticket: TicketModel): void {
     const ticketRef = this.dialog.open(TicketDetailComponent, {
       panelClass: 'ticket-wrapper',
       data: ticket,
+      height: '85vh',
       maxHeight: '90vh',
       maxWidth: '50vw',
+      width: '50vw',
       autoFocus: '__non_existing_element__',
     });
 
@@ -249,9 +251,13 @@ export class BoardComponent implements OnInit {
   public addTicket(column: BoardColumn): void {
     const ticketRef = this.dialog.open(TicketDetailComponent, {
       panelClass: 'ticket-wrapper',
+      height: '85vh',
       maxHeight: '90vh',
+      maxWidth: '50vw',
+      width: '50vw',
       data: new TicketModel(),
       autoFocus: '__non_existing_element__',
+      disableClose: true,
     });
 
     ticketRef.afterClosed().subscribe((newTicket: TicketModel) => {

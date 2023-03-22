@@ -6,6 +6,9 @@
     <a id="staffbite" class="navbar-brand" href="/dashboard" *ngIf="user"
       >TASKCHAIN</a
     >
+    <a class="nav-link" *ngIf="user" style="color: white; font-weight: 500">
+      Welcome {{ user.username }}
+    </a>
     <div class="d-flex">
       <ul class="navbar-nav">
         <li class="nav-item">
