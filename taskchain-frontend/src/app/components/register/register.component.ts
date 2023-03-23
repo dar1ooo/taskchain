@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
   public passwordsMatch = true;
   public takenUsernames: string[] = [];
   public showUsernameTakenError: boolean = false;
+  public validationMessage: string = 'required';
 
   constructor(
     private userService: UserService,
@@ -108,6 +109,25 @@ export class RegisterComponent implements OnInit {
    * @memberof RegisterComponent
    */
   public validatePassword(): void {
+    var userPassword = this.userRegister.Password;
+    if (userPassword === '') {
+      this.validationMessage = 'required';
+    } else if (userPassword.length < 6) {
+      this.validationMessage = 'password is too short';
+    } else if (userPassword.length > 50) {
+      this.validationMessage = 'password is too long';
+    } else if (userPassword.search(/\d/) == -1) {
+      this.validationMessage = 'password must include a number';
+    } else if (userPassword.search(/[a-zA-Z]/) == -1) {
+      this.validationMessage = 'password has no letters';
+    } else if (
+      userPassword.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+\.\,\;\:]/) != -1
+    ) {
+      this.validationMessage = 'incorrect characters';
+    } else {
+      this.validationMessage = 'good to go!';
+    }
+
     if (this.userRegister.Password === this.userRegister.ConfirmPassword) {
       this.passwordsMatch = true;
     } else {

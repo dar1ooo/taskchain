@@ -24,7 +24,17 @@
             [(ngModel)]="userRegister.Password"
             (ngModelChange)="validatePassword()"
           />
-          <div class="error-message"></div>
+          <div class="message">
+            <div
+              ngClass="{{
+                this.validationMessage === 'good to go!'
+                  ? 'validmessage valid'
+                  : 'validmessage invalid'
+              }}"
+            >
+              {{ this.validationMessage }}
+            </div>
+          </div>
         </div>
         <div class="register__field">
           <input

@@ -11,6 +11,20 @@
   color: red;
 }
 
+.message {
+  height: 30px;
+  padding-top: 10px;
+}
+
+.validmessage {
+  &.valid {
+    color: green;
+  }
+  &.invalid {
+    color: red;
+  }
+}
+
 .screen {
   position: relative;
   background: linear-gradient(to bottom, #323232 0%, #3f3f3f 40%, #1c1c1c 150%),
