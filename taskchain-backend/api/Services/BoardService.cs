@@ -27,7 +27,7 @@ namespace api.Services
                 do
                 {
                     // Generate a 6-character random string to use as the board's invite code
-                    mongoDbBoard.InviteCode = RandomString(6);
+                    mongoDbBoard.InviteCode = RandomInviteCode(6);
 
                     // Check if a board with the generated invite code already exists, if not, set inviteCodeExists to false to exit the loop
                     if (GetBoardByInviteCode(mongoDbBoard.InviteCode) == null)
@@ -113,8 +113,8 @@ namespace api.Services
             MongoCRUD.DeleteRecord(collection, arrayFilter);
         }
 
-        // Generates a random string of a given length.
-        private static string RandomString(int length)
+        // Generates a random invite code of a given length.
+        private static string RandomInviteCode(int length)
         {
             // Initialize a new instance of the Random class to generate a random number.
             Random random = new();
