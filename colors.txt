@@ -1,0 +1,5 @@
+Usability: 6FD9BB
+Feature: 0BB4FF
+Bug: FF2E6F
+Architecture: FFC547
+ToCheck: E571FF

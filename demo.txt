@@ -1,0 +1,14 @@
+ALLES IM EDGE BROWSER MACHEN !!!!!!!
+---------------------------------
+1. MongoDB Starten
+2. NG Serve
+3. Backend Starten
+--------------------------------
+
+Username: Dario
+password: dario123
+
+username: Philipp
+password: philipp123
+
+-----------------------
