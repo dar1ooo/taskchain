@@ -1,0 +1,125 @@
+BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:REQUEST
+BEGIN:VTIMEZONE
+TZID:Europe/Zurich
+X-LIC-LOCATION:Europe/Zurich
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+TZNAME:CEST
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+TZNAME:CET
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Zurich:20230403T180000
+DTEND;TZID=Europe/Zurich:20230403T200000
+DTSTAMP:20230320T140217Z
+ORGANIZER;CN=Min Wang:mailto:min.wang@exchange-pro.ch
+UID:38ma5icnosp5vv16enn3n6k9lb@google.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=TRUE
+ ;CN=stephanie_dusci@swissre.com;X-NUM-GUESTS=0:mailto:stephanie_dusci@swiss
+ re.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=TRUE
+ ;CN=bernd.lienberger@ergon.ch;X-NUM-GUESTS=0:mailto:bernd.lienberger@ergon.
+ ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=miriam.balloi@ktsh.ch;X-NUM-GUESTS=0:mailto:miriam.balloi@ktsh.ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=daniel.preckel@lu.ch;X-NUM-GUESTS=0:mailto:daniel.preckel@lu.ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=TRUE
+ ;CN=mobil@gibz.ch;X-NUM-GUESTS=0:mailto:mobil@gibz.ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=martin.frieden@gibb.ch;X-NUM-GUESTS=0:mailto:martin.frieden@gibb.ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=TRUE
+ ;CN=ramon.leemann@mba.zh.ch;X-NUM-GUESTS=0:mailto:ramon.leemann@mba.zh.ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=katharina.fischer@lu.ch;X-NUM-GUESTS=0:mailto:katharina.fischer@lu.
+ ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=TRUE
+ ;CN=roger.cuennet@gibgl.ch;X-NUM-GUESTS=0:mailto:roger.cuennet@gibgl.ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=TRUE
+ ;CN=Min Wang;X-NUM-GUESTS=0:mailto:min.wang@exchange-pro.ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=TRUE
+ ;CN=michelle.chang@artecos.ch;X-NUM-GUESTS=0:mailto:michelle.chang@artecos.
+ ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=gert.christen@artecos.ch;X-NUM-GUESTS=0:mailto:gert.christen@arteco
+ s.ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=DECLINED;RSVP=TRUE
+ ;CN=Balloi Miriam;X-NUM-GUESTS=0:mailto:miriam.balloi@sh.ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=maurus.graf@ergon.ch;X-NUM-GUESTS=0:mailto:maurus.graf@ergon.ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=lautenschlager.martinjoel@gmail.com;X-NUM-GUESTS=0:mailto:lautensch
+ lager.martinjoel@gmail.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=sven.heller@bbz-sh.ch;X-NUM-GUESTS=0:mailto:sven.heller@bbz-sh.ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=hatice_canmaya@swissre.com;X-NUM-GUESTS=0:mailto:hatice_canmaya@swi
+ ssre.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=diego@lovisetto.ch;X-NUM-GUESTS=0:mailto:diego@lovisetto.ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=alex_smolders@swissre.com;X-NUM-GUESTS=0:mailto:alex_smolders@swiss
+ re.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=tarnold@online.gibz.ch;X-NUM-GUESTS=0:mailto:tarnold@online.gibz.ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=luis.leuppi@redit.ch;X-NUM-GUESTS=0:mailto:luis.leuppi@redit.ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=Gian-Luca Naegeli;X-NUM-GUESTS=0:mailto:gian-luca.naegeli@roche.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=nicola.schweizer@bbz-sh.ch;X-NUM-GUESTS=0:mailto:nicola.schweizer@b
+ bz-sh.ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=kirthikan.ravishangar@lernende.ethz.ch;X-NUM-GUESTS=0:mailto:kirthi
+ kan.ravishangar@lernende.ethz.ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=martin.oberholzer@geberit.ch;X-NUM-GUESTS=0:mailto:martin.oberholze
+ r@geberit.ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=luca.mock@gmx.ch;X-NUM-GUESTS=0:mailto:luca.mock@gmx.ch
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=dschaffner@online.gibz.ch;X-NUM-GUESTS=0:mailto:dschaffner@online.g
+ ibz.ch
+X-MICROSOFT-CDO-OWNERAPPTID:906699670
+CREATED:20230308T095512Z
+DESCRIPTION:<p>Dear all\,</p><p>I would like to congratulate all the partic
+ ipants for being selected for the <strong>Silicon Valley IT Talent Program 
+ 2023</strong>!  You are the best in your school\, company\, or canton and y
+ ou have earned a one-of-lifetime opportunity to experience the world-famous
+  Silicon Valley!</p><p>With this note\, I kindly invite you to the Kickoff-
+ Meeting\, which will take place on <strong>Monday\, 3rd of April from 6:00-
+  8:00 pm in Luzern</strong>.  Your apprentice trainers and parents are also
+  cordially invited.  To get to know each other better\, we would like to as
+ k you to come to the meeting in person.  However\, if not possible\, you ca
+ n also join us via Zoom.</p><p>I look forward very much to meeting all of y
+ ou soon!  Should you have any questions\, do not hesitate to contact me.  P
+ lease respond to this invite\, so we know that you have received it.</p><p>
+ Warm greetings\,</p><p>--</p><p>Min Wang</p><p>Program Director</p><p><stro
+ ng>ExchangePro</strong></p><p>Zurich Switzerland</p><p><a href="http://www.
+ exchange-pro.ch/">www.exchange-pro.ch</a></p><p><br></p><p><br>──────────<b
+ r><br>Min Wang is inviting you to a scheduled Zoom meeting.<br><br>Join Zoo
+ m Meeting<br><a href="https://us02web.zoom.us/j/89034020396">https://us02we
+ b.zoom.us/j/89034020396</a><br><br>Meeting ID: 890 3402 0396<br><br>───────
+ ───</p>
+LAST-MODIFIED:20230320T140215Z
+LOCATION:Aula at BBZB (Robert-Zünd-Strasse 4-6\,  Luzern) or Zoom (see deta
+ ils below)
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Silicon Valley IT Talent Program 2023 Kickoff Meeting
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR
