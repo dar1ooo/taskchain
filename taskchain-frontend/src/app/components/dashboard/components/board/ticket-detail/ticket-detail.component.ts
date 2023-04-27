@@ -42,48 +42,10 @@ export class TicketDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getAllUsers();
   }
 
   closeDialog(): void {
     this.dialogRef.close(this.ticket);
-  }
-
-  /**
-   * Get all users from the current Board
-   * @private
-   * @memberof TicketDetailComponent
-   */
-  private getAllUsers(): void {
-    const urlParams = new URLSearchParams(window.location.search);
-    const boardId = urlParams.get('id')?.toString();
-
-    if (boardId) {
-      const request: IGetAllUsersRequest = {
-        boardId: boardId.toString(),
-      };
-
-      this.userService
-        .getAllUsers(request)
-        .pipe(
-          tap((res) => {
-            this.users = res.users;
-          }),
-          catchError((err) => {
-            const ref = this.snackBar.open('Failed to load users', 'close', {
-              horizontalPosition: 'right',
-              verticalPosition: 'bottom',
-            });
-
-            ref.onAction().subscribe(() => {
-              this.dialogRef.close();
-            });
-
-            return err;
-          })
-        )
-        .subscribe();
-    }
   }
 
   /**

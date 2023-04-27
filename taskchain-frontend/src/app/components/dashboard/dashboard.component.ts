@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { catchError, tap } from 'rxjs';
-import { Extensions } from 'src/app/shared/extensions';
-import { UserModel } from 'src/app/shared/models';
-import { IGetBoardsRequest } from 'src/app/shared/models/request';
-import { UserService } from 'src/app/shared/services/user.service';
+import { BoardModel, UserModel } from 'src/app/shared/models';
+import * as data from 'src/assets/demo-data/Boards.json';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,38 +8,23 @@ import { UserService } from 'src/app/shared/services/user.service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  public user = new UserModel();
-
-  constructor(
-    private extensions: Extensions,
-    private userService: UserService
-  ) {}
-
+  public boards: BoardModel[] = [];
   ngOnInit(): void {
-    this.extensions.checkForLogin();
-    this.getBoards();
+    this.loadDemoData();
   }
 
-  /**
-   * Loads all board for the current user
-   * @private
-   * @memberof DashboardComponent
-   */
-  private getBoards() {
-    const request: IGetBoardsRequest = {
-      user: this.extensions.getUser(),
-    };
+  public loadDemoData(): void {
+    const boards = sessionStorage.getItem('boards');
+    if (!boards) {
+      var boardsData = JSON.parse(JSON.stringify(data));
+      boardsData.default.forEach((board: BoardModel) => {
+        this.boards.push(board);
+      });
 
-    this.userService
-      .getBoards(request)
-      .pipe(
-        tap((result) => {
-          this.user.boards = result.boards;
-        }),
-        catchError((err) => {
-          return err;
-        })
-      )
-      .subscribe();
+      sessionStorage.setItem('boards', JSON.stringify(this.boards));
+    } else {
+      const foundBoards = JSON.parse(boards) as BoardModel[];
+      this.boards = foundBoards;
+    }
   }
 }

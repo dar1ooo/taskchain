@@ -14,16 +14,10 @@ import { UserService } from 'src/app/shared/services/user.service';
 export class LoginComponent implements OnInit {
   public userLogin = new UserLogin();
 
-  constructor(
-    private userService: UserService,
-    private snackBar: MatSnackBar,
-    private extensions: Extensions
-  ) {}
+  constructor(private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
-    if (this.extensions.getUser().id !== '') {
-      window.location.href = '/dashboard';
-    }
+    this.snackBar.open('Just press the login button :)');
   }
 
   /**
@@ -31,42 +25,9 @@ export class LoginComponent implements OnInit {
    * @memberof LoginComponent
    */
   public loginUser(): void {
-    if (this.userLogin.username !== '' && this.userLogin.password !== '') {
-      const request: IUserLoginRequest = {
-        username: this.userLogin.username,
-        password: this.userLogin.password,
-      };
-
-      this.userService
-        .loginUser(request)
-        .pipe(
-          tap((res) => {
-            let user = new UserModel();
-            user = res;
-            sessionStorage.setItem('user', JSON.stringify(user));
-            window.location.href = '/dashboard';
-          }),
-          catchError((error) => {
-            this.snackBar.open('Login Failed, please check your credentials', '', {
-              horizontalPosition: 'right',
-              verticalPosition: 'bottom',
-              duration: 6000,
-            });
-
-            return error;
-          })
-        )
-        .subscribe();
-    }
-
-    if (this.userLogin.username === '') {
-      this.snackBar.open('Username is required !', '', {
-        duration: 3000,
-      });
-    } else if (this.userLogin.password === '') {
-      this.snackBar.open('Password is required !', '', {
-        duration: 3000,
-      });
-    }
+    const user = new UserModel();
+    user.username = 'to the Demo';
+    sessionStorage.setItem('user', JSON.stringify(user));
+    window.location.href = '/dashboard';
   }
 }

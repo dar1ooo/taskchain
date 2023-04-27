@@ -6,7 +6,7 @@ import {
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { catchError, debounceTime, Subject, Subscription, tap } from 'rxjs';
+import { Subject, Subscription, debounceTime } from 'rxjs';
 import { Extensions } from 'src/app/shared/extensions';
 import {
   BoardColumn,
@@ -15,12 +15,6 @@ import {
   TicketModel,
   UserModel,
 } from 'src/app/shared/models';
-import {
-  ICreateBoardRequest,
-  IGetBoardRequest,
-} from 'src/app/shared/models/request';
-import { ISaveBoardRequest } from 'src/app/shared/models/request/save-board-request';
-import { BoardService } from 'src/app/shared/services/board.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { BoardSettingsComponent } from './board-settings/board-settings.component';
 import { NewBoardDialogComponent } from './new-board-dialog/new-board-dialog.component';
@@ -38,92 +32,36 @@ export interface DialogData {
 export class BoardComponent implements OnInit {
   public board: BoardModel = new BoardModel();
   public modelChanged: Subject<BoardModel> = new Subject<BoardModel>();
+  public user = new UserModel();
   private subscription = new Subscription();
   private debounceTime = 2000;
-  public user = new UserModel();
 
   constructor(
     public dialog: MatDialog,
-    private boardService: BoardService,
-    private snackBar: MatSnackBar,
-    private extensions: Extensions
+    private extensions: Extensions,
+    private snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.extensions.checkForLogin();
-    this.loadBoard();
-
     this.subscription = this.modelChanged
       .pipe(debounceTime(this.debounceTime))
       .subscribe((res) => {
         this.saveBoard(res);
       });
 
-    this.user = this.extensions.getUser();
-  }
-
-  /**
-   * Load the current board
-   * @memberof BoardComponent
-   */
-  public loadBoard(): void {
     const urlParams = new URLSearchParams(window.location.search);
     const boardId = urlParams.get('id')?.toString();
-    if (
-      !this.extensions.getUser().boards.find((board) => board.id === boardId) &&
-      boardId !== '0'
-    ) {
-      const ref = this.snackBar.open(
-        'You do not have permission to access this board',
-        'close',
-        {
-          horizontalPosition: 'right',
-          verticalPosition: 'bottom',
-        }
-      );
+    if (boardId === '0') {
+      this.createBoard();
+    } else if (boardId) {
+      this.board = this.extensions.getBoard(boardId);
+      if (this.board.id === '') {
+        const ref = this.snackbar.open('board not found', 'dashboard');
 
-      ref.onAction().subscribe(() => {
-        window.location.href = '/dashboard';
-      });
-    } else if (boardId && boardId !== '' && boardId !== '0') {
-      const request: IGetBoardRequest = {
-        BoardId: boardId,
-      };
-
-      this.boardService
-        .getBoard(request)
-        .pipe(
-          tap((res) => {
-            this.board = res;
-          }),
-          catchError((error) => {
-            const ref = this.snackBar.open('Loading Board', 'retry', {
-              horizontalPosition: 'right',
-              verticalPosition: 'bottom',
-            });
-
-            ref.onAction().subscribe((res) => {
-              this.loadBoard();
-            });
-
-            return error;
-          })
-        )
-        .subscribe();
-    } else if (boardId === '0') {
-      const newBoardRef = this.dialog.open(NewBoardDialogComponent, {
-        data: new BoardModel(),
-        disableClose: true,
-        maxHeight: '90vh',
-        autoFocus: '__non_existing_element__',
-      });
-
-      newBoardRef.afterClosed().subscribe((newBoard: BoardModel) => {
-        if (newBoard) {
-          this.board = newBoard;
-          this.createBoard();
-        }
-      });
+        ref.onAction().subscribe((result) => {
+          window.location.href = '/dashboard';
+        });
+      }
     }
   }
 
@@ -132,34 +70,20 @@ export class BoardComponent implements OnInit {
    * @memberof BoardComponent
    */
   public createBoard(): void {
-    const request: ICreateBoardRequest = {
-      boardTitle: this.board.title,
-      user: this.extensions.getUser(),
-    };
+    const newBoardRef = this.dialog.open(NewBoardDialogComponent, {
+      data: new BoardModel(),
+      disableClose: true,
+      maxHeight: '90vh',
+      autoFocus: '__non_existing_element__',
+    });
 
-    this.boardService
-      .createBoard(request)
-      .pipe(
-        tap((res) => {
-          let user = this.extensions.getUser();
-          user.boards.push({ id: res.board.id, title: this.board.title });
-          sessionStorage.setItem('user', JSON.stringify(user));
-          window.location.href = '/board?id=' + res.board.id;
-        }),
-        catchError((error) => {
-          const ref = this.snackBar.open('Saving Board failed', 'retry', {
-            horizontalPosition: 'right',
-            verticalPosition: 'bottom',
-          });
-
-          ref.onAction().subscribe((res) => {
-            this.createBoard();
-          });
-
-          return error;
-        })
-      )
-      .subscribe();
+    newBoardRef.afterClosed().subscribe((newBoard: BoardModel) => {
+      if (newBoard) {
+        newBoard.id = crypto.randomUUID();
+        this.extensions.addNewBoard(newBoard);
+        window.location.href = '/dashboard';
+      }
+    });
   }
 
   /**
@@ -168,30 +92,7 @@ export class BoardComponent implements OnInit {
    * @memberof BoardComponent
    */
   public saveBoard(board: BoardModel): void {
-    const request: ISaveBoardRequest = {
-      board: board,
-    };
-
-    this.boardService
-      .saveBoard(request)
-      .pipe(
-        tap((res) => {
-          this.board = res.board;
-        }),
-        catchError((error) => {
-          const ref = this.snackBar.open('Saving Board failed', 'retry', {
-            horizontalPosition: 'right',
-            verticalPosition: 'bottom',
-          });
-
-          ref.onAction().subscribe((res) => {
-            this.createBoard();
-          });
-
-          return error;
-        })
-      )
-      .subscribe();
+    this.extensions.updateBoards(board);
   }
 
   public boardChanged(): void {

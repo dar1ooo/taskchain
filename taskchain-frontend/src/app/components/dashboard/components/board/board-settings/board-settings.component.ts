@@ -1,24 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {
+  MAT_DIALOG_DATA,
   MatDialog,
   MatDialogRef,
-  MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { catchError, tap } from 'rxjs';
-import {
-  BoardModel,
-  ConfirmDialogModel,
-  UserModel,
-} from 'src/app/shared/models';
-import {
-  IDeleteBoardRequest,
-  IGetAllUsersRequest,
-  IRemoveUserRequest,
-} from 'src/app/shared/models/request';
-import { BoardService } from 'src/app/shared/services/board.service';
-import { UserService } from 'src/app/shared/services/user.service';
-import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
+import { BoardModel, UserModel } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-board-settings',
@@ -30,15 +17,44 @@ export class BoardSettingsComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public board: BoardModel,
-    private userService: UserService,
-    private boardService: BoardService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<BoardSettingsComponent>
   ) {}
 
   ngOnInit(): void {
+    this.board.inviteCode = 'L29BNI';
     this.getAllUsers();
+    this.users.push({
+      boards: [],
+      id: 'c7111522-f519-4fa2-ae80-070e2212c7e1',
+      username: 'Test User 1',
+    });
+    this.users.push({
+      boards: [],
+      id: 'c7111522-f519-4fa2-ae80-070e2212c7e2',
+      username: 'Test User 2',
+    });
+    this.users.push({
+      boards: [],
+      id: 'c7111522-f519-4fa2-ae80-070e2212c7e3',
+      username: 'Test User 3',
+    });
+    this.users.push({
+      boards: [],
+      id: 'c7111522-f519-4fa2-ae80-070e2212c7e4',
+      username: 'Test User 4',
+    });
+    this.users.push({
+      boards: [],
+      id: 'c7111522-f519-4fa2-ae80-070e2212c7e5',
+      username: 'Test User 5',
+    });
+    this.users.push({
+      boards: [],
+      id: 'c7111522-f519-4fa2-ae80-070e2212c7e6',
+      username: 'Test User 6',
+    });
   }
 
   /**
@@ -46,46 +62,7 @@ export class BoardSettingsComponent implements OnInit {
    * @private
    * @memberof BoardSettingsComponent
    */
-  private getAllUsers(): void {
-    const urlParams = new URLSearchParams(window.location.search);
-    const boardId = urlParams.get('id')?.toString();
-
-    if (boardId) {
-      const request: IGetAllUsersRequest = {
-        boardId: boardId.toString(),
-      };
-
-      this.userService
-        .getAllUsers(request)
-        .pipe(
-          tap((res) => {
-            this.users = res.users;
-            const userIndex = this.users.findIndex(
-              (user) => user.id === this.board.owner
-            );
-
-            if (userIndex > -1) {
-              const [user] = this.users.splice(userIndex, 1);
-              this.users.unshift(user);
-            }
-          }),
-
-          catchError((err) => {
-            const ref = this.snackBar.open('Failed to load users', 'close', {
-              horizontalPosition: 'right',
-              verticalPosition: 'bottom',
-            });
-
-            ref.onAction().subscribe(() => {
-              this.dialogRef.close();
-            });
-
-            return err;
-          })
-        )
-        .subscribe();
-    }
-  }
+  private getAllUsers(): void {}
 
   /**
    * Remove a user from the board
@@ -93,43 +70,7 @@ export class BoardSettingsComponent implements OnInit {
    * @memberof BoardSettingsComponent
    */
   public removeUser(user: UserModel): void {
-    const message =
-      'Are you sure you want to remove user: ' + user.username + ' ?';
-
-    const dialogData = new ConfirmDialogModel({
-      title: 'Confirm Action',
-      message: message,
-    });
-
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      maxWidth: '400px',
-      data: dialogData,
-    });
-
-    dialogRef.afterClosed().subscribe((dialogResult) => {
-      if (dialogResult === true) {
-        const request: IRemoveUserRequest = {
-          userId: user.id,
-          boardId: this.board.id,
-        };
-
-        this.userService
-          .removeUser(request)
-          .pipe(
-            tap(() => {
-              const index = this.users.indexOf(user);
-              if (index > 0) {
-                this.users.splice(index, 1);
-              }
-            }),
-            catchError((err) => {
-              this.snackBar.open('User could not be removed', 'close');
-              return err;
-            })
-          )
-          .subscribe();
-      }
-    });
+    this.users = this.users.filter((itm) => itm.id !== user.id);
   }
 
   /**
@@ -137,39 +78,6 @@ export class BoardSettingsComponent implements OnInit {
    * @memberof BoardSettingsComponent
    */
   public deleteBoard(): void {
-    const message =
-      'Are you sure you want to delete board: ' + this.board.title + ' ?';
-
-    const dialogData = new ConfirmDialogModel({
-      title: 'Confirm Action',
-      message: message,
-    });
-
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      maxWidth: '400px',
-      data: dialogData,
-    });
-
-    dialogRef.afterClosed().subscribe((dialogResult) => {
-      if (dialogResult === true) {
-        const request: IDeleteBoardRequest = {
-          BoardId: this.board.id,
-          Users: this.users,
-        };
-
-        this.boardService
-          .deleteBoard(request)
-          .pipe(
-            tap(() => {
-              window.location.href = '/dashboard';
-            }),
-            catchError((err) => {
-              this.snackBar.open('Board could not be deleted', 'close');
-              return err;
-            })
-          )
-          .subscribe();
-      }
-    });
+    this.snackBar.open('nice try :)');
   }
 }

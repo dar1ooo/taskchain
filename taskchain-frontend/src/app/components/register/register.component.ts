@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { catchError, tap } from 'rxjs';
-import { UserModel, UserRegister } from 'src/app/shared/models';
-import { IUserRegisterRequest } from 'src/app/shared/models/request';
+import { UserRegister } from 'src/app/shared/models';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
@@ -23,23 +21,7 @@ export class RegisterComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {}
 
-  ngOnInit(): void {
-    this.getTakenUsernames();
-  }
-
-  public getTakenUsernames(): void {
-    this.userService
-      .getAllUsernames()
-      .pipe(
-        tap((usernames) => {
-          this.takenUsernames = usernames;
-        }),
-        catchError((err) => {
-          return err;
-        })
-      )
-      .subscribe();
-  }
+  ngOnInit(): void {}
 
   /**
    * Register a user
@@ -51,34 +33,10 @@ export class RegisterComponent implements OnInit {
       this.userRegister.Password !== '' &&
       this.userRegister.ConfirmPassword != '' &&
       this.passwordsMatch &&
-      !this.showUsernameTakenError
+      !this.showUsernameTakenError &&
+      this.validationMessage === 'good to go!'
     ) {
-      const request: IUserRegisterRequest = {
-        Username: this.userRegister.Username,
-        Password: this.userRegister.Password,
-      };
-
-      this.userService
-        .registerUser(request)
-        .pipe(
-          tap((result) => {
-            let user = new UserModel();
-            user = result;
-            sessionStorage.setItem('user', JSON.stringify(user));
-            window.location.href = '/dashboard';
-          }),
-          catchError((err) => {
-            this.snackBar.open('Registration Failed', 'retry', {
-              horizontalPosition: 'right',
-              verticalPosition: 'bottom',
-              duration: 3000,
-            });
-            this.userRegister = new UserRegister();
-
-            return err;
-          })
-        )
-        .subscribe();
+      window.location.href = 'dashboard';
     }
 
     if (this.userRegister.Username === '') {
@@ -96,13 +54,7 @@ export class RegisterComponent implements OnInit {
    * Checks if the entered username is available
    * @memberof RegisterComponent
    */
-  public checkForAvailableUsername(): void {
-    if (this.takenUsernames.includes(this.userRegister.Username)) {
-      this.showUsernameTakenError = true;
-    } else {
-      this.showUsernameTakenError = false;
-    }
-  }
+  public checkForAvailableUsername(): void {}
 
   /**
    * Validates the entered password with the confirmation password
