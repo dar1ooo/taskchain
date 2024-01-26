@@ -10,7 +10,7 @@
         "tickets": [
           {
             "title": "Cockpit | simplify and revise API",
-            "description": "<p><img src=\"https://media.tenor.com/x8v1oNUOmg4AAAAd/rickroll-roll.gif\"></p>",
+            "description": "<p></p>",
             "pullRequestUrl": "",
             "testRunUrl": "",
             "completedChecks": 3,
@@ -101,7 +101,7 @@
         "tickets": [
           {
             "title": "App | Delete solo work position in the app",
-            "description": "<p><img src=\"https://media.tenor.com/x8v1oNUOmg4AAAAd/rickroll-roll.gif\"></p>",
+            "description": "<p></p>",
             "pullRequestUrl": "",
             "testRunUrl": "",
             "completedChecks": 0,
