@@ -19,13 +19,8 @@ Before you begin, ensure you have met the following requirements:
 
 ### Installation
 - Clone the repository:
-   ```
-   git clone https://github.com/yourusername/taskchain.git
-   ```
 - Set up the MongoDB connection string in `appsettings.json`.
-
 - Start the backend server
-
 - Navigate to the frontend directory and install Angular dependencies:
    ```
    npm install
